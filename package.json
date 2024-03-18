@@ -6,8 +6,7 @@
         "dev": "next dev",
         "build": "next build",
         "start": "next start",
-        "lint": "next lint",
-        "deploy": "next build && next export && touch out/.nojekyll && gh-pages -d out"
+        "lint": "next lint"
     },
     "dependencies": {
         "@react-three/drei": "^9.102.6",
