@@ -49,12 +49,6 @@ const Earth = () => {
 
     const rotationAngle = 0.5;
 
-    // const textureLoader = new THREE.TextureLoader();
-
-    // const texMaterial = new THREE.MeshStandardMaterial({
-    //     map: textureLoader.load(earthTexture.src),
-    // });
-
     const textureLoader = new THREE.TextureLoader();
     const tex = textureLoader.load(earthTexture.src);
 
