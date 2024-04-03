@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Earth from "@/(components)/Earth";
+import Earth from "@/(components)/earth";
 import QuestionImage from "@/(components)/QuestionImage/QuestionImage"; // Import the named export
 import gpsImageData from "@/app/gpsImageData.json";
 

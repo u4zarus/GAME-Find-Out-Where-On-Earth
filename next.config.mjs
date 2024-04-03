@@ -3,7 +3,7 @@
  */
 const nextConfig = {
     // output: "export",
-    unoptimized: true,
+    // unoptimized: true,
 };
 
 export default nextConfig;
