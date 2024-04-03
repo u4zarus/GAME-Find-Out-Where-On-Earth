@@ -2,6 +2,7 @@
     "gpsImageData": {
         "01": {
             "location": "Prague",
+            "img_path": "/sattelite_imgs/prague.jpg",
             "latitude_tl": 50.2145,
             "longitude_tl": 15.5145,
             "latitude_br": 49.6498,
@@ -9,6 +10,7 @@
         },
         "02": {
             "location": "Jihlava",
+            "img_path": "/sattelite_imgs/jihlava.jpg",
             "latitude_tl": 49.7589,
             "longitude_tl": 16.4328,
             "latitude_br": 49.1888,
@@ -16,6 +18,7 @@
         },
         "03": {
             "location": "Trojmezi",
+            "img_path": "/sattelite_imgs/trojmezi.jpg",
             "latitude_tl": 49.8001,
             "longitude_tl": 19.6406,
             "latitude_br": 49.2306,
@@ -23,6 +26,7 @@
         },
         "04": {
             "location": "New York",
+            "img_path": "/sattelite_imgs/new_york.jpg",
             "latitude_tl": 41.0285,
             "longitude_tl": -73.1094,
             "latitude_br": 40.3633,
@@ -30,6 +34,7 @@
         },
         "05": {
             "location": "Betsiboka",
+            "img_path": "/sattelite_imgs/betsiboka.jpg",
             "latitude_tl": -15.4867,
             "longitude_tl": 47.1769,
             "latitude_br": -16.3304,
@@ -37,6 +42,7 @@
         },
         "06": {
             "location": "Mount Everest",
+            "img_path": "/sattelite_imgs/everest.jpg",
             "latitude_tl": 28.2939,
             "longitude_tl": 87.7538,
             "latitude_br": 27.5187,
