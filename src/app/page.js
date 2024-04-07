@@ -40,11 +40,13 @@ const GameController = () => {
     );
 };
 
-export default function Home() {
+const Home = () => {
     return (
         <main>
             <GameController />
             <Earth />
         </main>
     );
-}
+};
+
+export default Home;
