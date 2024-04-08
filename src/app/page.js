@@ -6,15 +6,8 @@ import QuestionImage from "@/(components)/QuestionImage/QuestionImage"; // Impor
 import gpsImageData from "@/app/gpsImageData.json";
 
 const GameController = () => {
-    // return (
-    //     <>
-    //         {Object.keys(gpsImageData.gpsImageData).map((locationId) => (
-    //             <QuestionImage key={locationId} location={locationId} />
-    //         ))}
-    //     </>
-    // );
-
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [clickedSphericalCoords, setClickedSphericalCoords] = useState(null);
 
     const veryfyGuess = (location) => {
         console.log("Veryfied");
@@ -23,6 +16,10 @@ const GameController = () => {
     const handleGuessButtonClick = () => {
         setCurrentIndex(currentIndex + 1);
         veryfyGuess();
+    };
+
+    const handleCanvasClick = (clickedSphericalCoords) => {
+        setClickedSphericalCoords(clickedSphericalCoords);
     };
 
     return (
@@ -34,6 +31,7 @@ const GameController = () => {
                         Object.keys(gpsImageData.gpsImageData)[currentIndex]
                     }
                     onGuessButtonClick={handleGuessButtonClick}
+                    clickedSphericalCoords={clickedSphericalCoords}
                 />
             )}
         </>
