@@ -5,10 +5,11 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas, useThree, useFrame, extend } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-
 import gpsData from "@/app/gpsImageData.json";
+import { calculateDistance2 } from "@/utils/coordUtils";
+import { QuestionImage } from "@/(components)/QuestionImage/QuestionImage";
+
 import earthTexture from "@/assets/earth_tex2.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
-import { calculateDistance2 } from "@/utils/coordUtils.js";
 
 extend({ OrbitControls });
 
@@ -45,20 +46,12 @@ const OrbitControlsCustom = () => {
     return <OrbitControls ref={controlsRef} args={[camera]} />;
 };
 
-const Earth = () => {
+const Earth = ({ onCanvasClick }) => {
     const mesh = useRef();
     const { camera, gl } = useThree();
     const [clickedSphericalCoords, setClickedSphericalCoords] = useState(null);
-
-    // const textureLoader = new THREE.TextureLoader();
-    // const tex = textureLoader.load(earthTexture.src);
-
-    // tex.wrapS = THREE.RepeatWrapping; // This sets the horizontal wrapping mode to repeat
-    // tex.offset.x = 0.2475; // Adjust this value to get the desired rotation
-
-    // const texMaterial = new THREE.MeshStandardMaterial({
-    //     map: tex,
-    // });
+    // const [middlePointSphericalCoords, setMiddlePointSphericalCoords] =
+    //     useState(null);
 
     const texture = useMemo(() => {
         const textureLoader = new THREE.TextureLoader();
@@ -96,41 +89,45 @@ const Earth = () => {
             console.log(clickedSphericalCoords);
 
             // Coordinate comparison logic
-            // Object.values(gpsData.gpsImageData).forEach((locationData) => {
-            //     const middlePointGPS = {
-            //         latitude:
-            //             (locationData.latitude_tl + locationData.latitude_br) /
-            //             2,
-            //         longitude:
-            //             (locationData.longitude_tl +
-            //                 locationData.longitude_br) /
-            //             2,
-            //     };
+            Object.values(gpsData.gpsImageData).forEach((locationData) => {
+                const middlePointGPS = {
+                    latitude:
+                        (locationData.latitude_tl + locationData.latitude_br) /
+                        2,
+                    longitude:
+                        (locationData.longitude_tl +
+                            locationData.longitude_br) /
+                        2,
+                };
 
-            //     // const middlePointSphericalCoords = new THREE.Spherical(
-            //     //     1, // radius
-            //     //     (90 - middlePointGPS.latitude) * THREE.MathUtils.DEG2RAD,
-            //     //     middlePointGPS.longitude * THREE.MathUtils.DEG2RAD
-            //     // );
+                const middlePointSphericalCoords = new THREE.Spherical(
+                    1, // radius
+                    (90 - middlePointGPS.latitude) * THREE.MathUtils.DEG2RAD,
+                    middlePointGPS.longitude * THREE.MathUtils.DEG2RAD
+                );
 
-            //     setMiddlePointSphericalCoords(
-            //         1, // radius
-            //         (90 - middlePointGPS.latitude) * THREE.MathUtils.DEG2RAD,
-            //         middlePointGPS.longitude * THREE.MathUtils.DEG2RAD
-            //     );
-
-            //     console.log(
-            //         `Distance to ${locationData.location}: ${calculateDistance2(
-            //             clickedSphericalCoords,
-            //             middlePointSphericalCoords
-            //         )}`
-            //     );
-            // });
+                // setMiddlePointSphericalCoords(
+                //     1, // radius
+                //     (90 - middlePointGPS.latitude) * THREE.MathUtils.DEG2RAD,
+                //     middlePointGPS.longitude * THREE.MathUtils.DEG2RAD
+                // );
+                if (clickedSphericalCoords) {
+                    console.log(
+                        `Distance to ${
+                            locationData.location
+                        }: ${calculateDistance2(
+                            clickedSphericalCoords,
+                            middlePointSphericalCoords
+                        )}`
+                    );
+                }
+            });
         }
     };
 
     return (
         <mesh ref={mesh} scale={[1, 1, 1]} onClick={handleCanvasClick}>
+            {/* <GameController /> */}
             <sphereGeometry args={[1, 32, 32]} />
             <primitive object={texMaterial} attach="material" />
         </mesh>
