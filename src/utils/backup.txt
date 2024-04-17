@@ -34,10 +34,7 @@ const Index = () => {
                 clickedSphericalCoords,
                 middlePointSphericalCoords
             );
-            alert(
-                `The place was - ${location.location}
-                You guess is ${distance.toFixed(0)} km away`
-            );
+            alert(`The distance is ${distance}`);
         }
     };
 
@@ -52,39 +49,19 @@ const Index = () => {
     };
 
     return (
-        <div className="w-screen h-screen flex flex-col">
-            <div className="flex flex-row items-center justify-between p-4">
-                <div className="flex items-center">
-                    {currentIndex <
-                        Object.keys(gpsData.gpsImageData).length && (
-                        <QuestionImage
-                            location={
-                                Object.keys(gpsData.gpsImageData)[currentIndex]
-                            }
-                            onGuessButtonClick={handleGuessButtonClick}
-                        />
-                    )}
-                    <div className="ml-4">
-                        <h1 className="text-lg">
-                            Double click to place a marker
-                        </h1>
-                        <h1 className="text-lg">
-                            Press Guess button when ready
-                        </h1>
-                    </div>
-                </div>
-            </div>
-
-            <div className="flex-grow">
-                <Canvas className="w-full h-full">
-                    <OrbitControlsCustom />
-                    <ambientLight intensity={2} />
-                    <directionalLight intensity={1} position={[2, 1, 1]} />
-                    <Earth
-                        setClickedSphericalCoords={setClickedSphericalCoords}
-                    />
-                </Canvas>
-            </div>
+        <div style={{ width: "100%", height: "100vh" }}>
+            {currentIndex < Object.keys(gpsData.gpsImageData).length && (
+                <QuestionImage
+                    location={Object.keys(gpsData.gpsImageData)[currentIndex]}
+                    onGuessButtonClick={handleGuessButtonClick}
+                />
+            )}
+            <Canvas>
+                <OrbitControlsCustom />
+                <ambientLight intensity={2} />
+                <directionalLight intensity={1} position={[2, 1, 1]} />
+                <Earth setClickedSphericalCoords={setClickedSphericalCoords} />
+            </Canvas>
         </div>
     );
 };
@@ -134,7 +111,9 @@ const QuestionImage = ({ location, onGuessButtonClick }) => {
 const Earth = ({ setClickedSphericalCoords }) => {
     const mesh = useRef();
     const { camera, gl } = useThree();
-    const [markerPosition, setMarkerPosition] = useState(null);
+    // const [clickedSphericalCoords, setClickedSphericalCoords] = useState(null);
+    // const [middlePointSphericalCoords, setMiddlePointSphericalCoords] =
+    //     useState(null);
 
     const texture = useMemo(() => {
         const textureLoader = new THREE.TextureLoader();
@@ -151,8 +130,6 @@ const Earth = ({ setClickedSphericalCoords }) => {
     }, [texture]);
 
     const handleCanvasClick = (event) => {
-        // if (event.button !== 0) return;
-
         const canvas = gl.domElement;
         const rect = canvas.getBoundingClientRect();
         const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -165,24 +142,56 @@ const Earth = ({ setClickedSphericalCoords }) => {
 
         if (intersects.length > 0) {
             const intersection = intersects[0];
+            // const clickedSphericalCoords = new THREE.Spherical().setFromVector3(
+            //     intersection.point
+            // );
             setClickedSphericalCoords(
                 new THREE.Spherical().setFromVector3(intersection.point)
             );
-            setMarkerPosition(intersection.point);
+            // console.log(clickedSphericalCoords);
+
+            // // Coordinate comparison logic
+            // Object.values(gpsData.gpsImageData).forEach((locationData) => {
+            //     const middlePointGPS = {
+            //         latitude:
+            //             (locationData.latitude_tl + locationData.latitude_br) /
+            //             2,
+            //         longitude:
+            //             (locationData.longitude_tl +
+            //                 locationData.longitude_br) /
+            //             2,
+            //     };
+
+            //     const middlePointSphericalCoords = new THREE.Spherical(
+            //         1, // radius
+            //         (90 - middlePointGPS.latitude) * THREE.MathUtils.DEG2RAD,
+            //         middlePointGPS.longitude * THREE.MathUtils.DEG2RAD
+            //     );
+
+            //     // setMiddlePointSphericalCoords(
+            //     //     1, // radius
+            //     //     (90 - middlePointGPS.latitude) * THREE.MathUtils.DEG2RAD,
+            //     //     middlePointGPS.longitude * THREE.MathUtils.DEG2RAD
+            //     // );
+            //     if (clickedSphericalCoords) {
+            //         console.log(
+            //             `Distance to ${
+            //                 locationData.location
+            //             }: ${calculateDistance2(
+            //                 clickedSphericalCoords,
+            //                 middlePointSphericalCoords
+            //             )}`
+            //         );
+            //     }
+            // });
         }
     };
 
     return (
-        <mesh ref={mesh} scale={[1, 1, 1]} onDoubleClick={handleCanvasClick}>
+        <mesh ref={mesh} scale={[1, 1, 1]} onClick={handleCanvasClick}>
             {/* <GameController /> */}
             <sphereGeometry args={[1, 32, 32]} />
             <primitive object={texMaterial} attach="material" />
-            {markerPosition && (
-                <mesh position={markerPosition}>
-                    <sphereGeometry args={[0.002, 16, 16]} />
-                    <meshBasicMaterial color="red" />
-                </mesh>
-            )}
         </mesh>
     );
 };

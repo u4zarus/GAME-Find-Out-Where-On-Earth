@@ -1,11 +1,14 @@
 import React from "react";
-import gpsImageData from "@/app/gpsImageData.json";
+// import gpsImageData from "@/app/gpsImageData.json";
 import Image from "next/image";
 
-const QuestionImage = ({ location, onGuessButtonClick }) => {
-    const data = gpsImageData.gpsImageData[location];
+const QuestionImage = ({ location, onGuessButtonClick, gpsData }) => {
+    // const data = gpsImageData.gpsImageData[location];
 
-    if (!data) {
+    // if (!data) {
+    //     return null;
+    // }
+    if (!gpsData) {
         return null;
     }
 
