@@ -9,8 +9,6 @@ import gpsData from "@/app/gpsImageData.json";
 import { calculateDistance2 } from "@/utils/coordUtils";
 import Image from "next/image";
 
-import "@/app/globals.css";
-
 import earthTexture from "@/assets/earth_tex2.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
 
 extend({ OrbitControls });
@@ -54,29 +52,26 @@ const Index = () => {
     };
 
     return (
-        <div>
-            <div>
-                <div>
-                    {currentIndex <
-                        Object.keys(gpsData.gpsImageData).length && (
-                        <QuestionImage
-                            location={
-                                Object.keys(gpsData.gpsImageData)[currentIndex]
-                            }
-                            onGuessButtonClick={handleGuessButtonClick}
-                        />
-                    )}
-                    <div>
-                        <h1 className="text-blue-500">
-                            Double click to place a marker
-                        </h1>
-                        <h1>Press Guess button when ready</h1>
-                    </div>
+        <div className="flex flex-col items-center justify-center h-full w-full overflow-hidden">
+            <div className="flex flex-col items-center justify-center space-y-4">
+                {currentIndex < Object.keys(gpsData.gpsImageData).length && (
+                    <QuestionImage
+                        location={
+                            Object.keys(gpsData.gpsImageData)[currentIndex]
+                        }
+                        onGuessButtonClick={handleGuessButtonClick}
+                    />
+                )}
+                <div className="text-center">
+                    <h1 className="text-2xl font-bold text-blue-500">
+                        Double click to place a marker
+                    </h1>
+                    <h1 className="text-xl">Press Guess button when ready</h1>
                 </div>
             </div>
 
-            <div>
-                <Canvas>
+            <div className="mt-8">
+                <Canvas style={{ width: "100vw", height: "100vh" }}>
                     <OrbitControlsCustom />
                     <ambientLight intensity={2} />
                     <directionalLight intensity={1} position={[2, 1, 1]} />
@@ -110,6 +105,8 @@ const OrbitControlsCustom = () => {
 };
 
 const QuestionImage = ({ location, onGuessButtonClick }) => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
+
     const data = gpsData.gpsImageData[location];
 
     if (!data) {
@@ -117,21 +114,39 @@ const QuestionImage = ({ location, onGuessButtonClick }) => {
     }
 
     return (
-        <div>
+        <div className="fixed top-0 right-0 m-4 border-2 border-blue-500 rounded-lg shadow-lg bg-white z-10">
             <Image
                 src={data.img_path}
                 alt={data.location}
                 width={300}
                 height={300}
-                style={{ width: "auto", height: "auto" }}
+                className="w-auto h-auto cursor-pointer"
                 priority={true}
+                onClick={() => setIsModalOpen(true)}
             />
             <button
                 onClick={onGuessButtonClick}
-                className="bg-blue-500 text-red-600"
+                className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
             >
                 Guess
             </button>
+
+            {isModalOpen && (
+                <div
+                    className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-20"
+                    onClick={() => setIsModalOpen(false)}
+                >
+                    <Image
+                        src={data.img_path}
+                        alt={data.location}
+                        width={1000}
+                        height={1000}
+                        className="w-auto h-auto"
+                        priority={true}
+                        onClick={(e) => e.stopPropagation()}
+                    />
+                </div>
+            )}
         </div>
     );
 };
