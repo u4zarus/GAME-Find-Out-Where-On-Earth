@@ -9,6 +9,8 @@ import gpsData from "@/app/gpsImageData.json";
 import { calculateDistance2 } from "@/utils/coordUtils";
 import Image from "next/image";
 
+import "@/app/globals.css";
+
 import earthTexture from "@/assets/earth_tex2.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
 
 extend({ OrbitControls });
@@ -52,9 +54,9 @@ const Index = () => {
     };
 
     return (
-        <div className="w-screen h-screen flex flex-col">
-            <div className="flex flex-row items-center justify-between p-4">
-                <div className="flex items-center">
+        <div>
+            <div>
+                <div>
                     {currentIndex <
                         Object.keys(gpsData.gpsImageData).length && (
                         <QuestionImage
@@ -64,19 +66,17 @@ const Index = () => {
                             onGuessButtonClick={handleGuessButtonClick}
                         />
                     )}
-                    <div className="ml-4">
-                        <h1 className="text-lg">
+                    <div>
+                        <h1 className="text-blue-500">
                             Double click to place a marker
                         </h1>
-                        <h1 className="text-lg">
-                            Press Guess button when ready
-                        </h1>
+                        <h1>Press Guess button when ready</h1>
                     </div>
                 </div>
             </div>
 
-            <div className="flex-grow">
-                <Canvas className="w-full h-full">
+            <div>
+                <Canvas>
                     <OrbitControlsCustom />
                     <ambientLight intensity={2} />
                     <directionalLight intensity={1} position={[2, 1, 1]} />
@@ -126,7 +126,12 @@ const QuestionImage = ({ location, onGuessButtonClick }) => {
                 style={{ width: "auto", height: "auto" }}
                 priority={true}
             />
-            <button onClick={onGuessButtonClick}>Guess</button>
+            <button
+                onClick={onGuessButtonClick}
+                className="bg-blue-500 text-red-600"
+            >
+                Guess
+            </button>
         </div>
     );
 };
