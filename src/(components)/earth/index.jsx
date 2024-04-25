@@ -9,7 +9,8 @@ import gpsData from "@/app/gpsImageData.json";
 import { calculateDistance2 } from "@/utils/coordUtils";
 import Image from "next/image";
 
-import earthTexture from "@/assets/earth_tex2.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
+// import earthTexture from "@/assets/earth_tex2.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
+import earthTexture from "@/assets/earth_tex1.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
 
 extend({ OrbitControls });
 
@@ -95,6 +96,9 @@ const OrbitControlsCustom = () => {
         controlsRef.current.rotateSpeed = 0.5;
         controlsRef.current.enableRotate = true;
         controlsRef.current.enablePan = false;
+
+        controlsRef.current.minDistance = 1.1; // Minimum distance from the camera to the target
+        controlsRef.current.maxDistance = 3; // Maximum distance from the camera to the target
     }, []);
 
     useFrame(() => {
