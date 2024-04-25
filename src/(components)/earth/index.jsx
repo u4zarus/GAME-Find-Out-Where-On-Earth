@@ -14,6 +14,7 @@ import earthTexture from "@/assets/earth_tex1.jpg"; // https://www.shadedrelief.
 
 extend({ OrbitControls });
 
+// ------------------ Index ------------------
 const Index = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickedSphericalCoords, setClickedSphericalCoords] = useState(null);
@@ -37,7 +38,7 @@ const Index = () => {
             );
             alert(
                 `The place was - ${location.location}
-                You guess is ${distance.toFixed(0)} km away`
+                \nYou guess is ${distance.toFixed(0)} km away`
             );
         }
     };
@@ -63,12 +64,6 @@ const Index = () => {
                         onGuessButtonClick={handleGuessButtonClick}
                     />
                 )}
-                <div className="text-center">
-                    <h1 className="text-2xl font-bold text-blue-500">
-                        Double click to place a marker
-                    </h1>
-                    <h1 className="text-xl">Press Guess button when ready</h1>
-                </div>
             </div>
 
             <div className="mt-8">
@@ -85,6 +80,7 @@ const Index = () => {
     );
 };
 
+// ------------------ OrbitControlsCustom ------------------
 const OrbitControlsCustom = () => {
     const { camera } = useThree();
     const controlsRef = useRef();
@@ -108,6 +104,7 @@ const OrbitControlsCustom = () => {
     return <OrbitControls ref={controlsRef} args={[camera]} />;
 };
 
+// ------------------ Question Image ------------------
 const QuestionImage = ({ location, onGuessButtonClick }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -118,7 +115,7 @@ const QuestionImage = ({ location, onGuessButtonClick }) => {
     }
 
     return (
-        <div className="fixed top-0 right-0 m-4 border-2 border-blue-500 rounded-lg shadow-lg bg-white z-10">
+        <div className="fixed top-12 right-0 m-4 border-2 border-blue-500 rounded-lg shadow-lg bg-white z-10">
             <Image
                 src={data.img_path}
                 alt={data.location}
@@ -155,6 +152,7 @@ const QuestionImage = ({ location, onGuessButtonClick }) => {
     );
 };
 
+// ------------------ Earth ------------------
 const Earth = ({ setClickedSphericalCoords }) => {
     const mesh = useRef();
     const { camera, gl } = useThree();
