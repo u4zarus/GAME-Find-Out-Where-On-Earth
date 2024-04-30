@@ -18,6 +18,7 @@ extend({ OrbitControls });
 const Index = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickedSphericalCoords, setClickedSphericalCoords] = useState(null);
+    const [score, setScore] = useState(0);
 
     const verifyGuess = (location, clickedSphericalCoords) => {
         if (clickedSphericalCoords) {
@@ -36,9 +37,22 @@ const Index = () => {
                 clickedSphericalCoords,
                 middlePointSphericalCoords
             );
+
+            const fixedDistance = distance.toFixed(0);
+            const maxDistance = 5000; // Maximum distance for which score is 0
+            const decayRate = 3; // Increase this to make the score decrease more rapidly
+            let newScore = Math.max(
+                0,
+                1000 * Math.exp((-fixedDistance * decayRate) / maxDistance)
+            );
+
+            newScore = Math.round(newScore);
+
+            setScore((prevScore) => prevScore + newScore);
+
             alert(
                 `The place was - ${location.location}
-                \nYou guess is ${distance.toFixed(0)} km away`
+                \nYou guess is ${fixedDistance} km away`
             );
         }
     };
@@ -64,6 +78,11 @@ const Index = () => {
                         onGuessButtonClick={handleGuessButtonClick}
                     />
                 )}
+            </div>
+
+            {/* Step 4: Display the score */}
+            <div className="fixed top-14 left-2 px-1 py-2 rounded-md text-xl z-50">
+                <p>Current Score: {score}</p>
             </div>
 
             <div className="mt-8">
