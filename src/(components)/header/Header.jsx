@@ -1,27 +1,24 @@
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = () => {
     return (
         <header className="flex items-center justify-between px-4 py-2 bg-gray-800 text-white">
             {/* Logo */}
             <div className="flex items-center">
-                <Image
-                    src="/logo.png"
-                    alt="Logo"
-                    width={40}
-                    height={40}
-                    className="cursor-pointer"
-                />
+                <Link href="/">
+                    <Image
+                        src="/logo.png"
+                        alt="Logo"
+                        width={40}
+                        height={40}
+                        className="cursor-pointer"
+                    />
+                </Link>
             </div>
 
             {/* Navigation */}
             <nav className="flex space-x-4">
-                <a
-                    href="#gamemodes"
-                    className="hover:text-gray-300 cursor-pointer"
-                >
-                    Game Modes
-                </a>
                 <a
                     className="hover:text-gray-300 cursor-pointer"
                     onClick={() =>
