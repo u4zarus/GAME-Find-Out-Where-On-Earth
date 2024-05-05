@@ -6,6 +6,11 @@ import Index from "@/(components)/earth";
 const Game = () => {
     return (
         <main>
+            <style jsx global>{`
+                body {
+                    overflow: hidden;
+                }
+            `}</style>
             <Header />
             <Index />
         </main>

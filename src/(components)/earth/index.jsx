@@ -68,7 +68,14 @@ const Index = () => {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center h-full w-full overflow-hidden">
+        <div
+            className="flex flex-col items-center justify-center h-full w-full overflow-hidden"
+            style={{
+                backgroundImage: `url('bbg.png')`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+            }}
+        >
             <div className="flex flex-col items-center justify-center space-y-4">
                 {currentIndex < Object.keys(gpsData.gpsImageData).length && (
                     <QuestionImage
@@ -113,7 +120,7 @@ const OrbitControlsCustom = () => {
         controlsRef.current.enablePan = false;
 
         controlsRef.current.minDistance = 1.1; // Minimum distance from the camera to the target
-        controlsRef.current.maxDistance = 3; // Maximum distance from the camera to the target
+        controlsRef.current.maxDistance = 2; // Maximum distance from the camera to the target
     }, []);
 
     useFrame(() => {
