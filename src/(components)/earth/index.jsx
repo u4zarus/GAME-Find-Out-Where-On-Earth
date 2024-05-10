@@ -19,6 +19,7 @@ const Index = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickedSphericalCoords, setClickedSphericalCoords] = useState(null);
     const [score, setScore] = useState(0);
+    const [MP, setMP] = useState(new THREE.Spherical(1, 0, 0));
 
     const verifyGuess = (location, clickedSphericalCoords) => {
         if (clickedSphericalCoords) {
@@ -32,6 +33,8 @@ const Index = () => {
                 (90 - middlePointGPS.latitude) * THREE.MathUtils.DEG2RAD,
                 middlePointGPS.longitude * THREE.MathUtils.DEG2RAD
             );
+
+            setMP(middlePointSphericalCoords);
 
             const distance = calculateDistance2(
                 clickedSphericalCoords,
@@ -87,7 +90,6 @@ const Index = () => {
                 )}
             </div>
 
-            {/* Step 4: Display the score */}
             <div className="fixed top-14 left-2 px-1 py-2 rounded-md text-xl z-50">
                 <p>Current Score: {score}</p>
             </div>
@@ -99,6 +101,7 @@ const Index = () => {
                     <directionalLight intensity={1} position={[2, 1, 1]} />
                     <Earth
                         setClickedSphericalCoords={setClickedSphericalCoords}
+                        MP={MP}
                     />
                 </Canvas>
             </div>
@@ -141,16 +144,18 @@ const QuestionImage = ({ location, onGuessButtonClick }) => {
     }
 
     return (
-        <div className="fixed top-12 right-0 m-4 border-2 border-blue-500 rounded-lg shadow-lg bg-white z-10">
-            <Image
-                src={data.img_path}
-                alt={data.location}
-                width={300}
-                height={300}
-                className="w-auto h-auto cursor-pointer"
-                priority={true}
-                onClick={() => setIsModalOpen(true)}
-            />
+        <div className="fixed top-12 right-0 m-4 border-2 border-blue-500 rounded-lg shadow-lg bg-gray-700 z-10">
+            <div className="image-container">
+                <Image
+                    src={data.img_path}
+                    alt={data.location}
+                    width={300}
+                    height={300}
+                    className="w-auto h-auto cursor-pointer"
+                    priority={true}
+                    onClick={() => setIsModalOpen(true)}
+                />
+            </div>
             <button
                 onClick={onGuessButtonClick}
                 className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
@@ -179,7 +184,7 @@ const QuestionImage = ({ location, onGuessButtonClick }) => {
 };
 
 // ------------------ Earth ------------------
-const Earth = ({ setClickedSphericalCoords }) => {
+const Earth = ({ setClickedSphericalCoords, MP }) => {
     const mesh = useRef();
     const { camera, gl } = useThree();
     const [markerPosition, setMarkerPosition] = useState(null);
@@ -199,8 +204,6 @@ const Earth = ({ setClickedSphericalCoords }) => {
     }, [texture]);
 
     const handleCanvasClick = (event) => {
-        // if (event.button !== 0) return;
-
         const canvas = gl.domElement;
         const rect = canvas.getBoundingClientRect();
         const x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -220,9 +223,22 @@ const Earth = ({ setClickedSphericalCoords }) => {
         }
     };
 
+    // useEffect(() => {
+    //     if (MP && camera) {
+    //         const sphericalToCartesian = (spherical) => {
+    //             const vector = new THREE.Vector3();
+    //             vector.setFromSpherical(spherical);
+    //             return vector;
+    //         };
+
+    //         const target = sphericalToCartesian(MP);
+    //         camera.lookAt(target);
+    //         camera.updateProjectionMatrix(); // Update the camera's projection matrix
+    //     }
+    // }, [MP, camera]);
+
     return (
         <mesh ref={mesh} scale={[1, 1, 1]} onDoubleClick={handleCanvasClick}>
-            {/* <GameController /> */}
             <sphereGeometry args={[1, 32, 32]} />
             <primitive object={texMaterial} attach="material" />
             {markerPosition && (

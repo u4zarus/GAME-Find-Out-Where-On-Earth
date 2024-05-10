@@ -34,6 +34,35 @@ canvas {
     display: block;
 }
 
+.image-container {
+    position: relative;
+}
+
+.image-container:hover::before {
+    content: "Click to enlarge";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 24px;
+    text-align: center;
+    background-color: rgba(
+        0,
+        0,
+        0,
+        0.5
+    ); /* Semi-transparent black background */
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 1;
+    pointer-events: none; /* Add this line */
+}
+
+.image-container:hover img {
+    filter: brightness(50%); /* Darken the image on hover */
+}
+
 @layer utilities {
     .text-balance {
         text-wrap: balance;

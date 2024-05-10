@@ -23,11 +23,6 @@ const Home = () => {
                                 Singleplayer
                             </p>
                         </Link>
-                        <Link href="#">
-                            <p className="text-2xl text-white text-center font-bold hover:text-gray-400 cursor-pointer">
-                                1v1 Multiplayer
-                            </p>
-                        </Link>
                     </div>
                     <div className="flex flex-col space-y-4">
                         {/* Add sign-in/sign-up components here */}
