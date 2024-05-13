@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useMemo } from "react";
-import { OrbitControls } from "@react-three/drei";
+import { OrbitControls, Line } from "@react-three/drei";
 import { Canvas, useThree, useFrame, extend } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
@@ -188,6 +188,7 @@ const Earth = ({ setClickedSphericalCoords, MP }) => {
     const mesh = useRef();
     const { camera, gl } = useThree();
     const [markerPosition, setMarkerPosition] = useState(null);
+    const [curvePoints, setCurvePoints] = useState([]);
 
     const texture = useMemo(() => {
         const textureLoader = new THREE.TextureLoader();
@@ -220,31 +221,68 @@ const Earth = ({ setClickedSphericalCoords, MP }) => {
                 new THREE.Spherical().setFromVector3(intersection.point)
             );
             setMarkerPosition(intersection.point);
+
+            const startPoint = intersection.point;
+            console.log(MP);
+            const endPoint = new THREE.Vector3().setFromSpherical(MP);
+            setCurvePoints([startPoint, endPoint]);
         }
     };
 
-    // useEffect(() => {
-    //     if (MP && camera) {
-    //         const sphericalToCartesian = (spherical) => {
-    //             const vector = new THREE.Vector3();
-    //             vector.setFromSpherical(spherical);
-    //             return vector;
-    //         };
+    const tubeGeometry = useMemo(() => {
+        if (curvePoints.length > 0) {
+            const points = curvePoints.map((point) => {
+                // Convert the point to spherical coordinates
+                const spherical = new THREE.Spherical().setFromVector3(point);
+                // Adjust the radius to be slightly above the surface of the Earth
+                spherical.radius = 1.0;
+                // Convert back to Cartesian coordinates
+                return new THREE.Vector3().setFromSpherical(spherical);
+            });
 
-    //         const target = sphericalToCartesian(MP);
-    //         camera.lookAt(target);
-    //         camera.updateProjectionMatrix(); // Update the camera's projection matrix
-    //     }
-    // }, [MP, camera]);
+            // Define the Bezier curve
+            const curve = new THREE.CubicBezierCurve3(
+                points[0],
+                points[1],
+                points[2],
+                points[3]
+            );
+
+            // Create the tube geometry based on the Bezier curve
+            const tubeGeometry = new THREE.TubeGeometry(
+                curve,
+                100, // tubularSegments
+                0.005, // radius
+                8, // radialSegments
+                false // closed
+            );
+
+            return tubeGeometry;
+        }
+        return null;
+    }, [curvePoints]);
 
     return (
         <mesh ref={mesh} scale={[1, 1, 1]} onDoubleClick={handleCanvasClick}>
             <sphereGeometry args={[1, 32, 32]} />
-            <primitive object={texMaterial} attach="material" />
+            {/* <primitive object={texMaterial} attach="material" /> */}
+            <primitive
+                object={
+                    new THREE.MeshBasicMaterial({
+                        color: 0x00ff00,
+                        wireframe: true,
+                    })
+                }
+            />
             {markerPosition && (
                 <mesh position={markerPosition}>
                     <sphereGeometry args={[0.002, 16, 16]} />
                     <meshBasicMaterial color="red" />
+                </mesh>
+            )}
+            {tubeGeometry && (
+                <mesh geometry={tubeGeometry}>
+                    <meshBasicMaterial color="blue" side={THREE.DoubleSide} />
                 </mesh>
             )}
         </mesh>
