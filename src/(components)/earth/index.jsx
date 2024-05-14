@@ -1,15 +1,15 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
-import { OrbitControls, Line } from "@react-three/drei";
+import React, { useState, useMemo, use } from "react";
+import { OrbitControls } from "@react-three/drei";
 import { Canvas, useThree, useFrame, extend } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import gpsData from "@/app/gpsImageData.json";
 import { calculateDistance2 } from "@/utils/coordUtils";
 import Image from "next/image";
+import { IoIosCloseCircle } from "react-icons/io";
 
-// import earthTexture from "@/assets/earth_tex2.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
 import earthTexture from "@/assets/earth_tex1.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
 
 extend({ OrbitControls });
@@ -18,8 +18,12 @@ extend({ OrbitControls });
 const Index = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickedSphericalCoords, setClickedSphericalCoords] = useState(null);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalData, setModalData] = useState({ location: "", distance: "" });
+    const [plusPoints, setPlusPoints] = useState(0);
+    const [distances, setDistances] = useState([]);
     const [score, setScore] = useState(0);
-    const [MP, setMP] = useState(new THREE.Spherical(1, 0, 0));
+    const [gameOver, setGameOver] = useState(false);
 
     const verifyGuess = (location, clickedSphericalCoords) => {
         if (clickedSphericalCoords) {
@@ -34,12 +38,12 @@ const Index = () => {
                 middlePointGPS.longitude * THREE.MathUtils.DEG2RAD
             );
 
-            setMP(middlePointSphericalCoords);
-
             const distance = calculateDistance2(
                 clickedSphericalCoords,
                 middlePointSphericalCoords
             );
+
+            setDistances([...distances, distance]);
 
             const fixedDistance = distance.toFixed(0);
             const maxDistance = 5000; // Maximum distance for which score is 0
@@ -50,13 +54,15 @@ const Index = () => {
             );
 
             newScore = Math.round(newScore);
+            setPlusPoints(newScore);
 
             setScore((prevScore) => prevScore + newScore);
 
-            alert(
-                `The place was - ${location.location}
-                \nYou guess is ${fixedDistance} km away`
-            );
+            setModalData({
+                location: location.location,
+                distance: fixedDistance,
+            });
+            setModalOpen(true);
         }
     };
 
@@ -68,6 +74,11 @@ const Index = () => {
             ],
             clickedSphericalCoords
         );
+        setClickedSphericalCoords(null);
+        const length = Object.keys(gpsData.gpsImageData).length;
+        if (currentIndex + 1 === length) {
+            setGameOver(true);
+        }
     };
 
     return (
@@ -80,19 +91,38 @@ const Index = () => {
             }}
         >
             <div className="flex flex-col items-center justify-center space-y-4">
-                {currentIndex < Object.keys(gpsData.gpsImageData).length && (
+                {currentIndex < Object.keys(gpsData.gpsImageData).length ? (
                     <QuestionImage
                         location={
                             Object.keys(gpsData.gpsImageData)[currentIndex]
                         }
                         onGuessButtonClick={handleGuessButtonClick}
+                        clickedSphericalCoords={clickedSphericalCoords}
                     />
-                )}
+                ) : null}
             </div>
 
             <div className="fixed top-14 left-2 px-1 py-2 rounded-md text-xl z-50">
                 <p>Current Score: {score}</p>
             </div>
+
+            {modalOpen ? (
+                <Modal
+                    location={modalData.location}
+                    distance={modalData.distance}
+                    points={plusPoints}
+                    onClose={() => setModalOpen(false)}
+                />
+            ) : null}
+
+            {gameOver ? (
+                <EndGameModal
+                    gpsImageData={gpsData.gpsImageData}
+                    distances={distances}
+                    totalScore={score}
+                    onClose={() => setGameOver(false)}
+                />
+            ) : null}
 
             <div className="mt-8">
                 <Canvas style={{ width: "100vw", height: "100vh" }}>
@@ -101,7 +131,7 @@ const Index = () => {
                     <directionalLight intensity={1} position={[2, 1, 1]} />
                     <Earth
                         setClickedSphericalCoords={setClickedSphericalCoords}
-                        MP={MP}
+                        clickedSphericalCoords={clickedSphericalCoords}
                     />
                 </Canvas>
             </div>
@@ -134,7 +164,11 @@ const OrbitControlsCustom = () => {
 };
 
 // ------------------ Question Image ------------------
-const QuestionImage = ({ location, onGuessButtonClick }) => {
+const QuestionImage = ({
+    location,
+    onGuessButtonClick,
+    clickedSphericalCoords,
+}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const data = gpsData.gpsImageData[location];
@@ -158,12 +192,13 @@ const QuestionImage = ({ location, onGuessButtonClick }) => {
             </div>
             <button
                 onClick={onGuessButtonClick}
-                className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+                className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 disabled:bg-gray-500 disabled:opacity-50"
+                disabled={!clickedSphericalCoords}
             >
                 Guess
             </button>
 
-            {isModalOpen && (
+            {isModalOpen ? (
                 <div
                     className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-20"
                     onClick={() => setIsModalOpen(false)}
@@ -178,17 +213,16 @@ const QuestionImage = ({ location, onGuessButtonClick }) => {
                         onClick={(e) => e.stopPropagation()}
                     />
                 </div>
-            )}
+            ) : null}
         </div>
     );
 };
 
 // ------------------ Earth ------------------
-const Earth = ({ setClickedSphericalCoords, MP }) => {
+const Earth = ({ setClickedSphericalCoords, clickedSphericalCoords }) => {
     const mesh = useRef();
     const { camera, gl } = useThree();
     const [markerPosition, setMarkerPosition] = useState(null);
-    const [curvePoints, setCurvePoints] = useState([]);
 
     const texture = useMemo(() => {
         const textureLoader = new THREE.TextureLoader();
@@ -221,71 +255,116 @@ const Earth = ({ setClickedSphericalCoords, MP }) => {
                 new THREE.Spherical().setFromVector3(intersection.point)
             );
             setMarkerPosition(intersection.point);
-
-            const startPoint = intersection.point;
-            console.log(MP);
-            const endPoint = new THREE.Vector3().setFromSpherical(MP);
-            setCurvePoints([startPoint, endPoint]);
         }
     };
-
-    const tubeGeometry = useMemo(() => {
-        if (curvePoints.length > 0) {
-            const points = curvePoints.map((point) => {
-                // Convert the point to spherical coordinates
-                const spherical = new THREE.Spherical().setFromVector3(point);
-                // Adjust the radius to be slightly above the surface of the Earth
-                spherical.radius = 1.0;
-                // Convert back to Cartesian coordinates
-                return new THREE.Vector3().setFromSpherical(spherical);
-            });
-
-            // Define the Bezier curve
-            const curve = new THREE.CubicBezierCurve3(
-                points[0],
-                points[1],
-                points[2],
-                points[3]
-            );
-
-            // Create the tube geometry based on the Bezier curve
-            const tubeGeometry = new THREE.TubeGeometry(
-                curve,
-                100, // tubularSegments
-                0.005, // radius
-                8, // radialSegments
-                false // closed
-            );
-
-            return tubeGeometry;
-        }
-        return null;
-    }, [curvePoints]);
 
     return (
         <mesh ref={mesh} scale={[1, 1, 1]} onDoubleClick={handleCanvasClick}>
             <sphereGeometry args={[1, 32, 32]} />
-            {/* <primitive object={texMaterial} attach="material" /> */}
-            <primitive
-                object={
-                    new THREE.MeshBasicMaterial({
-                        color: 0x00ff00,
-                        wireframe: true,
-                    })
-                }
-            />
-            {markerPosition && (
+            <primitive object={texMaterial} attach="material" />
+            {markerPosition && clickedSphericalCoords ? (
                 <mesh position={markerPosition}>
                     <sphereGeometry args={[0.002, 16, 16]} />
                     <meshBasicMaterial color="red" />
                 </mesh>
-            )}
-            {tubeGeometry && (
-                <mesh geometry={tubeGeometry}>
-                    <meshBasicMaterial color="blue" side={THREE.DoubleSide} />
-                </mesh>
-            )}
+            ) : null}
         </mesh>
+    );
+};
+
+// ------------------ Modal ------------------
+const Modal = ({ location, distance, points, onClose }) => {
+    const [isOpen, setIsOpen] = useState(true);
+
+    const handleClose = () => {
+        setIsOpen(false);
+        onClose();
+    };
+
+    return (
+        <div
+            className={`modal ${isOpen ? "is-active" : ""}`}
+            style={{ position: "fixed", zIndex: 9999 }}
+        >
+            <div className="modal-background fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div className="modal-content bg-white rounded-lg shadow-xl w-3/4 md:w-1/2 lg:w-1/3">
+                    <div className="box p-6 relative">
+                        <button
+                            className="absolute top-2 right-2 text-3xl"
+                            onClick={handleClose}
+                        >
+                            <IoIosCloseCircle fill="black" />
+                        </button>
+                        <p className="text-lg text-gray-950 font-semibold mb-2">
+                            The place was - {location}
+                        </p>
+                        <p className="text-lg text-gray-950 font-semibold">
+                            Your guess is {distance} km away
+                        </p>
+                        <p className="text-lg text-green-600 font-semibold">
+                            +{points} points
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+};
+
+// ------------------ EndGameModal ------------------
+const EndGameModal = ({ gpsImageData, distances, totalScore, onClose }) => {
+    const [isOpen, setIsOpen] = useState(true);
+
+    const handleClose = () => {
+        setIsOpen(false);
+        onClose();
+    };
+
+    const handleTryAgain = () => {
+        window.location.reload();
+    };
+
+    return (
+        <div
+            className={`modal ${isOpen ? "is-active" : ""}`}
+            style={{ position: "fixed", zIndex: 9999 }}
+        >
+            <div className="modal-background fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                <div className="modal-content bg-white rounded-lg shadow-xl w-3/4 md:w-1/2 lg:w-1/3 p-6">
+                    <button
+                        className="absolute top-2 right-2 text-3xl"
+                        onClick={handleClose}
+                    >
+                        <IoIosCloseCircle fill="black" />
+                    </button>
+                    <h1 className="text-2xl text-gray-950 font-semibold mb-4">
+                        Game Over
+                    </h1>
+                    <p className="text-lg text-gray-950 font-semibold mb-2">
+                        Total Score: {totalScore}
+                    </p>
+                    <div className="mt-4 mb-6">
+                        <h2 className="text-lg text-gray-950 font-semibold mb-2">
+                            Distances:
+                        </h2>
+                        <ul>
+                            {Object.keys(gpsImageData).map((key, index) => (
+                                <li key={index} className="text-gray-600">
+                                    Location: {gpsImageData[key].location},
+                                    Distance: {distances[index].toFixed(0)} km
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <button
+                        onClick={handleTryAgain}
+                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Try Again
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 };
 

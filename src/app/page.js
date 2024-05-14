@@ -20,12 +20,9 @@ const Home = () => {
                     <div className="flex flex-col space-y-8">
                         <Link href="/game">
                             <p className="text-2xl text-white text-center font-bold hover:text-gray-400 cursor-pointer">
-                                Singleplayer
+                                Play
                             </p>
                         </Link>
-                    </div>
-                    <div className="flex flex-col space-y-4">
-                        {/* Add sign-in/sign-up components here */}
                     </div>
                 </div>
             </main>
