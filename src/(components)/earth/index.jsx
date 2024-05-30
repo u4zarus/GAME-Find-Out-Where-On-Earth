@@ -9,6 +9,7 @@ import gpsData from "@/app/gpsImageData.json";
 import { calculateDistance2 } from "@/utils/coordUtils";
 import Image from "next/image";
 import { IoIosCloseCircle } from "react-icons/io";
+import { isMobile } from "react-device-detect";
 
 import earthTexture from "@/assets/earth_tex1.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
 
@@ -103,7 +104,8 @@ const Index = () => {
             </div>
 
             <div className="fixed top-14 left-2 px-1 py-2 rounded-md text-xl z-50">
-                <p>Current Score: {score}</p>
+                <p className="hidden sm:block">Current Score: {score}</p>
+                <p className="sm:hidden">{score}</p>
             </div>
 
             {modalOpen ? (
@@ -259,7 +261,12 @@ const Earth = ({ setClickedSphericalCoords, clickedSphericalCoords }) => {
     };
 
     return (
-        <mesh ref={mesh} scale={[1, 1, 1]} onDoubleClick={handleCanvasClick}>
+        <mesh
+            ref={mesh}
+            scale={[1, 1, 1]}
+            onDoubleClick={!isMobile ? handleCanvasClick : null}
+            onClick={isMobile ? handleCanvasClick : null}
+        >
             <sphereGeometry args={[1, 32, 32]} />
             <primitive object={texMaterial} attach="material" />
             {markerPosition && clickedSphericalCoords ? (
@@ -312,6 +319,7 @@ const Modal = ({ location, distance, points, onClose }) => {
 };
 
 // ------------------ EndGameModal ------------------
+
 const EndGameModal = ({ gpsImageData, distances, totalScore, onClose }) => {
     const [isOpen, setIsOpen] = useState(true);
 
@@ -340,16 +348,19 @@ const EndGameModal = ({ gpsImageData, distances, totalScore, onClose }) => {
                     <h1 className="text-2xl text-gray-950 font-semibold mb-4">
                         Game Over
                     </h1>
-                    <p className="text-lg text-gray-950 font-semibold mb-2">
+                    <p className="text-lg sm:text-base text-gray-950 font-semibold mb-2">
                         Total Score: {totalScore}
                     </p>
                     <div className="mt-4 mb-6">
-                        <h2 className="text-lg text-gray-950 font-semibold mb-2">
+                        <h2 className="text-lg sm:text-base text-gray-950 font-semibold mb-2">
                             Distances:
                         </h2>
                         <ul>
                             {Object.keys(gpsImageData).map((key, index) => (
-                                <li key={index} className="text-gray-600">
+                                <li
+                                    key={index}
+                                    className="text-gray-600 text-sm sm:text-base"
+                                >
                                     Location: {gpsImageData[key].location},
                                     Distance: {distances[index].toFixed(0)} km
                                 </li>
