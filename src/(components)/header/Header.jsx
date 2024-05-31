@@ -80,8 +80,9 @@ const InfoModal = ({ onClose }) => {
                                 photo on the Earth!
                             </li>
                             <li className="pb-2">
-                                Double click on the Earth to place a guess
-                                marker, then press Guess button to take a guess.
+                                Double click (single tap on mobile) on the Earth
+                                to place a guess marker, then press Guess button
+                                to take a guess.
                             </li>
                             <li className="pb-2">
                                 Enable GPU acceleration in your browser settings

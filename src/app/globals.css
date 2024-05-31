@@ -47,20 +47,15 @@ canvas {
     color: white;
     font-size: 24px;
     text-align: center;
-    background-color: rgba(
-        0,
-        0,
-        0,
-        0.5
-    ); /* Semi-transparent black background */
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 10px;
     border-radius: 5px;
     z-index: 1;
-    pointer-events: none; /* Add this line */
+    pointer-events: none;
 }
 
 .image-container:hover img {
-    filter: brightness(50%); /* Darken the image on hover */
+    filter: brightness(50%);
 }
 
 @layer utilities {

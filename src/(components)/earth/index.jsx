@@ -319,7 +319,6 @@ const Modal = ({ location, distance, points, onClose }) => {
 };
 
 // ------------------ EndGameModal ------------------
-
 const EndGameModal = ({ gpsImageData, distances, totalScore, onClose }) => {
     const [isOpen, setIsOpen] = useState(true);
 
