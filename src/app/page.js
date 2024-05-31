@@ -15,7 +15,7 @@ const Home = () => {
                 {/* Center Container for Title and Buttons */}
                 <div className="flex flex-col items-center space-y-8 bg-gray-900 bg-opacity-70 p-8 rounded-lg">
                     <h1 className="text-4xl font-bold mb-8 text-white text-center">
-                        Find Where on Earth
+                        Find where on Earth
                     </h1>
                     <div className="flex flex-col space-y-8">
                         <Link href="/game">
