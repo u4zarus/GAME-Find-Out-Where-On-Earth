@@ -2,7 +2,7 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-    assetPrefix: `/${GAME - Find - Out - Where - On - Earth}`,
+    assetPrefix: "/GAME-Find-Out-Where-On-Earth",
     images: {
         unoptimized: true,
     },
