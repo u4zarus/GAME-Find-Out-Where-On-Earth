@@ -2,8 +2,10 @@
  * @type {import('next').NextConfig}
  */
 const nextConfig = {
-    // output: "export",
-    // unoptimized: true,
+    assetPrefix: `/${GAME - Find - Out - Where - On - Earth}`,
+    images: {
+        unoptimized: true,
+    },
 };
 
 export default nextConfig;
