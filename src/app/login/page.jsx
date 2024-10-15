@@ -25,7 +25,7 @@ const LoginPage = () => {
                 value={user.email}
                 onChange={(e) => setUser({ ...user, email: e.target.value })}
                 placeholder="Email"
-                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
             />
 
             <label htmlFor="password">Password</label>
@@ -35,7 +35,7 @@ const LoginPage = () => {
                 value={user.password}
                 onChange={(e) => setUser({ ...user, password: e.target.value })}
                 placeholder="Password"
-                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 text-black"
             />
 
             <button
