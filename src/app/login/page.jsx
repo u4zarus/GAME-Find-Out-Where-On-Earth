@@ -2,20 +2,45 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Axios } from "axios";
-import { useState } from "react";
+import axios, { Axios } from "axios";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
+    const router = useRouter();
     const [user, setUser] = useState({
         email: "",
         password: "",
     });
+    const [buttonDisabled, setButtonDisabled] = useState(false);
+    const [loading, setLoading] = useState(false);
 
-    const onLogin = async () => {};
+    const onLogin = async () => {
+        try {
+            setLoading(true);
+            const response = await axios.post("/api/users/login", user);
+            console.log("Log In successful", response.data);
+            toast.success("Log In successful");
+            router.push("/profile");
+        } catch (error) {
+            console.log("Log In failed", error.message);
+            toast.error(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        if (user.email.length > 0 && user.password.length > 0) {
+            setButtonDisabled(false);
+        } else {
+            setButtonDisabled(true);
+        }
+    }, [user]);
 
     return (
         <div className="flex flex-col items-center justify-center min-h-screen py-2">
-            <h1>Log In</h1>
+            <h1>{loading ? "Processing" : "Log In"}</h1>
             <hr />
 
             <label htmlFor="email">Email</label>
