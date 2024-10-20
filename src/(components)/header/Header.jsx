@@ -32,7 +32,7 @@ const Header = () => {
             </nav>
 
             {/* Profile */}
-            <div className="flex items-center space-x-4">
+            {/* <div className="flex items-center space-x-4">
                 <Image
                     src="/profile.jpg"
                     alt="Profile"
@@ -40,7 +40,24 @@ const Header = () => {
                     height={40}
                     className="rounded-full cursor-pointer"
                 />
-            </div>
+            </div> */}
+            {/* Log In */}
+            <Link href="/login" className="hover:text-gray-300 cursor-pointer">
+                Log In
+            </Link>
+
+            {/* Sign Up */}
+            <Link href="/signup" className="hover:text-gray-300 cursor-pointer">
+                Sign Up
+            </Link>
+
+            {/* Profile */}
+            <Link
+                href="/profile"
+                className="hover:text-gray-300 cursor-pointer"
+            >
+                Profile
+            </Link>
 
             {showModal ? (
                 <InfoModal onClose={() => setShowModal(false)} />
