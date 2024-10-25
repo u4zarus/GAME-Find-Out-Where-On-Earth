@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
     forgotPasswordTokenExpiry: Date,
     verifyToken: String,
     verifyTokenExpiry: Date,
+    maxScore: {
+        type: Number,
+        default: 0,
+    },
 });
 
 const User = mongoose.models.users || mongoose.model("users", userSchema);

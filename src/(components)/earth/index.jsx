@@ -10,6 +10,8 @@ import { calculateDistance2 } from "@/utils/coordUtils";
 import Image from "next/image";
 import { IoIosCloseCircle } from "react-icons/io";
 import { isMobile } from "react-device-detect";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 import earthTexture from "@/assets/earth_tex1.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
 
@@ -321,6 +323,7 @@ const Modal = ({ location, distance, points, onClose }) => {
 // ------------------ EndGameModal ------------------
 const EndGameModal = ({ gpsImageData, distances, totalScore, onClose }) => {
     const [isOpen, setIsOpen] = useState(true);
+    const [data, setData] = useState(null);
 
     const handleClose = () => {
         setIsOpen(false);
@@ -330,6 +333,32 @@ const EndGameModal = ({ gpsImageData, distances, totalScore, onClose }) => {
     const handleTryAgain = () => {
         window.location.reload();
     };
+
+    // const getUserDetails = async () => {
+    //     const res = await axios.get("/api/users/me");
+    //     const userId = res.data.data._id;
+    //     console.log("id", userId);
+    //     setData(userId);
+    //     console.log("data/score", userId, totalScore); // Log the user ID directly
+    //     updateMaxScore(totalScore); // Call updateMaxScore here with the correct user ID
+    // };
+
+    const updateMaxScore = async (totalScore) => {
+        try {
+            const response = await axios.post("/api/users/updateMaxScore", {
+                totalScore, // Pass only totalScore, backend will get userId from token
+            });
+            console.log("Score updated successfully", response.data);
+            toast.success("Score updated successfully");
+        } catch (error) {
+            console.error("Score update failed", error.message);
+            toast.error(error.message);
+        }
+    };
+
+    useEffect(() => {
+        updateMaxScore(totalScore);
+    }, []);
 
     return (
         <div

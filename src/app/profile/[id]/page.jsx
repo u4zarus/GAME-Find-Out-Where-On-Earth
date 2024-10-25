@@ -1,6 +1,9 @@
+import Link from "next/link";
+
 const UserProfile = ({ params }) => {
     return (
         <div className="flex flex-col justify-center items-center min-h-screen py-2">
+            <Link href="/">Home</Link>
             Profile
             <p className="text-4xl">
                 Profile Page{" "}

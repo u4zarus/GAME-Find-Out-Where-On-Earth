@@ -29,6 +29,9 @@ const ProfilePage = () => {
 
     return (
         <div className="flex flex-col justify-center items-center min-h-screen py-2">
+            <Link href="/" className="text-blue-300">
+                Go to Home
+            </Link>
             Profile
             <h2 className="p-1 rounded bg-green-500">
                 {data === "Nothing" ? (

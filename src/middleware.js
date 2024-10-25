@@ -21,6 +21,7 @@ export const config = {
         "/profile",
         "/login",
         "/signup",
+        "/game",
         "/profile/:path*",
         "/verifyemail",
     ],

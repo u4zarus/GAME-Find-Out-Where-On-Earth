@@ -1,0 +1,148 @@
+{
+    "gpsImageData": {
+        "01": {
+            "location": "Prague",
+            "img_path": "/sattelite_imgs/prague.jpg",
+            "latitude_tl": 50.2145,
+            "longitude_tl": 15.5145,
+            "latitude_br": 49.6498,
+            "longitude_br": 15.5145
+        },
+        "02": {
+            "location": "Jihlava",
+            "img_path": "/sattelite_imgs/jihlava.jpg",
+            "latitude_tl": 49.7589,
+            "longitude_tl": 16.4328,
+            "latitude_br": 49.1888,
+            "longitude_br": 16.4328
+        },
+        "03": {
+            "location": "Trojmezi",
+            "img_path": "/sattelite_imgs/trojmezi.jpg",
+            "latitude_tl": 49.8001,
+            "longitude_tl": 19.6406,
+            "latitude_br": 49.2306,
+            "longitude_br": 19.6406
+        },
+        "04": {
+            "location": "New York",
+            "img_path": "/sattelite_imgs/new_york.jpg",
+            "latitude_tl": 41.0285,
+            "longitude_tl": -73.1094,
+            "latitude_br": 40.3633,
+            "longitude_br": -73.1094
+        },
+        "05": {
+            "location": "Betsiboka",
+            "img_path": "/sattelite_imgs/betsiboka.jpg",
+            "latitude_tl": -15.4867,
+            "longitude_tl": 47.1769,
+            "latitude_br": -16.3304,
+            "longitude_br": 47.1769
+        },
+        "06": {
+            "location": "Mount Everest",
+            "img_path": "/sattelite_imgs/everest.jpg",
+            "latitude_tl": 28.2939,
+            "longitude_tl": 87.7538,
+            "latitude_br": 27.5187,
+            "longitude_br": 87.7538
+        },
+        "07": {
+            "location": "Moscow",
+            "img_path": "/sattelite_imgs/moscow.jpg",
+            "latitude_tl": 55.978,
+            "longitude_tl": 36.7294,
+            "latitude_br": 55.5006,
+            "longitude_br": 38.4508
+        },
+        "08": {
+            "location": "Tokyo",
+            "img_path": "/sattelite_imgs/tokyo.jpg",
+            "latitude_tl": 35.7947,
+            "longitude_tl": 139.3015,
+            "latitude_br": 35.4492,
+            "longitude_br": 140.1522
+        },
+        "09": {
+            "location": "Venice",
+            "img_path": "/sattelite_imgs/venice.jpg",
+            "latitude_tl": 45.6092,
+            "longitude_tl": 11.8491,
+            "latitude_br": 45.3104,
+            "longitude_br": 12.7225
+        },
+        "10": {
+            "location": "Giza",
+            "img_path": "/sattelite_imgs/giza.jpg",
+            "latitude_tl": 30.06627,
+            "longitude_tl": 30.89939,
+            "latitude_br": 29.88143,
+            "longitude_br": 31.3349
+        },
+        "11": {
+            "location": "Beijing",
+            "img_path": "/sattelite_imgs/beijing.jpg",
+            "latitude_tl": 40.2481,
+            "longitude_tl": 115.5254,
+            "latitude_br": 39.5978,
+            "longitude_br": 117.2578
+        },
+        "12": {
+            "location": "Amsterdam",
+            "img_path": "/sattelite_imgs/amsterdam.jpg",
+            "latitude_tl": 52.6114,
+            "longitude_tl": 3.9413,
+            "latitude_br": 52.0909,
+            "longitude_br": 5.6751
+        },
+        "13": {
+            "location": "Toronto",
+            "img_path": "/sattelite_imgs/toronto.jpg",
+            "latitude_tl": 43.9839,
+            "longitude_tl": -80.4295,
+            "latitude_br": 43.3666,
+            "longitude_br": -78.6985
+        },
+        "14": {
+            "location": "Melbourne",
+            "img_path": "/sattelite_imgs/melbourne.jpg",
+            "latitude_tl": -37.495,
+            "longitude_tl": 143.9717,
+            "latitude_br": -38.1702,
+            "longitude_br": 145.7041
+        },
+        "15": {
+            "location": "Mogadishu",
+            "img_path": "/sattelite_imgs/mogadishu.jpg",
+            "latitude_tl": 2.16448,
+            "longitude_tl": 45.0654,
+            "latitude_br": 1.9509,
+            "longitude_br": 45.49541
+        },
+        "16": {
+            "location": "Honolulu",
+            "img_path": "/sattelite_imgs/honolulu.jpg",
+            "latitude_tl": 21.42111,
+            "longitude_tl": -158.06854,
+            "latitude_br": 21.22314,
+            "longitude_br": -157.63887
+        },
+        "17": {
+            "location": "Delhi",
+            "img_path": "/sattelite_imgs/delhi.jpg",
+            "latitude_tl": 28.78075,
+            "longitude_tl": 77.00317,
+            "latitude_br": 28.59357,
+            "longitude_br": 77.43816
+        },
+        "18": {
+            "location": "Cadiz",
+            "img_path": "/sattelite_imgs/cadiz.jpg",
+            "latitude_tl": 36.60698,
+            "longitude_tl": -6.4967,
+            "latitude_br": 36.43551,
+            "longitude_br": -6.06462
+        }
+    }
+}
