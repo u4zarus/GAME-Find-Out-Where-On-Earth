@@ -31,6 +31,14 @@ const Header = () => {
                 </a>
             </nav>
 
+            {/* Leaderboard */}
+            <Link
+                href="/leaderboard"
+                className="hover:text-gray-300 cursor-pointer"
+            >
+                Leaderboard
+            </Link>
+
             {/* Profile */}
             {/* <div className="flex items-center space-x-4">
                 <Image

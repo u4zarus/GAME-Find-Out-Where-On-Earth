@@ -5,10 +5,12 @@ import Link from "next/link";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { set } from "mongoose";
 
 const ProfilePage = () => {
     const router = useRouter();
     const [data, setData] = useState("Nothing");
+    const [username, setUsername] = useState("");
 
     const logout = async () => {
         try {
@@ -25,6 +27,7 @@ const ProfilePage = () => {
         const res = await axios.get("/api/users/me");
         console.log(res.data);
         setData(res.data.data._id);
+        setUsername(res.data.data.username);
     };
 
     return (
@@ -40,6 +43,7 @@ const ProfilePage = () => {
                     <Link href={`/profile/${data}`}>{data}</Link>
                 )}
             </h2>
+            <h2 className="p-1 rounded bg-green-500">{username}</h2>
             <hr />
             <button
                 onClick={logout}
