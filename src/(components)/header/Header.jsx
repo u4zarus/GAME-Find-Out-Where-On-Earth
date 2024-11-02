@@ -7,7 +7,7 @@ const Header = () => {
     const [showModal, setShowModal] = useState(false);
 
     return (
-        <header className="flex items-center justify-between px-4 py-2 bg-gray-800 text-white">
+        <header className="flex items-center justify-between px-4 py-2 bg-gray-800 text-white fixed w-full">
             {/* Logo */}
             <div className="flex items-center">
                 <Link href="/">

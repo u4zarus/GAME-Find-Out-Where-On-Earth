@@ -128,7 +128,7 @@ const Index = () => {
                 />
             ) : null}
 
-            <div className="mt-8">
+            <div className="mt-14">
                 <Canvas style={{ width: "100vw", height: "100vh" }}>
                     <OrbitControlsCustom />
                     <ambientLight intensity={2} />
@@ -333,15 +333,6 @@ const EndGameModal = ({ gpsImageData, distances, totalScore, onClose }) => {
     const handleTryAgain = () => {
         window.location.reload();
     };
-
-    // const getUserDetails = async () => {
-    //     const res = await axios.get("/api/users/me");
-    //     const userId = res.data.data._id;
-    //     console.log("id", userId);
-    //     setData(userId);
-    //     console.log("data/score", userId, totalScore); // Log the user ID directly
-    //     updateMaxScore(totalScore); // Call updateMaxScore here with the correct user ID
-    // };
 
     const updateMaxScore = async (totalScore) => {
         try {

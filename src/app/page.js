@@ -8,12 +8,9 @@ const Home = () => {
     return (
         <div className="flex flex-col min-h-screen">
             <Header />
-            <main
-                className="flex-grow flex justify-center items-center bg-cover"
-                style={{ backgroundImage: `url('/bg.png')` }}
-            >
+            <main className="flex-grow flex justify-center items-center bg-gradient-to-br from-gray-900 to-gray-950">
                 {/* Center Container for Title and Buttons */}
-                <div className="flex flex-col items-center space-y-8 bg-gray-900 bg-opacity-70 p-8 rounded-lg">
+                <div className="flex flex-col items-center space-y-8 bg-gray-900 bg-opacity-80 p-8 rounded-lg">
                     <h1 className="text-4xl font-bold mb-8 text-white text-center">
                         Find where on Earth
                     </h1>
