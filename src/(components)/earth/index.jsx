@@ -298,6 +298,31 @@ const Earth = ({
         }
     };
 
+    const createCurveBetweenPoints = (point1, point2) => {
+        const numPoints = 100;
+        const curve = new THREE.CatmullRomCurve3(
+            [point1, ...interpolatePoints(point1, point2, numPoints), point2],
+            false,
+            "catmullrom",
+            0.5
+        );
+        return curve.getPoints(numPoints);
+    };
+
+    const interpolatePoints = (point1, point2, numPoints) => {
+        const points = [];
+        for (let i = 1; i < numPoints; i++) {
+            const alpha = i / numPoints;
+            const interpolated = new THREE.Vector3()
+                .copy(point1)
+                .lerp(point2, alpha)
+                .normalize()
+                .multiplyScalar(1); // Keep points on the sphere's surface
+            points.push(interpolated);
+        }
+        return points;
+    };
+
     return (
         <mesh
             ref={mesh}
@@ -307,12 +332,16 @@ const Earth = ({
         >
             <sphereGeometry args={[1, 32, 32]} />
             <primitive object={texMaterial} attach="material" />
+
+            {/* User guess mark */}
             {markerPosition ? (
                 <mesh position={markerPosition}>
                     <sphereGeometry args={[0.002, 16, 16]} />
                     <meshBasicMaterial color="red" />
                 </mesh>
             ) : null}
+
+            {/* Actual location reveal mark */}
             {actualLocation ? (
                 <mesh
                     position={new THREE.Vector3().setFromSpherical(
@@ -322,6 +351,39 @@ const Earth = ({
                     <sphereGeometry args={[0.003, 16, 16]} />
                     <meshBasicMaterial color="green" />
                 </mesh>
+            ) : null}
+
+            {/* A line between the marks */}
+            {markerPosition && actualLocation ? (
+                <line>
+                    <bufferGeometry
+                        attach="geometry"
+                        onUpdate={(geometry) => {
+                            const curvePoints = createCurveBetweenPoints(
+                                markerPosition,
+                                new THREE.Vector3().setFromSpherical(
+                                    actualLocation
+                                )
+                            );
+                            const positions = new Float32Array(
+                                curvePoints.flatMap((point) => [
+                                    point.x,
+                                    point.y,
+                                    point.z,
+                                ])
+                            );
+                            geometry.setAttribute(
+                                "position",
+                                new THREE.BufferAttribute(positions, 3)
+                            );
+                        }}
+                    />
+                    <lineBasicMaterial
+                        attach="material"
+                        color="yellow"
+                        linewidth={2}
+                    />
+                </line>
             ) : null}
         </mesh>
     );
