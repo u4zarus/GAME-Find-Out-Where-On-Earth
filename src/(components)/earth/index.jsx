@@ -27,6 +27,9 @@ const Index = () => {
     const [distances, setDistances] = useState([]);
     const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
+    //
+    const [actualLocation, setActualLocation] = useState(null);
+    const [guessDisabled, setGuessDisabled] = useState(false);
 
     const verifyGuess = (location, clickedSphericalCoords) => {
         if (clickedSphericalCoords) {
@@ -66,22 +69,41 @@ const Index = () => {
                 distance: fixedDistance,
             });
             setModalOpen(true);
+            setActualLocation(middlePointSphericalCoords);
         }
     };
-
-    const handleGuessButtonClick = () => {
+    //
+    const handleNextImage = () => {
         setCurrentIndex(currentIndex + 1);
-        verifyGuess(
-            gpsData.gpsImageData[
-                Object.keys(gpsData.gpsImageData)[currentIndex]
-            ],
-            clickedSphericalCoords
-        );
+        setModalOpen(false);
+        setActualLocation(null);
         setClickedSphericalCoords(null);
+        setGuessDisabled(false); // Re-enable the guess button when moving to the next image
         const length = Object.keys(gpsData.gpsImageData).length;
         if (currentIndex + 1 === length) {
             setGameOver(true);
         }
+    };
+
+    const handleGuessButtonClick = () => {
+        // verifyGuess(
+        //     gpsData.gpsImageData[
+        //         Object.keys(gpsData.gpsImageData)[currentIndex]
+        //     ],
+        //     clickedSphericalCoords
+        // );
+        // setClickedSphericalCoords(null);
+
+        if (!guessDisabled) {
+            verifyGuess(
+                gpsData.gpsImageData[
+                    Object.keys(gpsData.gpsImageData)[currentIndex]
+                ],
+                clickedSphericalCoords
+            );
+            setGuessDisabled(true);
+        }
+        setClickedSphericalCoords(null);
     };
 
     return (
@@ -101,9 +123,20 @@ const Index = () => {
                         }
                         onGuessButtonClick={handleGuessButtonClick}
                         clickedSphericalCoords={clickedSphericalCoords}
+                        guessDisabled={guessDisabled}
                     />
                 ) : null}
             </div>
+            {actualLocation ? (
+                <>
+                    <button
+                        onClick={handleNextImage}
+                        className="fixed bottom-10 right-10 px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600 z-50"
+                    >
+                        Next Image
+                    </button>
+                </>
+            ) : null}
 
             <div className="fixed top-14 left-2 px-1 py-2 rounded-md text-xl z-50">
                 <p className="hidden sm:block">Current Score: {score}</p>
@@ -136,6 +169,7 @@ const Index = () => {
                     <Earth
                         setClickedSphericalCoords={setClickedSphericalCoords}
                         clickedSphericalCoords={clickedSphericalCoords}
+                        actualLocation={actualLocation}
                     />
                 </Canvas>
             </div>
@@ -172,6 +206,7 @@ const QuestionImage = ({
     location,
     onGuessButtonClick,
     clickedSphericalCoords,
+    guessDisabled,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -197,7 +232,7 @@ const QuestionImage = ({
             <button
                 onClick={onGuessButtonClick}
                 className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 disabled:bg-gray-500 disabled:opacity-50"
-                disabled={!clickedSphericalCoords}
+                disabled={!clickedSphericalCoords || guessDisabled}
             >
                 Guess
             </button>
@@ -223,7 +258,11 @@ const QuestionImage = ({
 };
 
 // ------------------ Earth ------------------
-const Earth = ({ setClickedSphericalCoords, clickedSphericalCoords }) => {
+const Earth = ({
+    setClickedSphericalCoords,
+    clickedSphericalCoords,
+    actualLocation,
+}) => {
     const mesh = useRef();
     const { camera, gl } = useThree();
     const [markerPosition, setMarkerPosition] = useState(null);
@@ -231,15 +270,13 @@ const Earth = ({ setClickedSphericalCoords, clickedSphericalCoords }) => {
     const texture = useMemo(() => {
         const textureLoader = new THREE.TextureLoader();
         const tex = textureLoader.load(earthTexture.src);
-        tex.wrapS = THREE.RepeatWrapping; // This sets the horizontal wrapping mode to repeat
-        tex.offset.x = 0.2475; // Adjust this value to get the desired rotation
+        tex.wrapS = THREE.RepeatWrapping;
+        tex.offset.x = 0.2475;
         return tex;
     }, []);
 
     const texMaterial = useMemo(() => {
-        return new THREE.MeshStandardMaterial({
-            map: texture,
-        });
+        return new THREE.MeshStandardMaterial({ map: texture });
     }, [texture]);
 
     const handleCanvasClick = (event) => {
@@ -252,13 +289,12 @@ const Earth = ({ setClickedSphericalCoords, clickedSphericalCoords }) => {
         raycaster.setFromCamera({ x, y }, camera);
 
         const intersects = raycaster.intersectObject(mesh.current);
-
         if (intersects.length > 0) {
             const intersection = intersects[0];
             setClickedSphericalCoords(
                 new THREE.Spherical().setFromVector3(intersection.point)
             );
-            setMarkerPosition(intersection.point);
+            setMarkerPosition(intersection.point); // Keep the guess marker position
         }
     };
 
@@ -271,10 +307,20 @@ const Earth = ({ setClickedSphericalCoords, clickedSphericalCoords }) => {
         >
             <sphereGeometry args={[1, 32, 32]} />
             <primitive object={texMaterial} attach="material" />
-            {markerPosition && clickedSphericalCoords ? (
+            {markerPosition ? (
                 <mesh position={markerPosition}>
                     <sphereGeometry args={[0.002, 16, 16]} />
                     <meshBasicMaterial color="red" />
+                </mesh>
+            ) : null}
+            {actualLocation ? (
+                <mesh
+                    position={new THREE.Vector3().setFromSpherical(
+                        actualLocation
+                    )}
+                >
+                    <sphereGeometry args={[0.003, 16, 16]} />
+                    <meshBasicMaterial color="green" />
                 </mesh>
             ) : null}
         </mesh>
