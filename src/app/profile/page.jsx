@@ -9,11 +9,8 @@ import Header from "@/(components)/header/Header";
 
 const ProfilePage = () => {
     const router = useRouter();
-    const [userDetails, setUserDetails] = useState({
-        id: "Nothing",
-        username: "",
-        maxScore: 0,
-    });
+    const [userDetails, setUserDetails] = useState(null); // Set initial state to null for better handling
+    const [loading, setLoading] = useState(true); // Track loading state
 
     const logout = async () => {
         try {
@@ -29,11 +26,17 @@ const ProfilePage = () => {
     const getUserDetails = async () => {
         try {
             const res = await axios.get("/api/users/me");
-            const { _id, username, maxScore } = res.data.data;
-            setUserDetails({ id: _id, username, maxScore });
+            if (res.data && res.data.data) {
+                const { _id, username, maxScore } = res.data.data;
+                setUserDetails({ id: _id, username, maxScore });
+            } else {
+                router.push("/login"); // Redirect if no user data
+            }
         } catch (error) {
             console.log("Failed to fetch user details", error.message);
-            toast.error("Failed to load user details");
+            router.push("/login"); // Redirect on error
+        } finally {
+            setLoading(false); // End loading state
         }
     };
 
@@ -41,11 +44,14 @@ const ProfilePage = () => {
         getUserDetails();
     }, []);
 
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
     return (
         <>
             <Header className="fixed top-0 left-0 w-full z-50" />
             <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-gray-200 pt-[80px]">
-                {/* Adjust the pt-[80px] value based on your header's height */}
                 <div className="w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-6">
                     <h1 className="text-2xl font-semibold mb-4 text-center">
                         User Profile
@@ -53,28 +59,28 @@ const ProfilePage = () => {
                     <div className="text-center mb-6">
                         <p className="text-lg font-medium">Username:</p>
                         <h2 className="text-xl font-bold mb-2">
-                            {userDetails.username || "Loading..."}
+                            {userDetails?.username || "Not available"}
                         </h2>
                     </div>
                     <div className="text-center mb-6">
                         <p className="text-lg font-medium">User ID:</p>
                         <h2 className="text-gray-400 mb-2">
-                            {userDetails.id === "Nothing" ? (
-                                "Not Available"
-                            ) : (
+                            {userDetails?.id ? (
                                 <Link
                                     href={`/profile/${userDetails.id}`}
                                     className="text-blue-400 hover:underline"
                                 >
                                     {userDetails.id}
                                 </Link>
+                            ) : (
+                                "Not available"
                             )}
                         </h2>
                     </div>
                     <div className="text-center mb-6">
                         <p className="text-lg font-medium">Max Score:</p>
                         <h2 className="text-xl font-bold">
-                            {userDetails.maxScore}
+                            {userDetails?.maxScore || 0}
                         </h2>
                     </div>
                     <div className="flex justify-between mt-4">

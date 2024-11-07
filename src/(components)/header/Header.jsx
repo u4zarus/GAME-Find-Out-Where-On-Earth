@@ -1,13 +1,33 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import axios from "axios";
 import { IoIosCloseCircle } from "react-icons/io";
+import { FaBars, FaTimes } from "react-icons/fa"; // Import icons for hamburger and close
 
 const Header = () => {
     const [showModal, setShowModal] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Mobile menu state
+
+    useEffect(() => {
+        // Check if user is logged in by fetching user data
+        const checkUserStatus = async () => {
+            try {
+                const res = await axios.get("/api/users/me");
+                setIsLoggedIn(!!res.data?.data); // Set logged-in status
+            } catch (error) {
+                setIsLoggedIn(false); // Assume not logged in on error
+            }
+        };
+        checkUserStatus();
+    }, []);
+
+    // Toggle mobile menu
+    const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
     return (
-        <header className="flex items-center justify-between px-4 py-2 bg-gray-800 text-white fixed w-full">
+        <header className="flex items-center justify-between px-4 py-2 bg-gray-800 text-white fixed w-full z-50">
             {/* Logo */}
             <div className="flex items-center">
                 <Link href="/">
@@ -21,51 +41,107 @@ const Header = () => {
                 </Link>
             </div>
 
-            {/* Navigation */}
-            <nav className="flex space-x-4">
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-4 ml-auto">
+                <Link
+                    href="/leaderboard"
+                    className="hover:text-gray-300 cursor-pointer"
+                >
+                    Leaderboard
+                </Link>
                 <a
                     className="hover:text-gray-300 cursor-pointer"
                     onClick={() => setShowModal(true)}
                 >
                     How to Play
                 </a>
+
+                {/* Conditional Links */}
+                {!isLoggedIn ? (
+                    <>
+                        <Link
+                            href="/login"
+                            className="hover:text-gray-300 cursor-pointer"
+                        >
+                            Log In
+                        </Link>
+                        <Link
+                            href="/signup"
+                            className="hover:text-gray-300 cursor-pointer"
+                        >
+                            Sign Up
+                        </Link>
+                    </>
+                ) : (
+                    <Link
+                        href="/profile"
+                        className="hover:text-gray-300 cursor-pointer"
+                    >
+                        Profile
+                    </Link>
+                )}
             </nav>
 
-            {/* Leaderboard */}
-            <Link
-                href="/leaderboard"
-                className="hover:text-gray-300 cursor-pointer"
-            >
-                Leaderboard
-            </Link>
+            {/* Mobile Menu Icon */}
+            <div className="md:hidden flex items-center ml-auto">
+                <button onClick={toggleMobileMenu} aria-label="Toggle menu">
+                    {isMobileMenuOpen ? (
+                        <FaTimes size={24} />
+                    ) : (
+                        <FaBars size={24} />
+                    )}
+                </button>
+            </div>
 
-            {/* Profile */}
-            {/* <div className="flex items-center space-x-4">
-                <Image
-                    src="/profile.jpg"
-                    alt="Profile"
-                    width={40}
-                    height={40}
-                    className="rounded-full cursor-pointer"
-                />
-            </div> */}
-            {/* Log In */}
-            <Link href="/login" className="hover:text-gray-300 cursor-pointer">
-                Log In
-            </Link>
+            {/* Mobile Dropdown Menu */}
+            {isMobileMenuOpen && (
+                <nav className="absolute top-full right-0 bg-gray-800 w-full md:hidden flex flex-col items-center space-y-4 py-4">
+                    <Link
+                        href="/leaderboard"
+                        className="hover:text-gray-300 cursor-pointer"
+                        onClick={toggleMobileMenu}
+                    >
+                        Leaderboard
+                    </Link>
+                    <a
+                        className="hover:text-gray-300 cursor-pointer"
+                        onClick={() => {
+                            setShowModal(true);
+                            toggleMobileMenu();
+                        }}
+                    >
+                        How to Play
+                    </a>
 
-            {/* Sign Up */}
-            <Link href="/signup" className="hover:text-gray-300 cursor-pointer">
-                Sign Up
-            </Link>
-
-            {/* Profile */}
-            <Link
-                href="/profile"
-                className="hover:text-gray-300 cursor-pointer"
-            >
-                Profile
-            </Link>
+                    {/* Conditional Links */}
+                    {!isLoggedIn ? (
+                        <>
+                            <Link
+                                href="/login"
+                                className="hover:text-gray-300 cursor-pointer"
+                                onClick={toggleMobileMenu}
+                            >
+                                Log In
+                            </Link>
+                            <Link
+                                href="/signup"
+                                className="hover:text-gray-300 cursor-pointer"
+                                onClick={toggleMobileMenu}
+                            >
+                                Sign Up
+                            </Link>
+                        </>
+                    ) : (
+                        <Link
+                            href="/profile"
+                            className="hover:text-gray-300 cursor-pointer"
+                            onClick={toggleMobileMenu}
+                        >
+                            Profile
+                        </Link>
+                    )}
+                </nav>
+            )}
 
             {showModal ? (
                 <InfoModal onClose={() => setShowModal(false)} />
@@ -101,7 +177,7 @@ const InfoModal = ({ onClose }) => {
                         </p>
                         <ul className="list-disc list-inside text-gray-600">
                             <li className="pb-2">
-                                Try to guess the location from the sattelite
+                                Try to guess the location from the satellite
                                 photo on the Earth!
                             </li>
                             <li className="pb-2">
