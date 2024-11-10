@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "@/(components)/header/Header";
-import Footer from "@/(components)/footer/Footer";
 
 const LeaderBoard = () => {
     const [leaderboard, setLeaderboard] = useState([]);

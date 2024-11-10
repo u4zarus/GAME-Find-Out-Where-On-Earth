@@ -500,6 +500,12 @@ const EndGameModal = ({ gpsImageData, distances, totalScore, onClose }) => {
                     >
                         Try Again
                     </button>
+                    <button
+                        onClick={() => (window.location.href = "/")}
+                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
+                    >
+                        Go to Home
+                    </button>
                 </div>
             </div>
         </div>

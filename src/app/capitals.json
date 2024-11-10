@@ -1,0 +1,28 @@
+{
+    "gpsImageData": {
+        "01": {
+            "location": "Prague",
+            "img_path": "/sattelite_imgs/prague.jpg",
+            "latitude_tl": 50.2145,
+            "longitude_tl": 15.5145,
+            "latitude_br": 49.6498,
+            "longitude_br": 15.5145
+        },
+        "02": {
+            "location": "Moscow",
+            "img_path": "/sattelite_imgs/moscow.jpg",
+            "latitude_tl": 55.978,
+            "longitude_tl": 36.7294,
+            "latitude_br": 55.5006,
+            "longitude_br": 38.4508
+        },
+        "03": {
+            "location": "Tokyo",
+            "img_path": "/sattelite_imgs/tokyo.jpg",
+            "latitude_tl": 35.7947,
+            "longitude_tl": 139.3015,
+            "latitude_br": 35.4492,
+            "longitude_br": 140.1522
+        }
+    }
+}

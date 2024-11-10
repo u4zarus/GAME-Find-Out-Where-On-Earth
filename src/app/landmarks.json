@@ -1,0 +1,28 @@
+{
+    "gpsImageData": {
+        "01": {
+            "location": "Betsiboka",
+            "img_path": "/sattelite_imgs/betsiboka.jpg",
+            "latitude_tl": -15.4867,
+            "longitude_tl": 47.1769,
+            "latitude_br": -16.3304,
+            "longitude_br": 47.1769
+        },
+        "02": {
+            "location": "Mount Everest",
+            "img_path": "/sattelite_imgs/everest.jpg",
+            "latitude_tl": 28.2939,
+            "longitude_tl": 87.7538,
+            "latitude_br": 27.5187,
+            "longitude_br": 87.7538
+        },
+        "03": {
+            "location": "Trojmezi",
+            "img_path": "/sattelite_imgs/trojmezi.jpg",
+            "latitude_tl": 49.8001,
+            "longitude_tl": 19.6406,
+            "latitude_br": 49.2306,
+            "longitude_br": 19.6406
+        }
+    }
+}
