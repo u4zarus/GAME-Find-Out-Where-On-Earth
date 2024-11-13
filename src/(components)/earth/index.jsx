@@ -1,11 +1,11 @@
 "use client";
 
-import React, { useState, useMemo, use } from "react";
+import React, { useState, useMemo } from "react";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas, useThree, useFrame, extend } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import gpsData from "@/app/gpsImageData.json";
+// import gpsData from "@/app/gpsImageData.json";
 import { calculateDistance2 } from "@/utils/coordUtils";
 import Image from "next/image";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -14,6 +14,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 
 import earthTexture from "@/assets/earth_tex1.jpg"; // https://www.shadedrelief.com/natural3/pages/textures.html
+import { useSearchParams } from "next/navigation";
 
 extend({ OrbitControls });
 
@@ -30,6 +31,32 @@ const Index = () => {
     //
     const [actualLocation, setActualLocation] = useState(null);
     const [guessDisabled, setGuessDisabled] = useState(false);
+    //
+    const searchParams = useSearchParams();
+    const mode = searchParams.get("mode");
+    const [gpsData, setGpsData] = useState(null);
+
+    useEffect(() => {
+        const loadJsonData = async () => {
+            try {
+                let data;
+                if (mode === "0") {
+                    data = await import("@/app/cities.json");
+                } else if (mode === "1") {
+                    data = await import("@/app/landmarks.json");
+                } else if (mode === "2") {
+                    data = await import("@/app/gpsImageData.json");
+                } else {
+                    data = await import("@/app/gpsImageData.json");
+                }
+                setGpsData(data.default);
+            } catch (error) {
+                console.error("Error loading JSON data", error.message);
+            }
+        };
+
+        loadJsonData();
+    }, []);
 
     const verifyGuess = (location, clickedSphericalCoords) => {
         if (clickedSphericalCoords) {
@@ -106,7 +133,7 @@ const Index = () => {
         setClickedSphericalCoords(null);
     };
 
-    return (
+    return gpsData ? (
         <div
             className="flex flex-col items-center justify-center h-full w-full overflow-hidden"
             style={{
@@ -124,6 +151,7 @@ const Index = () => {
                         onGuessButtonClick={handleGuessButtonClick}
                         clickedSphericalCoords={clickedSphericalCoords}
                         guessDisabled={guessDisabled}
+                        gpsData={gpsData}
                     />
                 ) : null}
             </div>
@@ -158,6 +186,7 @@ const Index = () => {
                     distances={distances}
                     totalScore={score}
                     onClose={() => setGameOver(false)}
+                    mode={mode}
                 />
             ) : null}
 
@@ -174,6 +203,8 @@ const Index = () => {
                 </Canvas>
             </div>
         </div>
+    ) : (
+        <p>Loading game data...</p>
     );
 };
 
@@ -207,6 +238,7 @@ const QuestionImage = ({
     onGuessButtonClick,
     clickedSphericalCoords,
     guessDisabled,
+    gpsData,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -429,9 +461,14 @@ const Modal = ({ location, distance, points, onClose }) => {
 };
 
 // ------------------ EndGameModal ------------------
-const EndGameModal = ({ gpsImageData, distances, totalScore, onClose }) => {
+const EndGameModal = ({
+    gpsImageData,
+    distances,
+    totalScore,
+    onClose,
+    mode,
+}) => {
     const [isOpen, setIsOpen] = useState(true);
-    const [data, setData] = useState(null);
 
     const handleClose = () => {
         setIsOpen(false);
@@ -442,10 +479,24 @@ const EndGameModal = ({ gpsImageData, distances, totalScore, onClose }) => {
         window.location.reload();
     };
 
+    // const updateMaxScore = async (totalScore) => {
+    //     try {
+    //         const response = await axios.post("/api/users/updateMaxScore", {
+    //             totalScore, // Pass only totalScore, backend will get userId from token
+    //         });
+    //         console.log("Score updated successfully", response.data);
+    //         toast.success("Score updated successfully");
+    //     } catch (error) {
+    //         console.error("Score update failed", error.message);
+    //         toast.error(error.message);
+    //     }
+    // };
+
     const updateMaxScore = async (totalScore) => {
         try {
             const response = await axios.post("/api/users/updateMaxScore", {
-                totalScore, // Pass only totalScore, backend will get userId from token
+                totalScore,
+                mode,
             });
             console.log("Score updated successfully", response.data);
             toast.success("Score updated successfully");

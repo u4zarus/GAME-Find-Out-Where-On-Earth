@@ -24,13 +24,13 @@ const Home = () => {
                             <div className="game-mode hover:scale-105 transition-transform">
                                 <Image
                                     src="/pexels-elina-sazonova-1850619.jpg"
-                                    alt="Capitals Mode"
+                                    alt="Cities Mode"
                                     className="rounded-lg w-full h-32 sm:h-48 object-cover"
                                     width={300}
                                     height={300}
                                 />
                                 <p className="text-xl sm:text-2xl text-white font-bold text-center mt-4">
-                                    Capitals
+                                    Cities
                                 </p>
                             </div>
                         </Link>
@@ -73,6 +73,8 @@ const Home = () => {
                             </div>
                         </Link>
                     </div>
+                    <p>Delete token in cookies if cannot login/signup/play</p>
+                    <p>Inspect/Application/Cookies</p>
                 </div>
             </main>
             <Footer />

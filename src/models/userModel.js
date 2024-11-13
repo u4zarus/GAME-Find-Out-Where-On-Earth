@@ -31,6 +31,14 @@ const userSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
+    maxScoreCities: {
+        type: Number,
+        default: 0,
+    },
+    maxScoreLandmarks: {
+        type: Number,
+        default: 0,
+    },
 });
 
 const User = mongoose.models.users || mongoose.model("users", userSchema);

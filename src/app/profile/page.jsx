@@ -27,8 +27,20 @@ const ProfilePage = () => {
         try {
             const res = await axios.get("/api/users/me");
             if (res.data && res.data.data) {
-                const { _id, username, maxScore } = res.data.data;
-                setUserDetails({ id: _id, username, maxScore });
+                const {
+                    _id,
+                    username,
+                    maxScoreCities,
+                    maxScoreLandmarks,
+                    maxScore,
+                } = res.data.data;
+                setUserDetails({
+                    id: _id,
+                    username,
+                    maxScoreCities,
+                    maxScoreLandmarks,
+                    maxScore,
+                });
             } else {
                 router.push("/login"); // Redirect if no user data
             }
@@ -78,10 +90,27 @@ const ProfilePage = () => {
                         </h2>
                     </div>
                     <div className="text-center mb-6">
-                        <p className="text-lg font-medium">Max Score:</p>
-                        <h2 className="text-xl font-bold">
-                            {userDetails?.maxScore || 0}
-                        </h2>
+                        <p className="text-lg font-medium">Max Scores:</p>
+                        <div className="flex justify-between">
+                            <div>
+                                <p className="text-gray-400">Cities:</p>
+                                <h2 className="text-xl font-bold">
+                                    {userDetails?.maxScoreCities || 0}
+                                </h2>
+                            </div>
+                            <div>
+                                <p className="text-gray-400">Landmarks:</p>
+                                <h2 className="text-xl font-bold">
+                                    {userDetails?.maxScoreLandmarks || 0}
+                                </h2>
+                            </div>
+                            <div>
+                                <p className="text-gray-400">Mixed:</p>
+                                <h2 className="text-xl font-bold">
+                                    {userDetails?.maxScore || 0}
+                                </h2>
+                            </div>
+                        </div>
                     </div>
                     <div className="flex justify-between mt-4">
                         <button

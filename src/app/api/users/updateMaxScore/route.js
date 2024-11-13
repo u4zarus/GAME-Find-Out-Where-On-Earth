@@ -19,7 +19,9 @@ export async function POST(request) {
         const userId = decodedToken.id;
 
         const reqBody = await request.json();
-        const { totalScore } = reqBody;
+        const { totalScore, mode } = reqBody;
+        console.log(`Total score: ${totalScore}`);
+        console.log(`Mode: ${mode}`);
 
         const user = await User.findById(userId);
         if (!user) {
@@ -29,16 +31,56 @@ export async function POST(request) {
             );
         }
 
-        console.log(`Current max score: ${user.maxScore}`);
-        console.log(`New total score: ${totalScore}`);
+        // console.log(`Current max score: ${user.maxScore}`);
+        // console.log(`New total score: ${totalScore}`);
 
-        if (totalScore > user.maxScore) {
-            user.maxScore = totalScore;
-            await user.save();
-            console.log("Score successfully updated");
+        // if (totalScore > user.maxScore) {
+        //     user.maxScore = totalScore;
+        //     await user.save();
+        //     console.log("Score successfully updated");
+        // } else {
+        //     console.log(
+        //         "No update needed, totalScore is not greater than maxScore"
+        //     );
+        // }
+
+        if (mode === "0") {
+            if (totalScore > user.maxScoreCities) {
+                user.maxScoreCities = totalScore;
+                await user.save();
+                console.log("Score successfully updated");
+            } else {
+                return NextResponse.json(
+                    { message: "No update needed" },
+                    { status: 200 }
+                );
+            }
+        } else if (mode === "1") {
+            if (totalScore > user.maxScoreLandmarks) {
+                user.maxScoreLandmarks = totalScore;
+                await user.save();
+                console.log("Score successfully updated");
+            } else {
+                return NextResponse.json(
+                    { message: "No update needed" },
+                    { status: 200 }
+                );
+            }
+        } else if (mode === "2") {
+            if (totalScore > user.maxScore) {
+                user.maxScore = totalScore;
+                await user.save();
+                console.log("Score successfully updated");
+            } else {
+                return NextResponse.json(
+                    { message: "No update needed" },
+                    { status: 200 }
+                );
+            }
         } else {
-            console.log(
-                "No update needed, totalScore is not greater than maxScore"
+            return NextResponse.json(
+                { error: "Invalid mode" },
+                { status: 400 }
             );
         }
 
