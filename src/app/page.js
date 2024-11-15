@@ -7,14 +7,14 @@ import Image from "next/image";
 
 const Home = () => {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-gray-950">
             <Header />
-            <main className="flex-grow flex justify-center items-center bg-gradient-to-br from-gray-900 to-gray-950">
-                <div className="flex flex-col items-center space-y-8 bg-gray-900 bg-opacity-80 p-8 rounded-lg">
-                    <h1 className="text-4xl font-bold mb-8 text-white text-center">
+            <main className="flex-grow flex justify-center items-center px-4 sm:px-6 mt-16">
+                <div className="flex flex-col items-center space-y-6 sm:space-y-8 bg-gray-900 bg-opacity-80 p-6 sm:p-8 rounded-lg w-full sm:w-auto">
+                    <h1 className="text-2xl sm:text-4xl font-bold mb-6 sm:mb-8 text-white text-center max-w-xs sm:max-w-none">
                         Find where on Earth
                     </h1>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full">
                         <Link
                             href={{
                                 pathname: "/game",
@@ -29,7 +29,7 @@ const Home = () => {
                                     width={300}
                                     height={300}
                                 />
-                                <p className="text-xl sm:text-2xl text-white font-bold text-center mt-4">
+                                <p className="text-lg sm:text-xl text-white font-bold text-center mt-4">
                                     Cities
                                 </p>
                             </div>
@@ -48,7 +48,7 @@ const Home = () => {
                                     width={300}
                                     height={300}
                                 />
-                                <p className="text-xl sm:text-2xl text-white font-bold text-center mt-4">
+                                <p className="text-lg sm:text-xl text-white font-bold text-center mt-4">
                                     Famous Landmarks
                                 </p>
                             </div>
@@ -67,14 +67,18 @@ const Home = () => {
                                     width={300}
                                     height={300}
                                 />
-                                <p className="text-xl sm:text-2xl text-white font-bold text-center mt-4">
+                                <p className="text-lg sm:text-xl text-white font-bold text-center mt-4">
                                     Mixed Mode
                                 </p>
                             </div>
                         </Link>
                     </div>
-                    <p>Delete token in cookies if cannot login/signup/play</p>
-                    <p>Inspect/Application/Cookies</p>
+                    <p className="text-center text-sm sm:text-base text-white mt-6">
+                        Delete token in cookies if cannot login/signup/play
+                    </p>
+                    <p className="text-center text-sm sm:text-base text-white">
+                        Inspect/Application/Cookies
+                    </p>
                 </div>
             </main>
             <Footer />

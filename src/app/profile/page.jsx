@@ -64,7 +64,7 @@ const ProfilePage = () => {
         <>
             <Header className="fixed top-0 left-0 w-full z-50" />
             <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-gray-200 pt-[80px]">
-                <div className="w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-6">
+                <div className="w-3/4 max-w-md bg-gray-800 shadow-lg rounded-lg p-6">
                     <h1 className="text-2xl font-semibold mb-4 text-center">
                         User Profile
                     </h1>
