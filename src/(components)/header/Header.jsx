@@ -18,6 +18,8 @@ const Header = () => {
                 setIsLoggedIn(!!res.data?.data); // Set logged-in status
             } catch (error) {
                 setIsLoggedIn(false); // Assume not logged in on error
+                document.cookie =
+                    "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Clear token cookie
             }
         };
         checkUserStatus();
