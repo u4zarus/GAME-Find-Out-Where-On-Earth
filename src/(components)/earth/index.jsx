@@ -479,19 +479,6 @@ const EndGameModal = ({
         window.location.reload();
     };
 
-    // const updateMaxScore = async (totalScore) => {
-    //     try {
-    //         const response = await axios.post("/api/users/updateMaxScore", {
-    //             totalScore, // Pass only totalScore, backend will get userId from token
-    //         });
-    //         console.log("Score updated successfully", response.data);
-    //         toast.success("Score updated successfully");
-    //     } catch (error) {
-    //         console.error("Score update failed", error.message);
-    //         toast.error(error.message);
-    //     }
-    // };
-
     const updateMaxScore = async (totalScore) => {
         try {
             const response = await axios.post("/api/users/updateMaxScore", {
@@ -516,47 +503,57 @@ const EndGameModal = ({
             style={{ position: "fixed", zIndex: 9999 }}
         >
             <div className="modal-background fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                <div className="modal-content bg-white rounded-lg shadow-xl w-3/4 md:w-1/2 lg:w-1/3 p-6">
-                    <button
-                        className="absolute top-2 right-2 text-3xl"
-                        onClick={handleClose}
-                    >
-                        <IoIosCloseCircle fill="black" />
-                    </button>
-                    <h1 className="text-2xl text-gray-950 font-semibold mb-4">
+                <div className="modal-content bg-white rounded-lg shadow-xl w-11/12 md:w-4/5 lg:w-2/3 max-h-screen overflow-y-auto p-6 relative">
+                    <h1 className="text-xl md:text-2xl text-gray-950 font-semibold mb-4 text-center">
                         Game Over
                     </h1>
-                    <p className="text-lg sm:text-base text-gray-950 font-semibold mb-2">
+                    <p className="text-base md:text-lg text-gray-950 font-semibold mb-4 text-center">
                         Total Score: {totalScore}
                     </p>
                     <div className="mt-4 mb-6">
-                        <h2 className="text-lg sm:text-base text-gray-950 font-semibold mb-2">
-                            Distances:
+                        <h2 className="text-lg text-gray-950 font-semibold mb-4 text-center">
+                            Results:
                         </h2>
-                        <ul>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                             {Object.keys(gpsImageData).map((key, index) => (
-                                <li
+                                <div
                                     key={index}
-                                    className="text-gray-600 text-sm sm:text-base"
+                                    className="p-4 bg-gray-100 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
                                 >
-                                    Location: {gpsImageData[key].location},
-                                    Distance: {distances[index].toFixed(0)} km
-                                </li>
+                                    <Image
+                                        src={gpsImageData[key].img_path}
+                                        alt={gpsImageData[key].location}
+                                        width={200}
+                                        height={150}
+                                        className="rounded-md mb-2 w-full"
+                                    />
+                                    <p className="text-gray-800 font-medium text-center">
+                                        {gpsImageData[key].location}
+                                    </p>
+                                    <p className="text-gray-600 text-center">
+                                        Distance:{" "}
+                                        <span className="font-semibold">
+                                            {distances[index].toFixed(0)} km
+                                        </span>
+                                    </p>
+                                </div>
                             ))}
-                        </ul>
+                        </div>
                     </div>
-                    <button
-                        onClick={handleTryAgain}
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Try Again
-                    </button>
-                    <button
-                        onClick={() => (window.location.href = "/")}
-                        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-4"
-                    >
-                        Go to Home
-                    </button>
+                    <div className="flex flex-wrap justify-end gap-4 mt-6">
+                        <button
+                            onClick={handleTryAgain}
+                            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Try Again
+                        </button>
+                        <button
+                            onClick={() => (window.location.href = "/")}
+                            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                        >
+                            Go to Home
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
