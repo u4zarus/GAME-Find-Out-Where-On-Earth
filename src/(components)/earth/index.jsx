@@ -113,14 +113,6 @@ const Index = () => {
     };
 
     const handleGuessButtonClick = () => {
-        // verifyGuess(
-        //     gpsData.gpsImageData[
-        //         Object.keys(gpsData.gpsImageData)[currentIndex]
-        //     ],
-        //     clickedSphericalCoords
-        // );
-        // setClickedSphericalCoords(null);
-
         if (!guessDisabled) {
             verifyGuess(
                 gpsData.gpsImageData[
@@ -134,14 +126,7 @@ const Index = () => {
     };
 
     return gpsData ? (
-        <div
-            className="flex flex-col items-center justify-center h-full w-full overflow-hidden"
-            style={{
-                backgroundImage: `url('bbg.png')`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-            }}
-        >
+        <div className="flex flex-col items-center justify-center h-full w-full overflow-hidden">
             <div className="flex flex-col items-center justify-center space-y-4">
                 {currentIndex < Object.keys(gpsData.gpsImageData).length ? (
                     <QuestionImage
@@ -192,6 +177,7 @@ const Index = () => {
 
             <div className="mt-14">
                 <Canvas style={{ width: "100vw", height: "100vh" }}>
+                    <StarField />
                     <OrbitControlsCustom />
                     <ambientLight intensity={2} />
                     <directionalLight intensity={1} position={[2, 1, 1]} />
@@ -205,6 +191,52 @@ const Index = () => {
         </div>
     ) : (
         <p>Loading game data...</p>
+    );
+};
+
+// ------------------ StarField ---------------------------
+const StarField = () => {
+    const points = useMemo(() => {
+        const starCount = 500;
+        const stars = [];
+        const colors = [];
+
+        for (let i = 0; i < starCount; i++) {
+            const x = THREE.MathUtils.randFloatSpread(200);
+            const y = THREE.MathUtils.randFloatSpread(200);
+            const z = THREE.MathUtils.randFloatSpread(200);
+            stars.push(x, y, z);
+
+            // random colors around white, blue, yellow, orange, red
+            const color = new THREE.Color();
+            color.setHSL(Math.random(), Math.random(), Math.random());
+            colors.push(color.r, color.g, color.b);
+        }
+
+        return {
+            positions: new Float32Array(stars),
+            colors: new Float32Array(colors),
+        };
+    }, []);
+
+    return (
+        <points>
+            <bufferGeometry>
+                <bufferAttribute
+                    attach="attributes-position"
+                    array={points.positions}
+                    count={points.positions.length / 3}
+                    itemSize={3}
+                />
+                <bufferAttribute
+                    attach="attributes-color"
+                    array={points.colors}
+                    count={points.colors.length / 3}
+                    itemSize={3}
+                />
+            </bufferGeometry>
+            <pointsMaterial size={0.3} vertexColors={true} />{" "}
+        </points>
     );
 };
 
@@ -468,13 +500,6 @@ const EndGameModal = ({
     onClose,
     mode,
 }) => {
-    const [isOpen, setIsOpen] = useState(true);
-
-    const handleClose = () => {
-        setIsOpen(false);
-        onClose();
-    };
-
     const handleTryAgain = () => {
         window.location.reload();
     };
@@ -497,11 +522,14 @@ const EndGameModal = ({
         updateMaxScore(totalScore);
     }, []);
 
+    const getDistanceColor = (distance) => {
+        if (distance < 100) return "bg-green-100 text-green-800";
+        if (distance < 500) return "bg-yellow-100 text-yellow-800";
+        return "bg-red-100 text-red-800";
+    };
+
     return (
-        <div
-            className={`modal ${isOpen ? "is-active" : ""}`}
-            style={{ position: "fixed", zIndex: 9999 }}
-        >
+        <div style={{ position: "fixed", zIndex: 9999 }}>
             <div className="modal-background fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="modal-content bg-white rounded-lg shadow-xl w-11/12 md:w-4/5 lg:w-2/3 max-h-screen overflow-y-auto p-6 relative">
                     <h1 className="text-xl md:text-2xl text-gray-950 font-semibold mb-4 text-center">
@@ -515,29 +543,34 @@ const EndGameModal = ({
                             Results:
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                            {Object.keys(gpsImageData).map((key, index) => (
-                                <div
-                                    key={index}
-                                    className="p-4 bg-gray-100 rounded-lg shadow hover:shadow-md transition-shadow duration-200"
-                                >
-                                    <Image
-                                        src={gpsImageData[key].img_path}
-                                        alt={gpsImageData[key].location}
-                                        width={200}
-                                        height={150}
-                                        className="rounded-md mb-2 w-full"
-                                    />
-                                    <p className="text-gray-800 font-medium text-center">
-                                        {gpsImageData[key].location}
-                                    </p>
-                                    <p className="text-gray-600 text-center">
-                                        Distance:{" "}
-                                        <span className="font-semibold">
-                                            {distances[index].toFixed(0)} km
-                                        </span>
-                                    </p>
-                                </div>
-                            ))}
+                            {Object.keys(gpsImageData).map((key, index) => {
+                                const colorClass = getDistanceColor(
+                                    distances[index]
+                                );
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`p-4 rounded-lg shadow hover:shadow-md transition-shadow duration-200 ${colorClass}`}
+                                    >
+                                        <Image
+                                            src={gpsImageData[key].img_path}
+                                            alt={gpsImageData[key].location}
+                                            width={200}
+                                            height={150}
+                                            className="rounded-md mb-2 w-full"
+                                        />
+                                        <p className="font-medium text-center">
+                                            {gpsImageData[key].location}
+                                        </p>
+                                        <p className="text-center">
+                                            Distance:{" "}
+                                            <span className="font-semibold">
+                                                {distances[index].toFixed(0)} km
+                                            </span>
+                                        </p>
+                                    </div>
+                                );
+                            })}
                         </div>
                     </div>
                     <div className="flex flex-wrap justify-end gap-4 mt-6">
