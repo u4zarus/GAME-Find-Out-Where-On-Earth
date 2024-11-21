@@ -3,29 +3,27 @@ import Image from "next/image";
 import Link from "next/link";
 import axios from "axios";
 import { IoIosCloseCircle } from "react-icons/io";
-import { FaBars, FaTimes } from "react-icons/fa"; // Import icons for hamburger and close
+import { FaBars, FaTimes } from "react-icons/fa";
 
 const Header = () => {
     const [showModal, setShowModal] = useState(false);
-    const [isLoggedIn, setIsLoggedIn] = useState(false); // Track login status
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false); // Mobile menu state
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
-        // Check if user is logged in by fetching user data
         const checkUserStatus = async () => {
             try {
                 const res = await axios.get("/api/users/me");
-                setIsLoggedIn(!!res.data?.data); // Set logged-in status
+                setIsLoggedIn(!!res.data?.data);
             } catch (error) {
-                setIsLoggedIn(false); // Assume not logged in on error
+                setIsLoggedIn(false);
                 document.cookie =
-                    "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; // Clear token cookie
+                    "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
             }
         };
         checkUserStatus();
     }, []);
 
-    // Toggle mobile menu
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
     return (

@@ -31,19 +31,6 @@ export async function POST(request) {
             );
         }
 
-        // console.log(`Current max score: ${user.maxScore}`);
-        // console.log(`New total score: ${totalScore}`);
-
-        // if (totalScore > user.maxScore) {
-        //     user.maxScore = totalScore;
-        //     await user.save();
-        //     console.log("Score successfully updated");
-        // } else {
-        //     console.log(
-        //         "No update needed, totalScore is not greater than maxScore"
-        //     );
-        // }
-
         if (mode === "0") {
             if (totalScore > user.maxScoreCities) {
                 user.maxScoreCities = totalScore;

@@ -5,7 +5,6 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas, useThree, useFrame, extend } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-// import gpsData from "@/app/gpsImageData.json";
 import { calculateDistance2 } from "@/utils/coordUtils";
 import Image from "next/image";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -185,6 +184,8 @@ const Index = () => {
                         setClickedSphericalCoords={setClickedSphericalCoords}
                         clickedSphericalCoords={clickedSphericalCoords}
                         actualLocation={actualLocation}
+                        gpsData={gpsData}
+                        currentIndex={currentIndex}
                     />
                 </Canvas>
             </div>
@@ -326,6 +327,8 @@ const Earth = ({
     setClickedSphericalCoords,
     clickedSphericalCoords,
     actualLocation,
+    gpsData,
+    currentIndex,
 }) => {
     const mesh = useRef();
     const { camera, gl } = useThree();
@@ -416,6 +419,26 @@ const Earth = ({
                     <meshBasicMaterial color="green" />
                 </mesh>
             ) : null}
+
+            {/* {actualLocation ? (
+                <mesh
+                    position={new THREE.Vector3().setFromSpherical(
+                        actualLocation
+                    )}
+                >
+                    <planeGeometry args={[0.02, 0.02]} />
+                    <meshBasicMaterial
+                        map={new THREE.TextureLoader().load(
+                            gpsData.gpsImageData[
+                                Object.keys(gpsData.gpsImageData)[currentIndex]
+                            ].img_path
+                        )}
+                        side={THREE.DoubleSide}
+                        transparent={true} // Ensure transparency
+                        depthTest={false} // Avoid z-buffer issues
+                    />
+                </mesh>
+            ) : null} */}
 
             {/* A line between the marks */}
             {markerPosition && actualLocation ? (

@@ -11,7 +11,6 @@ export async function GET(request) {
             maxScoreLandmarks: -1,
         });
         const usersMixed = await User.find().sort({ maxScore: -1 });
-        // return NextResponse.json(users);
         return NextResponse.json({
             usersCities,
             usersLandmarks,
