@@ -44,19 +44,19 @@ const LeaderBoard = () => {
     }, [currentUser]);
 
     const renderTable = (data, title) => (
-        <div className="w-full max-w-xs mb-4">
+        <div className="w-full mb-4">
             <h2 className="text-2xl font-semibold text-center my-3">{title}</h2>
-            <div className="max-h-[500px] overflow-y-auto">
-                <table className="table-auto w-full text-left">
+            <div className="max-h-[500px] overflow-y-auto no-scrollbar">
+                <table className="table-fixed w-full text-left border-collapse">
                     <thead className="bg-gray-800 sticky top-0">
                         <tr>
-                            <th className="px-6 py-3 text-gray-300 font-semibold">
+                            <th className="px-2 py-3 text-gray-300 font-semibold w-1/6">
                                 Rank
                             </th>
-                            <th className="px-6 py-3 text-gray-300 font-semibold">
+                            <th className="px-2 py-3 text-gray-300 font-semibold w-3/6 truncate">
                                 Username
                             </th>
-                            <th className="px-6 py-3 text-gray-300 font-semibold">
+                            <th className="px-2 py-3 text-gray-300 font-semibold w-2/6">
                                 Max Score
                             </th>
                         </tr>
@@ -70,30 +70,20 @@ const LeaderBoard = () => {
                                 <tr
                                     key={user._id}
                                     className={`${
-                                        index % 2 === 0
-                                            ? "bg-gray-800"
-                                            : "bg-gray-700"
-                                    } ${
                                         isCurrentUser
                                             ? "bg-blue-500 text-white"
-                                            : "hover:bg-gray-600"
-                                    } transition-colors duration-150`}
-                                    style={
-                                        isCurrentUser
-                                            ? {
-                                                  backgroundColor: "#3b82f6",
-                                                  color: "white",
-                                              }
-                                            : {}
-                                    }
+                                            : index % 2 === 0
+                                            ? "bg-gray-800"
+                                            : "bg-gray-700"
+                                    }`}
                                 >
-                                    <td className="border border-gray-600 px-6 py-3">
+                                    <td className="border border-gray-600 px-2 py-3 text-center">
                                         {index + 1}
                                     </td>
-                                    <td className="border border-gray-600 px-6 py-3">
+                                    <td className="border border-gray-600 px-2 py-3 truncate">
                                         {user.username}
                                     </td>
-                                    <td className="border border-gray-600 px-6 py-3">
+                                    <td className="border border-gray-600 px-2 py-3 text-center">
                                         {title === "Cities"
                                             ? user.maxScoreCities
                                             : title === "Landmarks"
@@ -106,7 +96,6 @@ const LeaderBoard = () => {
                     </tbody>
                 </table>
             </div>
-            {/* Current user's score */}
             {currentUser && (
                 <div className="mt-4 text-center text-gray-400">
                     <p>
@@ -129,14 +118,14 @@ const LeaderBoard = () => {
                 <h1 className="text-4xl font-bold text-center mb-5 text-white">
                     Leaderboard
                 </h1>
-                <div className="flex flex-col sm:flex-row justify-around w-full max-w-5xl">
-                    <div className="flex justify-center w-full">
+                <div className="flex flex-col sm:flex-row justify-around w-full max-w-5xl sm:gap-6">
+                    <div className="flex justify-center w-full sm:w-auto">
                         {renderTable(cities, "Cities")}
                     </div>
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center w-full sm:w-auto">
                         {renderTable(landmarks, "Landmarks")}
                     </div>
-                    <div className="flex justify-center w-full">
+                    <div className="flex justify-center w-full sm:w-auto">
                         {renderTable(mixed, "Mixed")}
                     </div>
                 </div>

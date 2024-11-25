@@ -14,6 +14,14 @@ module.exports = {
             //         "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
             // },
             colors: {},
+            scrollbar: {
+                hidden: {
+                    "&::-webkit-scrollbar": { display: "none" },
+                    "-ms-overflow-style":
+                        "none" /* For Internet Explorer and Edge */,
+                    "scrollbar-width": "none" /* For Firefox */,
+                },
+            },
         },
     },
     plugins: [],

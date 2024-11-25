@@ -186,6 +186,13 @@ const InfoModal = ({ onClose }) => {
                                 to take a guess.
                             </li>
                             <li className="pb-2">
+                                The closer your guess is to the actual location,
+                                the more points you earn (0 - 1000).
+                            </li>
+                            <li className="pb-2">
+                                You need to guess the center of the image.
+                            </li>
+                            <li className="pb-2">
                                 Enable GPU acceleration in your browser settings
                                 for better performance.
                             </li>

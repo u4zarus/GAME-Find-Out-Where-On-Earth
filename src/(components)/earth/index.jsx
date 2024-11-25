@@ -27,10 +27,8 @@ const Index = () => {
     const [distances, setDistances] = useState([]);
     const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
-    //
     const [actualLocation, setActualLocation] = useState(null);
     const [guessDisabled, setGuessDisabled] = useState(false);
-    //
     const searchParams = useSearchParams();
     const mode = searchParams.get("mode");
     const [gpsData, setGpsData] = useState(null);
@@ -80,10 +78,18 @@ const Index = () => {
             const fixedDistance = distance.toFixed(0);
             const maxDistance = 5000; // Maximum distance for which score is 0
             const decayRate = 3; // Increase this to make the score decrease more rapidly
-            let newScore = Math.max(
-                0,
-                1000 * Math.exp((-fixedDistance * decayRate) / maxDistance)
-            );
+
+            // Add tolerance: if distance is less than 10km, set score to 1000
+            let newScore =
+                fixedDistance < 10
+                    ? 1000
+                    : Math.max(
+                          0,
+                          1000 *
+                              Math.exp(
+                                  (-fixedDistance * decayRate) / maxDistance
+                              )
+                      );
 
             newScore = Math.round(newScore);
             setPlusPoints(newScore);
@@ -98,7 +104,7 @@ const Index = () => {
             setActualLocation(middlePointSphericalCoords);
         }
     };
-    //
+
     const handleNextImage = () => {
         setCurrentIndex(currentIndex + 1);
         setModalOpen(false);
@@ -139,18 +145,21 @@ const Index = () => {
                     />
                 ) : null}
             </div>
-            {actualLocation ? (
-                <>
+            <div className="fixed bottom-10 right-10 z-50">
+                {actualLocation ? (
                     <button
                         onClick={handleNextImage}
-                        className="fixed bottom-10 right-10 px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600 z-50"
+                        className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
                     >
-                        Next Image
+                        {currentIndex + 1 ===
+                        Object.keys(gpsData.gpsImageData).length
+                            ? "See Results"
+                            : "Next Image"}
                     </button>
-                </>
-            ) : null}
+                ) : null}
+            </div>
 
-            <div className="fixed top-14 left-2 px-1 py-2 rounded-md text-xl z-50">
+            <div className="fixed top-16 left-2 px-1 py-2 text-center min-w-10 rounded-md text-xl z-50 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600">
                 <p className="hidden sm:block">Current Score: {score}</p>
                 <p className="sm:hidden">{score}</p>
             </div>
@@ -254,7 +263,7 @@ const OrbitControlsCustom = () => {
         controlsRef.current.enableRotate = true;
         controlsRef.current.enablePan = false;
 
-        controlsRef.current.minDistance = 1.1; // Minimum distance from the camera to the target
+        controlsRef.current.minDistance = 1.11; // Minimum distance from the camera to the target
         controlsRef.current.maxDistance = 2; // Maximum distance from the camera to the target
     }, []);
 
@@ -361,7 +370,7 @@ const Earth = ({
             setClickedSphericalCoords(
                 new THREE.Spherical().setFromVector3(intersection.point)
             );
-            setMarkerPosition(intersection.point); // Keep the guess marker position
+            setMarkerPosition(intersection.point);
         }
     };
 
@@ -384,10 +393,26 @@ const Earth = ({
                 .copy(point1)
                 .lerp(point2, alpha)
                 .normalize()
-                .multiplyScalar(1); // Keep points on the sphere's surface
+                .multiplyScalar(1);
             points.push(interpolated);
         }
         return points;
+    };
+
+    const calculatePlaneRotation = (position) => {
+        const center = new THREE.Vector3(0, 0, 0);
+        const direction = new THREE.Vector3()
+            .subVectors(position, center)
+            .normalize();
+        const rotationMatrix = new THREE.Matrix4().lookAt(
+            direction,
+            center,
+            new THREE.Vector3(0, 1, 0)
+        );
+        const quaternion = new THREE.Quaternion().setFromRotationMatrix(
+            rotationMatrix
+        );
+        return quaternion;
     };
 
     return (
@@ -400,22 +425,20 @@ const Earth = ({
             <sphereGeometry args={[1, 32, 32]} />
             <primitive object={texMaterial} attach="material" />
 
-            {/* User guess mark */}
             {markerPosition ? (
                 <mesh position={markerPosition}>
-                    <sphereGeometry args={[0.002, 16, 16]} />
+                    <sphereGeometry args={[0.004, 16, 16]} />
                     <meshBasicMaterial color="red" />
                 </mesh>
             ) : null}
 
-            {/* Actual location reveal mark */}
             {actualLocation ? (
                 <mesh
                     position={new THREE.Vector3().setFromSpherical(
                         actualLocation
                     )}
                 >
-                    <sphereGeometry args={[0.003, 16, 16]} />
+                    <sphereGeometry args={[0.004, 16, 16]} />
                     <meshBasicMaterial color="green" />
                 </mesh>
             ) : null}
@@ -425,8 +448,11 @@ const Earth = ({
                     position={new THREE.Vector3().setFromSpherical(
                         actualLocation
                     )}
+                    quaternion={calculatePlaneRotation(
+                        new THREE.Vector3().setFromSpherical(actualLocation)
+                    )}
                 >
-                    <planeGeometry args={[0.02, 0.02]} />
+                    <planeGeometry args={[0.01, 0.005]} />
                     <meshBasicMaterial
                         map={new THREE.TextureLoader().load(
                             gpsData.gpsImageData[
@@ -434,13 +460,12 @@ const Earth = ({
                             ].img_path
                         )}
                         side={THREE.DoubleSide}
-                        transparent={true} // Ensure transparency
-                        depthTest={false} // Avoid z-buffer issues
+                        transparent={true}
+                        depthTest={false}
                     />
                 </mesh>
             ) : null} */}
 
-            {/* A line between the marks */}
             {markerPosition && actualLocation ? (
                 <line>
                     <bufferGeometry

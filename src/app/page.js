@@ -14,6 +14,9 @@ const Home = () => {
                     <h1 className="text-2xl sm:text-4xl font-bold mb-6 sm:mb-8 text-white text-center max-w-xs sm:max-w-none">
                         Find where on Earth
                     </h1>
+                    <p className="text-lg sm:text-xl text-white text-center">
+                        Select a game mode to start playing
+                    </p>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 w-full">
                         <Link
                             href={{
@@ -73,12 +76,6 @@ const Home = () => {
                             </div>
                         </Link>
                     </div>
-                    <p className="text-center text-sm sm:text-base text-white mt-6">
-                        Delete token in cookies if cannot login/signup/play
-                    </p>
-                    <p className="text-center text-sm sm:text-base text-white">
-                        Inspect/Application/Cookies
-                    </p>
                 </div>
             </main>
             <Footer />

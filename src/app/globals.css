@@ -58,6 +58,15 @@ canvas {
     filter: brightness(50%);
 }
 
+.no-scrollbar::-webkit-scrollbar {
+    display: none; /* Hide scrollbar for Chrome, Safari, and Edge */
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none; /* Hide scrollbar for Internet Explorer and Edge */
+    scrollbar-width: none; /* Hide scrollbar for Firefox */
+}
+
 @layer utilities {
     .text-balance {
         text-wrap: balance;
