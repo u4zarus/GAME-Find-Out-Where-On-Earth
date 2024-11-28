@@ -14,11 +14,19 @@ export async function GET(request) {
             .limit(20);
         const usersMixed = await User.find().sort({ maxScore: -1 }).limit(20); // Limit to top 20 users
 
-        return NextResponse.json({
-            usersCities,
-            usersLandmarks,
-            usersMixed,
-        });
+        return NextResponse.json(
+            {
+                usersCities,
+                usersLandmarks,
+                usersMixed,
+            },
+            {
+                headers: {
+                    "Cache-Control": "no-cache",
+                    Pragma: "no-cache",
+                },
+            }
+        );
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }

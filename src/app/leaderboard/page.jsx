@@ -9,46 +9,50 @@ const LeaderBoard = () => {
     const [landmarks, setLandmarks] = useState([]);
     const [mixed, setMixed] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
-    const [fetchTrigger, setFetchTrigger] = useState(false); // Trigger for re-fetching leaderboard
 
-    const fetchLeaderboard = async () => {
-        try {
-            const response = await axios.get("/api/users/leaderboard", {
-                withCredentials: true,
-            });
-            setCities(response.data.usersCities);
-            setLandmarks(response.data.usersLandmarks);
-            setMixed(response.data.usersMixed);
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
-    const fetchCurrentUser = async () => {
-        try {
-            const response = await axios.get("/api/users/me");
-            setCurrentUser(response.data.data); // Assuming 'data' contains user info
-            console.log("Current User Fetched:", response.data);
-        } catch (error) {
-            console.error("Failed to fetch current user:", error);
-        }
-    };
-
-    // Fetch leaderboard and current user on mount or trigger
     useEffect(() => {
+        const fetchLeaderboard = async () => {
+            try {
+                const response = await axios.get(
+                    "/api/users/leaderboard",
+                    {
+                        withCredentials: true,
+                    },
+                    {
+                        headers: {
+                            "Cache-Control": "no-cache",
+                            Pragma: "no-cache",
+                        },
+                    }
+                );
+                setCities(response.data.usersCities);
+                setLandmarks(response.data.usersLandmarks);
+                setMixed(response.data.usersMixed);
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        const fetchCurrentUser = async () => {
+            try {
+                const response = await axios.get("/api/users/me");
+                setCurrentUser(response.data.data); // Assuming 'data' is where the user info is inside the response
+                console.log("Current User Fetched:", response.data);
+            } catch (error) {
+                console.error("Failed to fetch current user:", error);
+            }
+        };
+
         fetchLeaderboard();
         fetchCurrentUser();
-    }, [fetchTrigger]); // Re-fetch when fetchTrigger changes
+    }, []);
 
-    const updateScore = async (newScore) => {
-        try {
-            // Assuming there's a route to update the user's score
-            await axios.post("/api/users/updateScore", { score: newScore });
-            setFetchTrigger(!fetchTrigger); // Trigger re-fetch of leaderboard and user
-        } catch (error) {
-            console.error("Error updating score:", error);
+    // Log currentUser when it changes
+    useEffect(() => {
+        if (currentUser) {
+            console.log("Updated Current User:", currentUser);
         }
-    };
+    }, [currentUser]);
 
     const renderTable = (data, title) => (
         <div className="w-full mb-4">
