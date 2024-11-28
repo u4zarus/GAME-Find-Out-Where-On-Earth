@@ -14,7 +14,7 @@ const ProfilePage = () => {
 
     const logout = async () => {
         try {
-            await axios.get("/api/users/logout");
+            await axios.get("/api/users/logout", { withCredentials: true });
             toast.success("Logged out");
             router.push("/login");
         } catch (error) {

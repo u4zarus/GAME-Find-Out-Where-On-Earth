@@ -22,7 +22,9 @@ const SignupPage = () => {
     const onSignup = async () => {
         try {
             setLoading(true);
-            const response = await axios.post("/api/users/signup", user);
+            const response = await axios.post("/api/users/signup", user, {
+                withCredentials: true,
+            });
             console.log("Sign Up successful", response.data);
             router.push("/login");
         } catch (error) {

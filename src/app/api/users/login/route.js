@@ -10,9 +10,7 @@ export async function POST(request) {
     try {
         const reqBody = await request.json();
         const { email, password } = reqBody;
-        console.log(reqBody);
 
-        // Check if user exists
         const user = await User.findOne({ email });
         if (!user) {
             return NextResponse.json(
@@ -20,9 +18,7 @@ export async function POST(request) {
                 { status: 400 }
             );
         }
-        console.log("user exists");
 
-        // Check if password is correct
         const validPassword = await bcryptjs.compare(password, user.password);
         if (!validPassword) {
             return NextResponse.json(
@@ -30,16 +26,13 @@ export async function POST(request) {
                 { status: 400 }
             );
         }
-        console.log(user);
 
-        // Create token data
         const tokenData = {
             id: user._id,
             username: user.username,
             email: user.email,
         };
-        // Create token
-        const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET, {
+        const token = jwt.sign(tokenData, process.env.TOKEN_SECRET, {
             expiresIn: "1d",
         });
 
@@ -47,15 +40,14 @@ export async function POST(request) {
             message: "Login successful",
             success: true,
         });
-        // response.cookies.set("token", token, {
-        //     httpOnly: false,
-        // });
+
         response.cookies.set("token", token, {
-            httpOnly: true, // Prevent JavaScript access
-            secure: process.env.NODE_ENV === "production", // Ensure it's only sent over HTTPS in production
-            sameSite: "lax", // Prevent cross-origin requests unless they are safe (GET requests, etc.)
-            path: "/", // Make it accessible across the app
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
         });
+
         return response;
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });

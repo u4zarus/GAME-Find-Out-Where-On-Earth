@@ -1,7 +1,7 @@
-import { connect } from "@/dbConfig/dbConfig";
+import jwt from "jsonwebtoken";
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
+import { connect } from "@/dbConfig/dbConfig";
 
 connect();
 
@@ -20,8 +20,6 @@ export async function POST(request) {
 
         const reqBody = await request.json();
         const { totalScore, mode } = reqBody;
-        console.log(`Total score: ${totalScore}`);
-        console.log(`Mode: ${mode}`);
 
         const user = await User.findById(userId);
         if (!user) {
@@ -31,52 +29,20 @@ export async function POST(request) {
             );
         }
 
-        if (mode === "0") {
-            if (totalScore > user.maxScoreCities) {
-                user.maxScoreCities = totalScore;
-                await user.save();
-                console.log("Score successfully updated");
-            } else {
-                return NextResponse.json(
-                    { message: "No update needed" },
-                    { status: 200 }
-                );
-            }
-        } else if (mode === "1") {
-            if (totalScore > user.maxScoreLandmarks) {
-                user.maxScoreLandmarks = totalScore;
-                await user.save();
-                console.log("Score successfully updated");
-            } else {
-                return NextResponse.json(
-                    { message: "No update needed" },
-                    { status: 200 }
-                );
-            }
-        } else if (mode === "2") {
-            if (totalScore > user.maxScore) {
-                user.maxScore = totalScore;
-                await user.save();
-                console.log("Score successfully updated");
-            } else {
-                return NextResponse.json(
-                    { message: "No update needed" },
-                    { status: 200 }
-                );
-            }
-        } else {
-            return NextResponse.json(
-                { error: "Invalid mode" },
-                { status: 400 }
-            );
-        }
+        // Update scores based on game mode
+        if (mode === "0" && totalScore > user.maxScoreCities)
+            user.maxScoreCities = totalScore;
+        else if (mode === "1" && totalScore > user.maxScoreLandmarks)
+            user.maxScoreLandmarks = totalScore;
+        else if (mode === "2" && totalScore > user.maxScore)
+            user.maxScore = totalScore;
 
+        await user.save();
         return NextResponse.json(
             { message: "Max score updated successfully" },
             { status: 200 }
         );
     } catch (error) {
-        console.error("Error updating score:", error);
         return NextResponse.json(
             { error: "Something went wrong", message: error.message },
             { status: 500 }

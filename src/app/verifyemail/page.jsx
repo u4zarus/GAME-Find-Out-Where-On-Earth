@@ -10,7 +10,11 @@ const VerifyEmailPage = () => {
     const [error, setError] = useState(false);
     const verifyUserEmail = async () => {
         try {
-            await axios.post("/api/users/verifyemail", { token });
+            await axios.post(
+                "/api/users/verifyemail",
+                { token },
+                { withCredentials: true }
+            );
             setVerified(true);
         } catch (error) {
             setError(true);

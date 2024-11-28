@@ -19,7 +19,9 @@ const LoginPage = () => {
     const onLogin = async () => {
         try {
             setLoading(true);
-            const response = await axios.post("/api/users/login", user);
+            const response = await axios.post("/api/users/login", user, {
+                withCredentials: true,
+            });
             console.log("Log In successful", response.data);
             toast.success("Log In successful");
             router.push("/profile");

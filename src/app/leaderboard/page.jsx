@@ -13,7 +13,9 @@ const LeaderBoard = () => {
     useEffect(() => {
         const fetchLeaderboard = async () => {
             try {
-                const response = await axios.get("/api/users/leaderboard");
+                const response = await axios.get("/api/users/leaderboard", {
+                    withCredentials: true,
+                });
                 setCities(response.data.usersCities);
                 setLandmarks(response.data.usersLandmarks);
                 setMixed(response.data.usersMixed);

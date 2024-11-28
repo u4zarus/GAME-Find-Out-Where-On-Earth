@@ -6,6 +6,7 @@ export async function GET() {
             message: "Logged out",
             success: true,
         });
+
         response.cookies.set("token", "", {
             httpOnly: true,
             expires: new Date(0),
@@ -13,6 +14,7 @@ export async function GET() {
             sameSite: "lax",
             path: "/",
         });
+
         return response;
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
