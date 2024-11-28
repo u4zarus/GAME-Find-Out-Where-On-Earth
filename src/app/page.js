@@ -56,7 +56,7 @@ const Home = () => {
                                 </p>
                             </div>
                         </Link>
-                        <Link
+                        {/* <Link
                             href={{
                                 pathname: "/game",
                                 query: { mode: 2 },
@@ -74,7 +74,7 @@ const Home = () => {
                                     Mixed Mode
                                 </p>
                             </div>
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </main>

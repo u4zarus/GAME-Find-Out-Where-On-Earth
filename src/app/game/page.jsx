@@ -2,6 +2,7 @@
 
 import Header from "@/(components)/header/Header";
 import Index from "@/(components)/earth";
+import { Suspense } from "react";
 
 const Game = () => {
     return (
@@ -12,9 +13,13 @@ const Game = () => {
                 }
             `}</style>
             <Header />
-            <Index />
+            <Suspense fallback={<div>Loading game...</div>}>
+                <Index />
+            </Suspense>
         </main>
     );
 };
+
+// export const dynamic = "force-dynamic";
 
 export default Game;

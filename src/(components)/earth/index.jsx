@@ -58,8 +58,8 @@ const Index = () => {
     const verifyGuess = (location, clickedSphericalCoords) => {
         if (clickedSphericalCoords) {
             const middlePointGPS = {
-                latitude: (location.latitude_tl + location.latitude_br) / 2,
-                longitude: (location.longitude_tl + location.longitude_br) / 2,
+                latitude: location.latitude,
+                longitude: location.longitude,
             };
 
             const middlePointSphericalCoords = new THREE.Spherical(
@@ -81,7 +81,7 @@ const Index = () => {
 
             // Add tolerance: if distance is less than 10km, set score to 1000
             let newScore =
-                fixedDistance < 10
+                fixedDistance < 20
                     ? 1000
                     : Math.max(
                           0,
@@ -347,7 +347,8 @@ const Earth = ({
         const textureLoader = new THREE.TextureLoader();
         const tex = textureLoader.load(earthTexture.src);
         tex.wrapS = THREE.RepeatWrapping;
-        tex.offset.x = 0.2475;
+        tex.offset.x = 0.2502;
+        tex.offset.y = 0.0006;
         return tex;
     }, []);
 
@@ -399,22 +400,6 @@ const Earth = ({
         return points;
     };
 
-    const calculatePlaneRotation = (position) => {
-        const center = new THREE.Vector3(0, 0, 0);
-        const direction = new THREE.Vector3()
-            .subVectors(position, center)
-            .normalize();
-        const rotationMatrix = new THREE.Matrix4().lookAt(
-            direction,
-            center,
-            new THREE.Vector3(0, 1, 0)
-        );
-        const quaternion = new THREE.Quaternion().setFromRotationMatrix(
-            rotationMatrix
-        );
-        return quaternion;
-    };
-
     return (
         <mesh
             ref={mesh}
@@ -427,7 +412,7 @@ const Earth = ({
 
             {markerPosition ? (
                 <mesh position={markerPosition}>
-                    <sphereGeometry args={[0.004, 16, 16]} />
+                    <sphereGeometry args={[0.003, 16, 16]} />
                     <meshBasicMaterial color="red" />
                 </mesh>
             ) : null}
@@ -438,33 +423,10 @@ const Earth = ({
                         actualLocation
                     )}
                 >
-                    <sphereGeometry args={[0.004, 16, 16]} />
+                    <sphereGeometry args={[0.003, 16, 16]} />
                     <meshBasicMaterial color="green" />
                 </mesh>
             ) : null}
-
-            {/* {actualLocation ? (
-                <mesh
-                    position={new THREE.Vector3().setFromSpherical(
-                        actualLocation
-                    )}
-                    quaternion={calculatePlaneRotation(
-                        new THREE.Vector3().setFromSpherical(actualLocation)
-                    )}
-                >
-                    <planeGeometry args={[0.01, 0.005]} />
-                    <meshBasicMaterial
-                        map={new THREE.TextureLoader().load(
-                            gpsData.gpsImageData[
-                                Object.keys(gpsData.gpsImageData)[currentIndex]
-                            ].img_path
-                        )}
-                        side={THREE.DoubleSide}
-                        transparent={true}
-                        depthTest={false}
-                    />
-                </mesh>
-            ) : null} */}
 
             {markerPosition && actualLocation ? (
                 <line>

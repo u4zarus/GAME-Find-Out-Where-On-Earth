@@ -1,12 +1,10 @@
 {
     "gpsImageData": {
         "01": {
-            "location": "Betsiboka",
-            "img_path": "/sattelite_imgs/betsiboka.jpg",
-            "latitude_tl": -15.4867,
-            "longitude_tl": 47.1769,
-            "latitude_br": -16.3304,
-            "longitude_br": 47.1769
+            "location": "Grand Canyon",
+            "img_path": "/sattelite_imgs/canyon.jpg",
+            "latitude": 36.1512,
+            "longitude": -112.1656
         },
         "02": {
             "location": "Mount Everest",
@@ -17,12 +15,34 @@
             "longitude_br": 87.7538
         },
         "03": {
-            "location": "Trojmezi",
-            "img_path": "/sattelite_imgs/trojmezi.jpg",
-            "latitude_tl": 49.8001,
-            "longitude_tl": 19.6406,
-            "latitude_br": 49.2306,
-            "longitude_br": 19.6406
+            "location": "Pyramids of Giza",
+            "img_path": "/sattelite_imgs/pyramids.jpg",
+            "latitude_tl": 29.9792,
+            "longitude_tl": 31.1342
+        },
+        "04": {
+            "location": "Mount Fuji",
+            "img_path": "/sattelite_imgs/fuji.jpg",
+            "latitude": 35.3606,
+            "longitude": 138.7274
+        },
+        "05": {
+            "location": "Dubai Palm Islands",
+            "img_path": "/sattelite_imgs/palmislands.jpg",
+            "latitude": 25.1413,
+            "longitude": 55.1854
+        },
+        "06": {
+            "location": "Mont Blanc / Alps",
+            "img_path": "/sattelite_imgs/montblanc.jpg",
+            "latitude": 45.8326,
+            "longitude": 6.8652
+        },
+        "07": {
+            "location": "Svalbard",
+            "img_path": "/sattelite_imgs/svalbard.jpg",
+            "latitude": 77.702,
+            "longitude": 16.627
         }
     }
 }

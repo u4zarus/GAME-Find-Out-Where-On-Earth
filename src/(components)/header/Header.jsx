@@ -190,7 +190,8 @@ const InfoModal = ({ onClose }) => {
                                 the more points you earn (0 - 1000).
                             </li>
                             <li className="pb-2">
-                                You need to guess the center of the image.
+                                You need to guess where is the place
+                                (city/landmark) located, not the image itself.
                             </li>
                             <li className="pb-2">
                                 Enable GPU acceleration in your browser settings
