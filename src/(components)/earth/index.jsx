@@ -516,10 +516,16 @@ const EndGameModal = ({
 
     const updateMaxScore = async (totalScore) => {
         try {
-            const response = await axios.post("/api/users/updateMaxScore", {
-                totalScore,
-                mode,
-            });
+            const response = await axios.post(
+                "/api/users/updateMaxScore",
+                {
+                    totalScore,
+                    mode,
+                },
+                {
+                    withCredentials: true,
+                }
+            );
             console.log("Score updated successfully", response.data);
             toast.success("Score updated successfully");
         } catch (error) {
