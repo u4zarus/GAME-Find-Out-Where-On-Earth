@@ -47,8 +47,14 @@ export async function POST(request) {
             message: "Login successful",
             success: true,
         });
+        // response.cookies.set("token", token, {
+        //     httpOnly: false,
+        // });
         response.cookies.set("token", token, {
-            httpOnly: false,
+            httpOnly: true, // Prevent JavaScript access
+            secure: process.env.NODE_ENV === "production", // Ensure it's only sent over HTTPS in production
+            sameSite: "lax", // Prevent cross-origin requests unless they are safe (GET requests, etc.)
+            path: "/", // Make it accessible across the app
         });
         return response;
     } catch (error) {

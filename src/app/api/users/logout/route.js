@@ -9,6 +9,9 @@ export async function GET() {
         response.cookies.set("token", "", {
             httpOnly: true,
             expires: new Date(0),
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
         });
         return response;
     } catch (error) {
