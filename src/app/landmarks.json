@@ -9,16 +9,14 @@
         "02": {
             "location": "Mount Everest",
             "img_path": "/sattelite_imgs/everest.jpg",
-            "latitude_tl": 28.2939,
-            "longitude_tl": 87.7538,
-            "latitude_br": 27.5187,
-            "longitude_br": 87.7538
+            "latitude": 27.9881,
+            "longitude": 86.925
         },
         "03": {
             "location": "Pyramids of Giza",
             "img_path": "/sattelite_imgs/pyramids.jpg",
-            "latitude_tl": 29.9792,
-            "longitude_tl": 31.1342
+            "latitude": 29.9792,
+            "longitude": 31.1342
         },
         "04": {
             "location": "Mount Fuji",
