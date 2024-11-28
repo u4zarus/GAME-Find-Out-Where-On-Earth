@@ -34,11 +34,11 @@ export function middleware(request) {
         return NextResponse.redirect(new URL("/", request.nextUrl));
     }
 
-    if (!isPublicPath && !token) {
-        if (path.startsWith("/game")) {
-            return NextResponse.redirect(new URL("/login", request.nextUrl));
-        }
-    }
+    // if (!isPublicPath && !token) {
+    //     if (path.startsWith("/game")) {
+    //         return NextResponse.redirect(new URL("/login", request.nextUrl));
+    //     }
+    // }
 
     return NextResponse.next();
 }
