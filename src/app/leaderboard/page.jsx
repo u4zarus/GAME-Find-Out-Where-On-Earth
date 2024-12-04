@@ -13,17 +13,13 @@ const LeaderBoard = () => {
     useEffect(() => {
         const fetchLeaderboard = async () => {
             try {
-                const response = await axios.get(
-                    "/api/users/leaderboard",
-                    {
-                        withCredentials: true,
+                const response = await axios.get("/api/users/leaderboard", {
+                    withCredentials: true,
+                    headers: {
+                        "Cache-Control": "no-cache",
                     },
-                    {
-                        headers: {
-                            "Cache-Control": "no-cache",
-                        },
-                    }
-                );
+                });
+                console.log("Leaderboard Fetched:", response.data);
                 setCities(response.data.usersCities);
                 setLandmarks(response.data.usersLandmarks);
                 setMixed(response.data.usersMixed);
