@@ -16,6 +16,10 @@ const LoginPage = () => {
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        router.refresh();
+    }, []);
+
     const onLogin = async () => {
         try {
             setLoading(true);

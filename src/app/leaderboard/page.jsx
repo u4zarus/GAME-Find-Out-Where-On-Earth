@@ -13,15 +13,8 @@ const LeaderBoard = () => {
     useEffect(() => {
         const fetchLeaderboard = async () => {
             try {
-                // const response = await axios.get("/api/users/leaderboard", {
-                //     withCredentials: true,
-                //     headers: {
-                //         "Cache-Control": "no-cache",
-                //     },
-                // });
-                const response = await fetch("/api/users/leaderboard", {
-                    method: "GET",
-                    credentials: "include",
+                const response = await axios.get("/api/users/leaderboard", {
+                    withCredentials: true,
                     headers: {
                         "Cache-Control": "no-cache",
                     },
