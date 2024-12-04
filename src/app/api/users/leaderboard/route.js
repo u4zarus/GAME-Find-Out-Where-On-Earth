@@ -25,7 +25,7 @@ export async function GET(request) {
             usersMixed,
         });
 
-        response.headers.set("Cache-Control", "no-cache, max-age=0");
+        response.headers.set("Cache-Control", "no-cache, no-store, max-age=0");
         return response;
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
