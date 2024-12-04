@@ -19,11 +19,18 @@ export async function GET(request) {
             .limit(20)
             .lean();
 
-        return NextResponse.json({
-            usersCities,
-            usersLandmarks,
-            usersMixed,
-        });
+        return NextResponse.json(
+            {
+                usersCities,
+                usersLandmarks,
+                usersMixed,
+            },
+            {
+                headers: {
+                    "Cache-Control": "no-cache",
+                },
+            }
+        );
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }

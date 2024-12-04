@@ -283,12 +283,38 @@ const QuestionImage = ({
     gpsData,
 }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [scale, setScale] = useState(1); // State to track zoom level
+    const modalImageRef = useRef(null);
 
     const data = gpsData.gpsImageData[location];
 
     if (!data) {
         return null;
     }
+
+    const handleWheel = (e) => {
+        e.preventDefault(); // Prevent default scrolling
+        const delta = e.deltaY > 0 ? -0.1 : 0.1; // Determine zoom direction
+        setScale((prevScale) => Math.min(Math.max(prevScale + delta, 0.5), 3)); // Limit zoom range between 0.5x and 3x
+    };
+
+    const handleBackgroundClick = (e) => {
+        if (!modalImageRef.current) return;
+
+        const rect = modalImageRef.current.getBoundingClientRect();
+        const x = e.clientX;
+        const y = e.clientY;
+
+        // Check if click is outside the image bounds
+        if (
+            x < rect.left ||
+            x > rect.right ||
+            y < rect.top ||
+            y > rect.bottom
+        ) {
+            setIsModalOpen(false); // Close the modal
+        }
+    };
 
     return (
         <div className="fixed top-12 right-0 m-4 border-2 border-blue-500 rounded-lg shadow-lg bg-gray-700 z-10">
@@ -311,22 +337,30 @@ const QuestionImage = ({
                 Guess
             </button>
 
-            {isModalOpen ? (
+            {isModalOpen && (
                 <div
                     className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 z-20"
-                    onClick={() => setIsModalOpen(false)}
+                    onClick={handleBackgroundClick} // Close modal if clicking outside bounds
                 >
-                    <Image
-                        src={data.img_path}
-                        alt={data.location}
-                        width={1000}
-                        height={1000}
-                        className="w-auto h-auto"
-                        priority={true}
-                        onClick={(e) => e.stopPropagation()}
-                    />
+                    <div
+                        className="relative"
+                        onWheel={handleWheel} // Attach wheel event
+                    >
+                        <Image
+                            ref={modalImageRef}
+                            src={data.img_path}
+                            alt={data.location}
+                            width={1000}
+                            height={1000}
+                            className="w-auto h-auto"
+                            priority={true}
+                            quality={100}
+                            unoptimized
+                            style={{ transform: `scale(${scale})` }} // Apply zoom transformation
+                        />
+                    </div>
                 </div>
-            ) : null}
+            )}
         </div>
     );
 };
@@ -455,7 +489,7 @@ const Earth = ({
                     <lineBasicMaterial
                         attach="material"
                         color="yellow"
-                        linewidth={2}
+                        linewidth={3}
                     />
                 </line>
             ) : null}

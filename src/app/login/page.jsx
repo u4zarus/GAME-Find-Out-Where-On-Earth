@@ -24,7 +24,8 @@ const LoginPage = () => {
             });
             console.log("Log In successful", response.data);
             toast.success("Log In successful");
-            router.push("/profile");
+            // router.push("/profile");
+            router.push("/");
         } catch (error) {
             console.log("Log In failed", error.message);
             toast.error(error.message);

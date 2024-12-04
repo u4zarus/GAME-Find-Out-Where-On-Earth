@@ -37,6 +37,10 @@ const LeaderBoard = () => {
             try {
                 const response = await axios.get("/api/users/me", {
                     withCredentials: true,
+                    headers: {
+                        "Cache-Control": "no-cache",
+                        Pragma: "no-cache",
+                    },
                 });
                 setCurrentUser(response.data.data); // Assuming 'data' is where the user info is inside the response
                 console.log("Current User Fetched:", response.data);

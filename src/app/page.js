@@ -4,8 +4,16 @@ import Header from "@/(components)/header/Header";
 import Footer from "@/(components)/footer/Footer";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const Home = () => {
+    const router = useRouter();
+
+    useEffect(() => {
+        router.refresh();
+    }, []);
+
     return (
         <div className="flex flex-col min-h-screen bg-gray-950">
             <Header />
