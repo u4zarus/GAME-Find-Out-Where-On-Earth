@@ -21,7 +21,6 @@ const LeaderBoard = () => {
                     {
                         headers: {
                             "Cache-Control": "no-cache",
-                            Pragma: "no-cache",
                         },
                     }
                 );
@@ -39,7 +38,6 @@ const LeaderBoard = () => {
                     withCredentials: true,
                     headers: {
                         "Cache-Control": "no-cache",
-                        Pragma: "no-cache",
                     },
                 });
                 setCurrentUser(response.data.data); // Assuming 'data' is where the user info is inside the response

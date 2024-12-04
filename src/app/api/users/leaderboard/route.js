@@ -19,22 +19,14 @@ export async function GET(request) {
             .limit(20)
             .lean();
 
-        return NextResponse.json(
-            {
-                usersCities,
-                usersLandmarks,
-                usersMixed,
-            },
-            {
-                headers: {
-                    "Cache-Control":
-                        "no-store, no-cache, must-revalidate, proxy-revalidate",
-                    Pragma: "no-cache",
-                    Expires: "0",
-                    "Surrogate-Control": "no-store",
-                },
-            }
-        );
+        const response = NextResponse.json({
+            usersCities,
+            usersLandmarks,
+            usersMixed,
+        });
+
+        response.headers.set("Cache-Control", "no-cache, max-age=0");
+        return response;
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
