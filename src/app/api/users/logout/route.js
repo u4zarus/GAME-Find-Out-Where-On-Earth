@@ -17,14 +17,17 @@ export async function GET() {
             path: "/",
         });
 
-        response.cookies.set("token", "", {
-            httpOnly: true,
-            expires: new Date(0), // Overwrite with immediate expiration
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
-            path: "/",
-        });
         console.log("token cleared");
+
+        setTimeout(() => {
+            response.cookies.set("token", "", {
+                httpOnly: true,
+                expires: new Date(0),
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "lax",
+                path: "/",
+            });
+        }, 100);
 
         return response;
     } catch (error) {
