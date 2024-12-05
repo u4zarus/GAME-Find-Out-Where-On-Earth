@@ -10,15 +10,12 @@ import Header from "@/(components)/header/Header";
 const LoginPage = () => {
     const router = useRouter();
     const [user, setUser] = useState({
-        email: "",
+        // email: "",
+        username: "",
         password: "",
     });
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
-
-    useEffect(() => {
-        router.refresh();
-    }, []);
 
     const onLogin = async () => {
         try {
@@ -30,6 +27,7 @@ const LoginPage = () => {
             toast.success("Log In successful");
             // router.push("/profile");
             router.push("/");
+            router.refresh();
         } catch (error) {
             console.log("Log In failed", error.message);
             toast.error(error.message);
@@ -39,7 +37,8 @@ const LoginPage = () => {
     };
 
     useEffect(() => {
-        if (user.email.length > 0 && user.password.length > 0) {
+        // if (user.email.length > 0 && user.password.length > 0) {
+        if (user.username.length > 0 && user.password.length > 0) {
             setButtonDisabled(false);
         } else {
             setButtonDisabled(true);
@@ -56,7 +55,7 @@ const LoginPage = () => {
                     </h1>
                     <hr className="border-gray-600 mb-4" />
 
-                    <label htmlFor="email" className="block mb-2">
+                    {/* <label htmlFor="email" className="block mb-2">
                         Email
                     </label>
                     <input
@@ -67,6 +66,20 @@ const LoginPage = () => {
                             setUser({ ...user, email: e.target.value })
                         }
                         placeholder="Email"
+                        className="w-full p-2 border border-gray-600 bg-gray-700 text-gray-200 rounded-lg mb-4 focus:outline-none focus:border-blue-500"
+                    /> */}
+
+                    <label htmlFor="username" className="block mb-2">
+                        Username
+                    </label>
+                    <input
+                        type="text"
+                        id="username"
+                        value={user.username}
+                        onChange={(e) =>
+                            setUser({ ...user, username: e.target.value })
+                        }
+                        placeholder="Username"
                         className="w-full p-2 border border-gray-600 bg-gray-700 text-gray-200 rounded-lg mb-4 focus:outline-none focus:border-blue-500"
                     />
 

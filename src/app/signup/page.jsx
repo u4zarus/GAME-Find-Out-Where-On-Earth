@@ -11,7 +11,7 @@ const SignupPage = () => {
     const router = useRouter();
 
     const [user, setUser] = useState({
-        email: "",
+        // email: "",
         password: "",
         username: "",
     });
@@ -36,8 +36,10 @@ const SignupPage = () => {
     };
 
     useEffect(() => {
+        console.log(user);
+
         if (
-            user.email.length > 0 &&
+            // user.email.length > 0 &&
             user.password.length > 0 &&
             user.username.length > 0
         ) {
@@ -71,7 +73,7 @@ const SignupPage = () => {
                         className="w-full p-2 border border-gray-600 bg-gray-700 text-gray-200 rounded-lg mb-4 focus:outline-none focus:border-blue-500"
                     />
 
-                    <label htmlFor="email" className="block mb-2">
+                    {/* <label htmlFor="email" className="block mb-2">
                         Email
                     </label>
                     <input
@@ -83,7 +85,7 @@ const SignupPage = () => {
                         }
                         placeholder="Email"
                         className="w-full p-2 border border-gray-600 bg-gray-700 text-gray-200 rounded-lg mb-4 focus:outline-none focus:border-blue-500"
-                    />
+                    /> */}
 
                     <label htmlFor="password" className="block mb-2">
                         Password

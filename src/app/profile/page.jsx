@@ -75,21 +75,6 @@ const ProfilePage = () => {
                         </h2>
                     </div>
                     <div className="text-center mb-6">
-                        <p className="text-lg font-medium">User ID:</p>
-                        <h2 className="text-gray-400 mb-2">
-                            {userDetails?.id ? (
-                                <Link
-                                    href={`/profile/${userDetails.id}`}
-                                    className="text-blue-400 hover:underline"
-                                >
-                                    {userDetails.id}
-                                </Link>
-                            ) : (
-                                "Not available"
-                            )}
-                        </h2>
-                    </div>
-                    <div className="text-center mb-6">
                         <p className="text-lg font-medium">Max Scores:</p>
                         <div className="flex justify-between">
                             <div>
@@ -119,11 +104,13 @@ const ProfilePage = () => {
                         >
                             Log Out
                         </button>
-                        <button
-                            onClick={getUserDetails}
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none"
-                        >
-                            Refresh
+                        <button>
+                            <Link
+                                href="/"
+                                className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none"
+                            >
+                                Go to Home Page
+                            </Link>
                         </button>
                     </div>
                 </div>
