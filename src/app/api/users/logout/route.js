@@ -13,6 +13,10 @@ export async function GET() {
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             path: "/",
+            domain:
+                process.env.NODE_ENV === "production"
+                    ? "fowoe.vercel.app"
+                    : undefined,
         });
 
         return response;
