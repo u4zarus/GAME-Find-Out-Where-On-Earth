@@ -15,14 +15,7 @@ const ProfilePage = () => {
     const logout = async () => {
         try {
             console.log("Logging out...");
-            // await axios.get("/api/users/logout", { withCredentials: true });
-            const baseUrl =
-                process.env.NODE_ENV === "production"
-                    ? "https://fowoe.vercel.app"
-                    : "";
-            await axios.get(`${baseUrl}/api/users/logout`, {
-                withCredentials: true,
-            });
+            await axios.get("/api/users/logout", { withCredentials: true });
             toast.success("Logged out");
             router.push("/login");
         } catch (error) {

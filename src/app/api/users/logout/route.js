@@ -7,17 +7,24 @@ export async function GET() {
             success: true,
         });
 
+        console.log("clearing token");
+
         response.cookies.set("token", "", {
             httpOnly: true,
             expires: new Date(0),
             secure: process.env.NODE_ENV === "production",
             sameSite: "lax",
             path: "/",
-            domain:
-                process.env.NODE_ENV === "production"
-                    ? "fowoe.vercel.app"
-                    : undefined,
         });
+
+        response.cookies.set("token", "", {
+            httpOnly: true,
+            expires: new Date(0), // Overwrite with immediate expiration
+            secure: process.env.NODE_ENV === "production",
+            sameSite: "lax",
+            path: "/",
+        });
+        console.log("token cleared");
 
         return response;
     } catch (error) {
