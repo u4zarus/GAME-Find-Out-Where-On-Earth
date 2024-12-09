@@ -19,16 +19,6 @@ export async function GET() {
 
         console.log("token cleared");
 
-        setTimeout(() => {
-            response.cookies.set("token", "", {
-                httpOnly: true,
-                expires: new Date(0),
-                secure: process.env.NODE_ENV === "production",
-                sameSite: "lax",
-                path: "/",
-            });
-        }, 100);
-
         return response;
     } catch (error) {
         return NextResponse.json({ error: error.message }, { status: 500 });
