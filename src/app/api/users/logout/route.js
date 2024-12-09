@@ -16,6 +16,7 @@ export async function GET() {
         //     sameSite: "lax",
         //     path: "/",
         // });
+
         response.cookies.delete("token", {
             path: "/",
             sameSite: "lax",

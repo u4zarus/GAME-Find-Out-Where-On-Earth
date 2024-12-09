@@ -38,6 +38,19 @@ export async function POST(request) {
             expiresIn: "1d",
         });
 
+        if (token) {
+            try {
+                jwt.verify(token, process.env.TOKEN_SECRET);
+            } catch (error) {
+                response.cookies.delete("token", {
+                    path: "/",
+                    sameSite: "lax",
+                    secure: process.env.NODE_ENV === "production",
+                });
+                return NextResponse.redirect(new URL("/login", request.url));
+            }
+        }
+
         const response = NextResponse.json({
             message: "Login successful",
             success: true,
