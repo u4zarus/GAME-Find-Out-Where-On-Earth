@@ -34,22 +34,7 @@ export async function POST(request) {
             username: user.username,
             // email: user.email,
         };
-        const token = jwt.sign(tokenData, process.env.TOKEN_SECRET, {
-            expiresIn: "1d",
-        });
-
-        if (token) {
-            try {
-                jwt.verify(token, process.env.TOKEN_SECRET);
-            } catch (error) {
-                response.cookies.delete("token", {
-                    path: "/",
-                    sameSite: "lax",
-                    secure: process.env.NODE_ENV === "production",
-                });
-                return NextResponse.redirect(new URL("/login", request.url));
-            }
-        }
+        const token = jwt.sign(tokenData, process.env.TOKEN_SECRET);
 
         const response = NextResponse.json({
             message: "Login successful",
