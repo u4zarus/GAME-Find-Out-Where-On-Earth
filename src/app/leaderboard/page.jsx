@@ -10,44 +10,43 @@ const LeaderBoard = () => {
     const [mixed, setMixed] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
 
+    const fetchLeaderboard = async () => {
+        try {
+            const response = await axios.get("/api/users/leaderboard", {
+                withCredentials: true,
+                headers: {
+                    "Cache-Control": "no-cache",
+                },
+            });
+            console.log("Leaderboard Fetched:", response.data);
+            setCities(response.data.usersCities);
+            setLandmarks(response.data.usersLandmarks);
+            setMixed(response.data.usersMixed);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const fetchCurrentUser = async () => {
+        try {
+            const response = await axios.get("/api/users/me", {
+                withCredentials: true,
+                headers: {
+                    "Cache-Control": "no-cache",
+                },
+            });
+            setCurrentUser(response.data.data);
+            console.log("Current User Fetched:", response.data);
+        } catch (error) {
+            console.error("Failed to fetch current user:", error);
+        }
+    };
+
     useEffect(() => {
-        const fetchLeaderboard = async () => {
-            try {
-                const response = await axios.get("/api/users/leaderboard", {
-                    withCredentials: true,
-                    headers: {
-                        "Cache-Control": "no-cache",
-                    },
-                });
-                console.log("Leaderboard Fetched:", response.data);
-                setCities(response.data.usersCities);
-                setLandmarks(response.data.usersLandmarks);
-                setMixed(response.data.usersMixed);
-            } catch (error) {
-                console.error(error);
-            }
-        };
-
-        const fetchCurrentUser = async () => {
-            try {
-                const response = await axios.get("/api/users/me", {
-                    withCredentials: true,
-                    headers: {
-                        "Cache-Control": "no-cache",
-                    },
-                });
-                setCurrentUser(response.data.data); // Assuming 'data' is where the user info is inside the response
-                console.log("Current User Fetched:", response.data);
-            } catch (error) {
-                console.error("Failed to fetch current user:", error);
-            }
-        };
-
         fetchLeaderboard();
         fetchCurrentUser();
     }, []);
 
-    // Log currentUser when it changes
     useEffect(() => {
         if (currentUser) {
             console.log("Updated Current User:", currentUser);
@@ -86,7 +85,7 @@ const LeaderBoard = () => {
                                             : index % 2 === 0
                                             ? "bg-gray-800"
                                             : "bg-gray-700"
-                                    }`}
+                                    } hover:bg-gray-600 transition-colors duration-150`}
                                 >
                                     <td className="border border-gray-600 px-2 py-3 text-center">
                                         {index + 1}
