@@ -9,12 +9,17 @@ export async function GET() {
 
         console.log("clearing token");
 
-        response.cookies.set("token", "", {
-            httpOnly: true,
-            expires: new Date(0),
-            secure: process.env.NODE_ENV === "production",
-            sameSite: "lax",
+        // response.cookies.set("token", "", {
+        //     httpOnly: true,
+        //     expires: new Date(0),
+        //     secure: process.env.NODE_ENV === "production",
+        //     sameSite: "lax",
+        //     path: "/",
+        // });
+        response.cookies.delete("token", {
             path: "/",
+            sameSite: "lax",
+            secure: process.env.NODE_ENV === "production",
         });
 
         console.log("token cleared");
