@@ -1,0 +1,64 @@
+{
+    "gpsImageData": {
+        "01": {
+            "location": "Cairo, Egypt",
+            "img_path": "/sattelite_imgs/cairo.jpg",
+            "latitude": 30.0444,
+            "longitude": 31.2357
+        },
+        "02": {
+            "location": "Cape Town, South Africa",
+            "img_path": "/sattelite_imgs/capetown.jpg",
+            "latitude": -33.9249,
+            "longitude": 18.4241
+        },
+        "03": {
+            "location": "Casablanca, Morocco",
+            "img_path": "/sattelite_imgs/casablanca.jpg",
+            "latitude": 33.5736,
+            "longitude": -7.5897
+        },
+        "04": {
+            "location": "Doha, Qatar",
+            "img_path": "/sattelite_imgs/doha.jpg",
+            "latitude": 25.3548,
+            "longitude": 51.1839
+        },
+        "05": {
+            "location": "Dubai, UAE",
+            "img_path": "/sattelite_imgs/dubai.jpg",
+            "latitude": 25.2048,
+            "longitude": 55.2708
+        },
+        "06": {
+            "location": "Jeruasalem, Israel",
+            "img_path": "/sattelite_imgs/jerusalem.jpg",
+            "latitude": 31.7683,
+            "longitude": 35.2137
+        },
+        "07": {
+            "location": "Lagos, Nigeria",
+            "img_path": "/sattelite_imgs/lagos.jpg",
+            "latitude": 6.5244,
+            "longitude": 3.3792
+        },
+        "08": {
+            "location": "Port Louis, Mauritius",
+            "img_path": "/sattelite_imgs/portlouis.jpg",
+            "latitude": -20.1639,
+            "longitude": 57.4989
+        },
+        "09": {
+            "location": "Riyadh, Saudi Arabia",
+            "img_path": "/sattelite_imgs/riyadh.jpg",
+            "latitude": 24.6954,
+            "longitude": 46.7219
+        },
+        "10": {
+            "location": "Tunis, Tunisia",
+            "img_path": "/sattelite_imgs/tunis.jpg",
+            "latitude": 36.8065,
+            "longitude": 10.1815
+        }
+    }
+}

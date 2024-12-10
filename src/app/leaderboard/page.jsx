@@ -5,9 +5,10 @@ import axios from "axios";
 import Header from "@/(components)/header/Header";
 
 const LeaderBoard = () => {
-    const [cities, setCities] = useState([]);
-    const [landmarks, setLandmarks] = useState([]);
-    const [mixed, setMixed] = useState([]);
+    const [europe, setEurope] = useState([]);
+    const [americas, setAmericas] = useState([]);
+    const [asiaOceania, setAsiaOceania] = useState([]);
+    const [africaMe, setAfricaMe] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
 
     const fetchLeaderboard = async () => {
@@ -19,9 +20,13 @@ const LeaderBoard = () => {
                 },
             });
             console.log("Leaderboard Fetched:", response.data);
-            setCities(response.data.usersCities);
-            setLandmarks(response.data.usersLandmarks);
-            setMixed(response.data.usersMixed);
+            // setCities(response.data.usersCities);
+            // setLandmarks(response.data.usersLandmarks);
+            // setMixed(response.data.usersMixed);
+            setEurope(response.data.europe);
+            setAmericas(response.data.americas);
+            setAsiaOceania(response.data.asiaOceania);
+            setAfricaMe(response.data.africaMe);
         } catch (error) {
             console.error(error);
         }
@@ -94,11 +99,14 @@ const LeaderBoard = () => {
                                         {user.username}
                                     </td>
                                     <td className="border border-gray-600 px-2 py-3 text-center">
-                                        {title === "Cities"
-                                            ? user.maxScoreCities
-                                            : title === "Landmarks"
-                                            ? user.maxScoreLandmarks
-                                            : user.maxScore}
+                                        {title === "European Cities"
+                                            ? user.maxScoreEurope
+                                            : title === "American Cities"
+                                            ? user.maxScoreAmericas
+                                            : title ===
+                                              "Asian and Oceanian Cities"
+                                            ? user.maxScoreAsiaOceania
+                                            : user.maxScoreAfricaMe}
                                     </td>
                                 </tr>
                             );
@@ -110,11 +118,13 @@ const LeaderBoard = () => {
                 <div className="mt-4 text-center text-gray-400">
                     <p>
                         Your Score:{" "}
-                        {title === "Cities"
-                            ? currentUser.maxScoreCities
-                            : title === "Landmarks"
-                            ? currentUser.maxScoreLandmarks
-                            : currentUser.maxScore}
+                        {title === "European Cities"
+                            ? currentUser.maxScoreEurope
+                            : title === "American Cities"
+                            ? currentUser.maxScoreAmericas
+                            : title === "Asian and Oceanian Cities"
+                            ? currentUser.maxScoreAsiaOceania
+                            : currentUser.maxScoreAfricaMe}
                     </p>
                 </div>
             )}
@@ -128,15 +138,21 @@ const LeaderBoard = () => {
                 <h1 className="text-4xl font-bold text-center mb-5 text-white">
                     Leaderboard
                 </h1>
-                <div className="flex flex-col sm:flex-row justify-around w-full max-w-5xl sm:gap-6">
-                    <div className="flex justify-center w-full sm:w-auto">
-                        {renderTable(cities, "Cities")}
+                <div className="flex flex-col items-center w-full max-w-5xl gap-6">
+                    <div className="w-full max-w-2xl">
+                        {renderTable(europe, "European Cities")}
                     </div>
-                    <div className="flex justify-center w-full sm:w-auto">
-                        {renderTable(landmarks, "Landmarks")}
+                    <div className="w-full max-w-2xl">
+                        {renderTable(americas, "American Cities")}
                     </div>
-                    <div className="flex justify-center w-full sm:w-auto">
-                        {renderTable(mixed, "Mixed")}
+                    <div className="w-full max-w-2xl">
+                        {renderTable(asiaOceania, "Asian and Oceanian Cities")}
+                    </div>
+                    <div className="w-full max-w-2xl">
+                        {renderTable(
+                            africaMe,
+                            "African and Middle Eastern Cities"
+                        )}
                     </div>
                 </div>
             </div>

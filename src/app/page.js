@@ -34,14 +34,14 @@ const Home = () => {
                         >
                             <div className="game-mode hover:scale-105 transition-transform">
                                 <Image
-                                    src="/pexels-elina-sazonova-1850619.jpg"
-                                    alt="Cities Mode"
+                                    src="/europe.jpg"
+                                    alt="European Cities Mode"
                                     className="rounded-lg w-full h-32 sm:h-48 object-cover"
                                     width={300}
                                     height={300}
                                 />
                                 <p className="text-lg sm:text-xl text-white font-bold text-center mt-4">
-                                    Cities
+                                    European Cities
                                 </p>
                             </div>
                         </Link>
@@ -53,18 +53,18 @@ const Home = () => {
                         >
                             <div className="game-mode hover:scale-105 transition-transform">
                                 <Image
-                                    src="/pexels-dick-hoskins-22993523-6642124.jpg"
-                                    alt="Famous Landmarks Mode"
+                                    src="/america.jpg"
+                                    alt="American Cities Mode"
                                     className="rounded-lg w-full h-32 sm:h-48 object-cover"
                                     width={300}
                                     height={300}
                                 />
                                 <p className="text-lg sm:text-xl text-white font-bold text-center mt-4">
-                                    Famous Landmarks
+                                    American Cities
                                 </p>
                             </div>
                         </Link>
-                        {/* <Link
+                        <Link
                             href={{
                                 pathname: "/game",
                                 query: { mode: 2 },
@@ -72,17 +72,36 @@ const Home = () => {
                         >
                             <div className="game-mode hover:scale-105 transition-transform">
                                 <Image
-                                    src="/mix.jpg"
-                                    alt="Mixed Mode"
+                                    src="/asia.jpg"
+                                    alt="Asian and Oceanian Cities Mode"
                                     className="rounded-lg w-full h-32 sm:h-48 object-cover"
                                     width={300}
                                     height={300}
                                 />
                                 <p className="text-lg sm:text-xl text-white font-bold text-center mt-4">
-                                    Mixed Mode
+                                    Asian and Oceanian Cities
                                 </p>
                             </div>
-                        </Link> */}
+                        </Link>
+                        <Link
+                            href={{
+                                pathname: "/game",
+                                query: { mode: 3 },
+                            }}
+                        >
+                            <div className="game-mode hover:scale-105 transition-transform">
+                                <Image
+                                    src="/africa.jpg"
+                                    alt="African and Middle Eastern Cities Mode"
+                                    className="rounded-lg w-full h-32 sm:h-48 object-cover"
+                                    width={300}
+                                    height={300}
+                                />
+                                <p className="text-lg sm:text-xl text-white font-bold text-center mt-4">
+                                    African and Middle Eastern Cities
+                                </p>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </main>

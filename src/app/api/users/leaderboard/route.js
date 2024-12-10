@@ -6,23 +6,28 @@ connect();
 
 export async function GET(request) {
     try {
-        const usersCities = await User.find()
-            .sort({ maxScoreCities: -1 })
+        const europe = await User.find()
+            .sort({ maxScoreEurope: -1 })
             .limit(20)
             .lean();
-        const usersLandmarks = await User.find()
-            .sort({ maxScoreLandmarks: -1 })
+        const americas = await User.find()
+            .sort({ maxScoreAmericas: -1 })
             .limit(20)
             .lean();
-        const usersMixed = await User.find()
-            .sort({ maxScore: -1 })
+        const asiaOceania = await User.find()
+            .sort({ maxScoreAsiaOceania: -1 })
+            .limit(20)
+            .lean();
+        const africaMe = await User.find()
+            .sort({ maxScoreAfricaMe: -1 })
             .limit(20)
             .lean();
 
         const response = NextResponse.json({
-            usersCities,
-            usersLandmarks,
-            usersMixed,
+            europe,
+            americas,
+            asiaOceania,
+            africaMe,
         });
 
         response.headers.set("Cache-Control", "no-cache, no-store, max-age=0");

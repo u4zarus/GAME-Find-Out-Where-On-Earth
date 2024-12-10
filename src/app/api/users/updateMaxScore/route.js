@@ -30,12 +30,14 @@ export async function POST(request) {
         }
 
         // Update scores based on game mode
-        if (mode === "0" && totalScore > user.maxScoreCities)
-            user.maxScoreCities = totalScore;
-        else if (mode === "1" && totalScore > user.maxScoreLandmarks)
-            user.maxScoreLandmarks = totalScore;
-        else if (mode === "2" && totalScore > user.maxScore)
-            user.maxScore = totalScore;
+        if (mode === "0" && totalScore > user.maxScoreEurope)
+            user.maxScoreEurope = totalScore;
+        else if (mode === "1" && totalScore > user.maxScoreAmericas)
+            user.maxScoreAmericas = totalScore;
+        else if (mode === "2" && totalScore > user.maxScoreAsiaOceania)
+            user.maxScoreAsiaOceania = totalScore;
+        else if (mode === "3" && totalScore > user.maxScoreAfricaMe)
+            user.maxScoreAfricaMe = totalScore;
 
         await user.save();
         return NextResponse.json(

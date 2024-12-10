@@ -1,0 +1,64 @@
+{
+    "gpsImageData": {
+        "01": {
+            "location": "Prague, Czechia",
+            "img_path": "/sattelite_imgs/prague.jpg",
+            "latitude": 50.0831,
+            "longitude": 14.4213
+        },
+        "02": {
+            "location": "Rome, Italy",
+            "img_path": "/sattelite_imgs/rome.jpg",
+            "latitude": 41.9028,
+            "longitude": 12.4964
+        },
+        "03": {
+            "location": "Athens, Greece",
+            "img_path": "/sattelite_imgs/athens.jpg",
+            "latitude": 37.9838,
+            "longitude": 23.7275
+        },
+        "04": {
+            "location": "Barcelona, Spain",
+            "img_path": "/sattelite_imgs/barcelona.jpg",
+            "latitude": 41.3851,
+            "longitude": 2.1734
+        },
+        "05": {
+            "location": "Berlin, Germany",
+            "img_path": "/sattelite_imgs/berlin.jpg",
+            "latitude": 52.52,
+            "longitude": 13.405
+        },
+        "06": {
+            "location": "London, United Kingdom",
+            "img_path": "/sattelite_imgs/london.jpg",
+            "latitude": 51.5074,
+            "longitude": 0.1278
+        },
+        "07": {
+            "location": "Paris, France",
+            "img_path": "/sattelite_imgs/paris.jpg",
+            "latitude": 48.8534,
+            "longitude": 2.3488
+        },
+        "08": {
+            "location": "Vienna, Austria",
+            "img_path": "/sattelite_imgs/vienna.jpg",
+            "latitude": 48.2082,
+            "longitude": 16.3738
+        },
+        "09": {
+            "location": "Istanbul, Turkey",
+            "img_path": "/sattelite_imgs/istanbul.jpg",
+            "latitude": 41.0082,
+            "longitude": 28.9784
+        },
+        "10": {
+            "location": "Amsterdam, Netherlands",
+            "img_path": "/sattelite_imgs/amsterdam.jpg",
+            "latitude": 52.3676,
+            "longitude": 4.9041
+        }
+    }
+}

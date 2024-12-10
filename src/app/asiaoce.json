@@ -1,0 +1,64 @@
+{
+    "gpsImageData": {
+        "01": {
+            "location": "Bangkok, Thailand",
+            "img_path": "/sattelite_imgs/bangkok.jpg",
+            "latitude": 13.7563,
+            "longitude": 100.5018
+        },
+        "02": {
+            "location": "Seoul, South Korea",
+            "img_path": "/sattelite_imgs/seoul.jpg",
+            "latitude": 37.5665,
+            "longitude": 126.978
+        },
+        "03": {
+            "location": "Tokyo, Japan",
+            "img_path": "/sattelite_imgs/tokyo.jpg",
+            "latitude": 35.6823,
+            "longitude": 139.7585
+        },
+        "04": {
+            "location": "Osaka, Japan",
+            "img_path": "/sattelite_imgs/osaka.jpg",
+            "latitude": 34.6937,
+            "longitude": 135.5023
+        },
+        "05": {
+            "location": "Beijing, China",
+            "img_path": "/sattelite_imgs/beijing.jpg",
+            "latitude": 39.9042,
+            "longitude": 116.4074
+        },
+        "06": {
+            "location": "Singapore, Singapore",
+            "img_path": "/sattelite_imgs/singapore.jpg",
+            "latitude": 1.3521,
+            "longitude": 103.8198
+        },
+        "07": {
+            "location": "Melbourne, Australia",
+            "img_path": "/sattelite_imgs/melbourne.jpg",
+            "latitude": -37.8136,
+            "longitude": 144.9631
+        },
+        "08": {
+            "location": "Sydney, Australia",
+            "img_path": "/sattelite_imgs/sydney.jpg",
+            "latitude": -33.8688,
+            "longitude": 151.2093
+        },
+        "09": {
+            "location": "Jakarta, Indonesia",
+            "img_path": "/sattelite_imgs/jakarta.jpg",
+            "latitude": -6.2146,
+            "longitude": 106.8456
+        },
+        "10": {
+            "location": "Mombai, India",
+            "img_path": "/sattelite_imgs/mombai.jpg",
+            "latitude": 19.076,
+            "longitude": 72.8777
+        }
+    }
+}

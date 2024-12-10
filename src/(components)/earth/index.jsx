@@ -38,13 +38,15 @@ const Index = () => {
             try {
                 let data;
                 if (mode === "0") {
-                    data = await import("@/app/cities.json");
+                    data = await import("@/app/europe.json");
                 } else if (mode === "1") {
-                    data = await import("@/app/landmarks.json");
+                    data = await import("@/app/americas.json");
                 } else if (mode === "2") {
-                    data = await import("@/app/gpsImageData.json");
+                    data = await import("@/app/asiaoce.json");
+                } else if (mode === "3") {
+                    data = await import("@/app/africame.json");
                 } else {
-                    data = await import("@/app/gpsImageData.json");
+                    data = await import("@/app/europe.json");
                 }
                 setGpsData(data.default);
             } catch (error) {

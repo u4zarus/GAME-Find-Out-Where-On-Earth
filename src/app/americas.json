@@ -1,0 +1,64 @@
+{
+    "gpsImageData": {
+        "01": {
+            "location": "New York, USA",
+            "img_path": "/sattelite_imgs/newyork.jpg",
+            "latitude": 40.7128,
+            "longitude": -74.006
+        },
+        "02": {
+            "location": "Los Angeles, USA",
+            "img_path": "/sattelite_imgs/losangeles.jpg",
+            "latitude": 34.0522,
+            "longitude": -118.2437
+        },
+        "03": {
+            "location": "Chicago, USA",
+            "img_path": "/sattelite_imgs/chicago.jpg",
+            "latitude": 41.8781,
+            "longitude": -87.6298
+        },
+        "04": {
+            "location": "Buenos Aires, Argentina",
+            "img_path": "/sattelite_imgs/buenosaires.jpg",
+            "latitude": -34.6037,
+            "longitude": -58.3816
+        },
+        "05": {
+            "location": "Miami, USA",
+            "img_path": "/sattelite_imgs/miami.jpg",
+            "latitude": 25.7617,
+            "longitude": -80.1918
+        },
+        "06": {
+            "location": "Toronto, Canada",
+            "img_path": "/sattelite_imgs/toronto.jpg",
+            "latitude": 43.6532,
+            "longitude": -79.3832
+        },
+        "07": {
+            "location": "Mexico City, Mexico",
+            "img_path": "/sattelite_imgs/mexicocity.jpg",
+            "latitude": 19.4326,
+            "longitude": -99.1332
+        },
+        "08": {
+            "location": "Panama City, Panama",
+            "img_path": "/sattelite_imgs/panama.jpg",
+            "latitude": 8.9945,
+            "longitude": -79.5188
+        },
+        "09": {
+            "location": "Vancouver, Canada",
+            "img_path": "/sattelite_imgs/vancouver.jpg",
+            "latitude": 49.2827,
+            "longitude": -123.1207
+        },
+        "10": {
+            "location": "Rio de Janeiro, Brazil",
+            "img_path": "/sattelite_imgs/rio.jpg",
+            "latitude": -22.9062,
+            "longitude": -43.1729
+        }
+    }
+}
