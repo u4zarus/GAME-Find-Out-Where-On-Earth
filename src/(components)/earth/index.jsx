@@ -583,18 +583,18 @@ const EndGameModal = ({
     return (
         <div style={{ position: "fixed", zIndex: 9999 }}>
             <div className="modal-background fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                <div className="modal-content bg-white rounded-lg shadow-xl w-11/12 md:w-4/5 lg:w-2/3 max-h-screen overflow-y-auto p-6 relative">
-                    <h1 className="text-xl md:text-2xl text-gray-950 font-semibold mb-4 text-center">
+                <div className="modal-content bg-white rounded-lg shadow-xl w-11/12 md:w-3/4 lg:w-1/2 max-h-screen overflow-y-auto p-4 relative">
+                    <h1 className="text-xl md:text-2xl text-gray-950 font-semibold mb-2 text-center">
                         Game Over
                     </h1>
-                    <p className="text-base md:text-lg text-gray-950 font-semibold mb-4 text-center">
+                    <p className="text-base md:text-lg text-gray-950 font-semibold mb-2 text-center">
                         Total Score: {totalScore}
                     </p>
-                    <div className="mt-4 mb-6">
-                        <h2 className="text-lg text-gray-950 font-semibold mb-4 text-center">
+                    <div className="mt-2 mb-4">
+                        <h2 className="text-lg text-gray-950 font-semibold mb-2 text-center">
                             Results:
                         </h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                             {Object.keys(gpsImageData).map((key, index) => {
                                 const colorClass = getDistanceColor(
                                     distances[index]
@@ -602,19 +602,19 @@ const EndGameModal = ({
                                 return (
                                     <div
                                         key={index}
-                                        className={`p-4 rounded-lg shadow hover:shadow-md transition-shadow duration-200 ${colorClass}`}
+                                        className={`p-2 rounded-lg shadow hover:shadow-md transition-shadow duration-200 ${colorClass}`}
                                     >
                                         <Image
                                             src={gpsImageData[key].img_path}
                                             alt={gpsImageData[key].location}
-                                            width={200}
-                                            height={150}
-                                            className="rounded-md mb-2 w-full"
+                                            width={300}
+                                            height={200}
+                                            className="rounded-md mb-1 w-full"
                                         />
-                                        <p className="font-medium text-center">
+                                        <p className="font-medium text-center text-sm">
                                             {gpsImageData[key].location}
                                         </p>
-                                        <p className="text-center">
+                                        <p className="text-center text-sm">
                                             Distance:{" "}
                                             <span className="font-semibold">
                                                 {distances[index].toFixed(0)} km
@@ -625,7 +625,7 @@ const EndGameModal = ({
                             })}
                         </div>
                     </div>
-                    <div className="flex flex-wrap justify-end gap-4 mt-6">
+                    <div className="flex flex-wrap justify-end gap-2 mt-4">
                         <button
                             onClick={handleTryAgain}
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
