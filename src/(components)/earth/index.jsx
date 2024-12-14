@@ -436,6 +436,11 @@ const Earth = ({
         return points;
     };
 
+    // Reset markerPosition when currentIndex changes
+    useEffect(() => {
+        setMarkerPosition(null);
+    }, [currentIndex]);
+
     return (
         <mesh
             ref={mesh}
