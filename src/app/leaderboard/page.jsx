@@ -13,16 +13,16 @@ const LeaderBoard = () => {
 
     const fetchLeaderboard = async () => {
         try {
-            const response = await axios.get("/api/users/leaderboard", {
-                withCredentials: true,
-                headers: {
-                    "Cache-Control": "no-cache",
-                },
-            });
+            const response = await axios.get(
+                `/api/users/leaderboard?timestamp=${new Date().getTime()}`,
+                {
+                    withCredentials: true,
+                    headers: {
+                        "Cache-Control": "no-cache",
+                    },
+                }
+            );
             console.log("Leaderboard Fetched:", response.data);
-            // setCities(response.data.usersCities);
-            // setLandmarks(response.data.usersLandmarks);
-            // setMixed(response.data.usersMixed);
             setEurope(response.data.europe);
             setAmericas(response.data.americas);
             setAsiaOceania(response.data.asiaOceania);
