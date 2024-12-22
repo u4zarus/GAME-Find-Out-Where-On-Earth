@@ -11,7 +11,6 @@ const SignupPage = () => {
     const router = useRouter();
 
     const [user, setUser] = useState({
-        // email: "",
         password: "",
         username: "",
     });
@@ -38,11 +37,7 @@ const SignupPage = () => {
     useEffect(() => {
         console.log(user);
 
-        if (
-            // user.email.length > 0 &&
-            user.password.length > 0 &&
-            user.username.length > 0
-        ) {
+        if (user.password.length > 0 && user.username.length > 0) {
             setButtonDisabled(false);
         } else {
             setButtonDisabled(true);
@@ -72,20 +67,6 @@ const SignupPage = () => {
                         placeholder="Username"
                         className="w-full p-2 border border-gray-600 bg-gray-700 text-gray-200 rounded-lg mb-4 focus:outline-none focus:border-blue-500"
                     />
-
-                    {/* <label htmlFor="email" className="block mb-2">
-                        Email
-                    </label>
-                    <input
-                        type="email"
-                        id="email"
-                        value={user.email}
-                        onChange={(e) =>
-                            setUser({ ...user, email: e.target.value })
-                        }
-                        placeholder="Email"
-                        className="w-full p-2 border border-gray-600 bg-gray-700 text-gray-200 rounded-lg mb-4 focus:outline-none focus:border-blue-500"
-                    /> */}
 
                     <label htmlFor="password" className="block mb-2">
                         Password
