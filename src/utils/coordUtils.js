@@ -1,5 +1,13 @@
 import * as THREE from "three";
 
+/**
+ * Calculates the distance between two points on the Earth's surface given their
+ * spherical coordinates, using Vincenty's formula.
+ *
+ * @param {THREE.Spherical} sphericalCoord1 - The spherical coordinates of the first point.
+ * @param {THREE.Spherical} sphericalCoord2 - The spherical coordinates of the second point.
+ * @returns {number} The distance between the two points in meters.
+ */
 export const calculateDistance2 = (sphericalCoord1, sphericalCoord2) => {
     const coord1 = sphericalToGeographic(sphericalCoord1);
     const coord2 = sphericalToGeographic(sphericalCoord2);
@@ -7,6 +15,12 @@ export const calculateDistance2 = (sphericalCoord1, sphericalCoord2) => {
     return vincentysFormula(coord1, coord2);
 };
 
+/**
+ * Converts spherical coordinates to geographic coordinates.
+ *
+ * @param {THREE.Spherical} sphericalCoord - The spherical coordinates to convert.
+ * @returns {Object} An object containing the latitude and longitude in degrees.
+ */
 export const sphericalToGeographic = (sphericalCoord) => {
     const latitude = 90 - THREE.MathUtils.RAD2DEG * sphericalCoord.phi;
     const longitude = THREE.MathUtils.RAD2DEG * sphericalCoord.theta;
@@ -14,10 +28,27 @@ export const sphericalToGeographic = (sphericalCoord) => {
     return { latitude, longitude };
 };
 
+/**
+ * Converts degrees to radians.
+ *
+ * @param {number} degrees - The angle in degrees.
+ * @returns {number} The angle in radians.
+ */
 export const toRadians = (degrees) => {
     return degrees * (Math.PI / 180);
 };
 
+/**
+ * Calculates the distance between two points on the Earth's surface given their
+ * geographic coordinates, using Vincenty's formula.
+ *
+ * @param {Object} coord1 - The geographic coordinates of the first point.
+ * @param {Object} coord2 - The geographic coordinates of the second point.
+ *
+ * @returns {number} The distance between the two points in kilometers.
+ * @throws {Error} If the formula fails to converge within the maximum number of iterations.
+ * @throws {Error} If the coordinates are invalid.
+ */
 export const vincentysFormula = (coord1, coord2) => {
     const a = 6378137; // semi-major axis of the Earth (meters)
     const b = 6356752.3142; // semi-minor axis

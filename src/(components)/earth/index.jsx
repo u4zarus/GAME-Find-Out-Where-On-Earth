@@ -17,7 +17,13 @@ import { useSearchParams } from "next/navigation";
 
 extend({ OrbitControls });
 
-// ------------------ Index ------------------
+/**
+ * The main component of the game. It renders the UI for the game and handles
+ * the game logic. It loads the game data from the JSON files and renders the
+ * game UI. It also handles the user's guesses and updates the score.
+ *
+ * @returns {ReactElement} The rendered game component.
+ */
 const Index = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickedSphericalCoords, setClickedSphericalCoords] = useState(null);
@@ -34,6 +40,13 @@ const Index = () => {
     const [gpsData, setGpsData] = useState(null);
 
     useEffect(() => {
+        /**
+         * Loads the JSON data for the game based on the mode parameter passed
+         * in the URL. If the mode is not recognized, it defaults to the Europe
+         * mode.
+         *
+         * @returns {Promise<void>} A promise that resolves when the data is loaded.
+         */
         const loadJsonData = async () => {
             try {
                 let data;
@@ -57,6 +70,14 @@ const Index = () => {
         loadJsonData();
     }, []);
 
+    /**
+     * Verifies the user's guess by calculating the distance between the clicked spherical coordinates
+     * and the actual location's coordinates. Updates the score based on the distance and displays
+     * the result in a modal.
+     *
+     * @param {Object} location - The location object containing latitude and longitude.
+     * @param {THREE.Spherical} clickedSphericalCoords - The spherical coordinates of the clicked point.
+     */
     const verifyGuess = (location, clickedSphericalCoords) => {
         if (clickedSphericalCoords) {
             const middlePointGPS = {
@@ -107,6 +128,13 @@ const Index = () => {
         }
     };
 
+    /**
+     * Handles the logic when the user wants to view the next image. This means
+     * incrementing the current index, closing the modal, resetting the actual
+     * location and the clicked spherical coordinates, and re-enabling the
+     * guess button. If the current index is at the last image, it will also
+     * set the game over flag to true.
+     */
     const handleNextImage = () => {
         setCurrentIndex(currentIndex + 1);
         setModalOpen(false);
@@ -119,6 +147,13 @@ const Index = () => {
         }
     };
 
+    /**
+     * Handles the logic when the user wants to take a guess. This means checking
+     * if the guess button is enabled, and if so, calling the verifyGuess function
+     * with the current image and the clicked spherical coordinates. Afterwards,
+     * the guess button is disabled and the clicked spherical coordinates are
+     * reset.
+     */
     const handleGuessButtonClick = () => {
         if (!guessDisabled) {
             verifyGuess(
@@ -206,7 +241,16 @@ const Index = () => {
     );
 };
 
-// ------------------ StarField ---------------------------
+/**
+ * StarField component renders a starfield background using Three.js
+ * points material and buffer geometry. The stars are positioned randomly
+ * within a cube of size 200x200x200 centered at the origin. The colors of
+ * the stars are randomly generated around white, blue, yellow, orange, and
+ * red. The component renders the stars as points using the points
+ * material and buffer geometry.
+ *
+ * @returns {JSX.Element} The rendered starfield component.
+ */
 const StarField = () => {
     const points = useMemo(() => {
         const starCount = 500;
@@ -252,7 +296,23 @@ const StarField = () => {
     );
 };
 
-// ------------------ OrbitControlsCustom ------------------
+/**
+ * Custom OrbitControls component that provides enhanced camera control
+ * features for a 3D scene using react-three-fiber.
+ *
+ * This component sets up a reference to the OrbitControls and configures
+ * various options such as damping, zoom, rotation speed, and distance
+ * constraints for the camera. It also updates the controls on each frame
+ * to ensure smooth interactions.
+ *
+ * The controls are set to enable damping with a specific damping factor
+ * and allow zooming and rotation while disabling panning. The camera's
+ * distance to the target is constrained between a minimum and maximum
+ * value to maintain a consistent viewing experience.
+ *
+ * @returns {ReactElement} The OrbitControlsCustom component.
+ */
+
 const OrbitControlsCustom = () => {
     const { camera } = useThree();
     const controlsRef = useRef();
@@ -276,7 +336,19 @@ const OrbitControlsCustom = () => {
     return <OrbitControls ref={controlsRef} args={[camera]} />;
 };
 
-// ------------------ Question Image ------------------
+/**
+ * Renders an interactive image component where users can make guesses
+ * about the image location. The component allows zooming and modal
+ * view for detailed inspection of the image.
+ *
+ * @param {string} location - The key representing the image location in gpsData.
+ * @param {function} onGuessButtonClick - Callback function triggered when the guess button is clicked.
+ * @param {THREE.Spherical} clickedSphericalCoords - Coordinates of the user's current guess.
+ * @param {boolean} guessDisabled - Flag to determine if the guess button is disabled.
+ * @param {Object} gpsData - Contains GPS image data including paths and locations.
+ *
+ * @returns {JSX.Element|null} The rendered interactive image component or null if data is missing.
+ */
 const QuestionImage = ({
     location,
     onGuessButtonClick,
@@ -294,12 +366,22 @@ const QuestionImage = ({
         return null;
     }
 
+    /**
+     * Handles mouse wheel events. Prevents default scrolling, and instead zooms
+     * the image in or out based on the wheel direction.
+     * @param {WheelEvent} e The mouse wheel event.
+     */
     const handleWheel = (e) => {
         e.preventDefault(); // Prevent default scrolling
         const delta = e.deltaY > 0 ? -0.1 : 0.1; // Determine zoom direction
         setScale((prevScale) => Math.min(Math.max(prevScale + delta, 0.5), 3)); // Limit zoom range between 0.5x and 3x
     };
 
+    /**
+     * Handles a click on the background, and checks if the click is outside of
+     * the image bounds. If it is, the modal is closed.
+     * @param {MouseEvent} e The mouse event.
+     */
     const handleBackgroundClick = (e) => {
         if (!modalImageRef.current) return;
 
@@ -367,7 +449,23 @@ const QuestionImage = ({
     );
 };
 
-// ------------------ Earth ------------------
+/**
+ * A 3D Earth component that displays a textured sphere with a marker for the
+ * user's guessed location and the actual location. The component also renders a
+ * yellow line connecting the two points if the guessed location is within a
+ * certain distance of the actual location. The component is interactive, and
+ * responds to mouse clicks and double clicks to update the marker position.
+ *
+ * @param {Object} props - The component props.
+ * @param {function} props.setClickedSphericalCoords - A function to update the
+ *   app state with the user's guessed location in spherical coordinates.
+ * @param {THREE.Spherical} props.clickedSphericalCoords - The user's current
+ *   guessed location in spherical coordinates.
+ * @param {Object} props.actualLocation - The actual location of the image.
+ * @param {Object} props.gpsData - The GPS data for the images.
+ * @param {number} props.currentIndex - The current index of the image being
+ *   displayed.
+ */
 const Earth = ({
     setClickedSphericalCoords,
     clickedSphericalCoords,
@@ -392,6 +490,12 @@ const Earth = ({
         return new THREE.MeshStandardMaterial({ map: texture });
     }, [texture]);
 
+    /**
+     * Handles a click on the canvas, and calculates the spherical coordinates of
+     * the intersection point on the Earth mesh.
+     *
+     * @param {MouseEvent} event The mouse event.
+     */
     const handleCanvasClick = (event) => {
         const canvas = gl.domElement;
         const rect = canvas.getBoundingClientRect();
@@ -411,6 +515,14 @@ const Earth = ({
         }
     };
 
+    /**
+     * Creates a smooth curve between two 3D points using Catmull-Rom splines.
+     *
+     * @param {THREE.Vector3} point1 - The starting point of the curve.
+     * @param {THREE.Vector3} point2 - The ending point of the curve.
+     * @returns {THREE.Vector3[]} An array of Vector3 points representing the curve.
+     */
+
     const createCurveBetweenPoints = (point1, point2) => {
         const numPoints = 100;
         const curve = new THREE.CatmullRomCurve3(
@@ -422,6 +534,15 @@ const Earth = ({
         return curve.getPoints(numPoints);
     };
 
+    /**
+     * Interpolates between two 3D points by linearly interpolating between the
+     * two points, normalizing the result, and scaling it to have length 1.
+     *
+     * @param {THREE.Vector3} point1 - The starting point of the interpolation.
+     * @param {THREE.Vector3} point2 - The ending point of the interpolation.
+     * @param {number} numPoints - The number of points to interpolate.
+     * @returns {THREE.Vector3[]} An array of Vector3 points representing the interpolation.
+     */
     const interpolatePoints = (point1, point2, numPoints) => {
         const points = [];
         for (let i = 1; i < numPoints; i++) {
@@ -504,10 +625,21 @@ const Earth = ({
     );
 };
 
-// ------------------ Modal ------------------
+/**
+ * A modal component that displays the result of the user's guess.
+ *
+ * @param {string} location - The name of the location.
+ * @param {number} distance - The distance between the user's guess and the actual location in kilometers.
+ * @param {number} points - The points earned by the user based on the distance.
+ * @param {function} onClose - The callback function that is called when the user closes the modal.
+ * @returns {JSX.Element} The modal component.
+ */
 const Modal = ({ location, distance, points, onClose }) => {
     const [isOpen, setIsOpen] = useState(true);
 
+    /**
+     * Closes the modal by setting its open state to false and calls the onClose callback.
+     */
     const handleClose = () => {
         setIsOpen(false);
         onClose();
@@ -543,7 +675,22 @@ const Modal = ({ location, distance, points, onClose }) => {
     );
 };
 
-// ------------------ EndGameModal ------------------
+/**
+ * The EndGameModal component renders a modal dialog that appears after the
+ * user has finished playing the game. The modal displays the total score
+ * the user achieved, a grid of images representing the locations visited
+ * during the game, and a button to try again or go back to the home page.
+ *
+ * @param {Object} gpsImageData - An object containing the image data for each
+ * location visited during the game.
+ * @param {number[]} distances - An array of distances, where each distance is
+ * the distance from the user's guess to the actual location.
+ * @param {number} totalScore - The total score the user achieved during the game.
+ * @param {function} onClose - A callback function to call when the modal is
+ * closed.
+ * @param {number} mode - The mode of the game that was played.
+ * @returns {JSX.Element} The rendered EndGameModal component.
+ */
 const EndGameModal = ({
     gpsImageData,
     distances,
@@ -551,10 +698,23 @@ const EndGameModal = ({
     onClose,
     mode,
 }) => {
+    /**
+     * Reloads the page to start a new game.
+     * @returns {void}
+     */
     const handleTryAgain = () => {
         window.location.reload();
     };
 
+    /**
+     * Updates the user's max score for the given mode by sending a POST request
+     * to /api/users/updateMaxScore with the totalScore and mode.
+     *
+     * @param {number} totalScore - The total score to update.
+     *
+     * @returns {Promise<void>} - A promise that resolves if the update is successful and
+     * rejects if there's an error.
+     */
     const updateMaxScore = async (totalScore) => {
         try {
             const response = await axios.post(
@@ -579,6 +739,13 @@ const EndGameModal = ({
         updateMaxScore(totalScore);
     }, []);
 
+    /**
+     * Determines the color class based on the distance.
+     *
+     * @param {number} distance - The distance value to evaluate.
+     * @returns {string} - The CSS class representing the color, which indicates how close the distance is.
+     *                     Returns green for distances under 100, yellow for distances under 500, and red otherwise.
+     */
     const getDistanceColor = (distance) => {
         if (distance < 100) return "bg-green-100 text-green-800";
         if (distance < 500) return "bg-yellow-100 text-yellow-800";

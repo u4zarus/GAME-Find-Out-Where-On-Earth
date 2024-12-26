@@ -7,6 +7,17 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Header from "@/(components)/header/Header";
 
+/**
+ * Renders the sign up page for the application.
+ *
+ * This component provides a user interface for users to sign up by entering a
+ * username and password. It manages the state of user credentials, loading
+ * status, and button disabled state. The component also handles sign up requests
+ * to the server and provides feedback to users via alerts and toasts based on the
+ * success or failure of the sign up attempt.
+ *
+ * @returns {JSX.Element} The rendered sign up page component.
+ */
 const SignupPage = () => {
     const router = useRouter();
 
@@ -18,6 +29,14 @@ const SignupPage = () => {
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    /**
+     * Handles a sign up request to the server.
+     *
+     * Sends a POST request to the sign up API endpoint with the current user
+     * credentials and withCredentials set to true. If the request is successful,
+     * redirects to the login page. If the request fails, logs the error and
+     * shows an error toast. Finally, sets the loading state to false.
+     */
     const onSignup = async () => {
         try {
             setLoading(true);

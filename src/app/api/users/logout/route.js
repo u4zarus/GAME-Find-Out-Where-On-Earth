@@ -1,5 +1,14 @@
 import { NextResponse } from "next/server";
 
+/**
+ * Handles a GET request to log out the user.
+ *
+ * @returns {Response} - A JSON response indicating the result of the operation.
+ *
+ * Possible response statuses:
+ * - 200: User logged out successfully.
+ * - 500: Internal Server Error, if an unexpected error occurs.
+ */
 export async function GET() {
     try {
         const response = NextResponse.json({
@@ -8,14 +17,6 @@ export async function GET() {
         });
 
         console.log("clearing token");
-
-        // response.cookies.set("token", "", {
-        //     httpOnly: true,
-        //     expires: new Date(0),
-        //     secure: process.env.NODE_ENV === "production",
-        //     sameSite: "lax",
-        //     path: "/",
-        // });
 
         response.cookies.delete("token", {
             path: "/",

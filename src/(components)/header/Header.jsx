@@ -153,6 +153,9 @@ const Header = () => {
 const InfoModal = ({ onClose }) => {
     const [isOpen, setIsOpen] = useState(true);
 
+    /**
+     * Closes the modal by setting its open state to false and calls the onClose callback.
+     */
     const handleClose = () => {
         setIsOpen(false);
         onClose();

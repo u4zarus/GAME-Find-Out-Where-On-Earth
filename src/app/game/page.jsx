@@ -4,6 +4,12 @@ import Header from "@/(components)/header/Header";
 import Index from "@/(components)/earth";
 import { Suspense } from "react";
 
+/**
+ * The main Game component. This component is responsible for rendering the main
+ * game area, the header, and the 3D globe. This page is what the user sees when he starts playing.
+ *
+ * @returns {ReactElement} The main game component.
+ */
 const Game = () => {
     return (
         <main>
@@ -19,7 +25,5 @@ const Game = () => {
         </main>
     );
 };
-
-// export const dynamic = "force-dynamic";
 
 export default Game;

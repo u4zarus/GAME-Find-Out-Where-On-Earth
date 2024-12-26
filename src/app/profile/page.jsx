@@ -7,11 +7,30 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import Header from "@/(components)/header/Header";
 
+/**
+ * ProfilePage component handles the display of the user's profile information.
+ * It fetches user details upon component mount, displaying them in a structured format.
+ * The component provides functionality to log the user out and navigate to the home page.
+ *
+ * Manages the loading state while fetching user data and redirects to the login page if
+ * the user is not authenticated. Renders the user's username and max scores for different
+ * regions, with options to log out or return to the home page.
+ *
+ * @returns {JSX.Element} The rendered profile page component.
+ */
 const ProfilePage = () => {
     const router = useRouter();
     const [userDetails, setUserDetails] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    /**
+     * Logs the user out of the application and redirects to the login page.
+     *
+     * Sends a GET request to the logout API endpoint with the current timestamp
+     * to prevent caching issues. If the request is successful, logs the user out and
+     * shows a success toast. If the request fails, logs the error and shows an
+     * error toast.
+     */
     const logout = async () => {
         try {
             await axios.get("/api/users/logout", { withCredentials: true });
@@ -23,6 +42,12 @@ const ProfilePage = () => {
         }
     };
 
+    /**
+     * Fetches the user details from the server and updates the component state with the results.
+     * If the user is not logged in, redirects to the login page.
+     * If the request fails, logs the error and redirects to the login page.
+     * Finally, sets the loading state to false.
+     */
     const getUserDetails = async () => {
         try {
             const res = await axios.get("/api/users/me");

@@ -7,6 +7,17 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Header from "@/(components)/header/Header";
 
+/**
+ * Renders the login page for the application.
+ *
+ * This component provides a user interface for users to log in by entering a
+ * username and password. It manages the state of user credentials, loading
+ * status, and button disabled state. The component also handles login
+ * requests to the server and provides feedback to users via alerts and
+ * toasts based on the success or failure of the login attempt.
+ *
+ * @returns {JSX.Element} The rendered login page component.
+ */
 const LoginPage = () => {
     const router = useRouter();
     const [user, setUser] = useState({
@@ -17,6 +28,18 @@ const LoginPage = () => {
     const [loading, setLoading] = useState(false);
     const [alertMessage, setAlertMessage] = useState("");
 
+    /**
+     * Handles a login request to the server.
+     *
+     * @param {object} user - The user credentials object containing a username and password.
+     *
+     * @returns {Promise<void>} - Resolves when the login request is completed, or rejects if the login fails.
+     *
+     * Possible response statuses:
+     * - 200: Login successful, redirects to the home page.
+     * - 400: Invalid username or password.
+     * - 500: Internal Server Error, if an unexpected error occurs.
+     */
     const onLogin = async () => {
         try {
             setLoading(true);

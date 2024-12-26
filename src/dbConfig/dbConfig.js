@@ -1,8 +1,16 @@
 import mongoose from "mongoose";
 
-// Track the connection status
 let isConnected = false;
 
+/**
+ * Establishes a connection to MongoDB and sets up event listeners
+ * for connection, disconnection, and errors.
+ *
+ * If MONGODB_URI is not defined, logs an error and exits with code 1.
+ * If the connection is already established, logs a message and returns.
+ *
+ * @returns {Promise<void>}
+ */
 export async function connect() {
     if (isConnected) {
         console.log("Already connected to MongoDB");
@@ -15,7 +23,6 @@ export async function connect() {
             process.exit(1);
         }
 
-        // Establish a new MongoDB connection if not already connected
         await mongoose.connect(process.env.MONGODB_URI);
 
         const connection = mongoose.connection;

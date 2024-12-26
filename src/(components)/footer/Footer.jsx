@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <footer className="bg-gray-800 text-white py-2 px-4">
             <p className="text-center text-sm">
-                © {currentYear} Find where on Earth
+                © {currentYear} Find out where on Earth
             </p>
         </footer>
     );

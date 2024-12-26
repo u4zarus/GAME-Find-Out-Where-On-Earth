@@ -4,6 +4,12 @@ import { NextResponse } from "next/server";
 
 connect();
 
+/**
+ * Handles a GET request to retrieve the leaderboard data.
+ *
+ * @param {Request} request - The incoming request object.
+ * @returns {Response} - A JSON response containing the leaderboard data.
+ */
 export async function GET(request) {
     try {
         const europe = await User.find()

@@ -5,6 +5,17 @@ import bcryptjs from "bcryptjs";
 
 connect();
 
+/**
+ * Handles a POST request to create a new user.
+ *
+ * @param {Request} request - The incoming request object containing cookies and JSON body.
+ * @returns {Response} - A JSON response indicating the result of the operation.
+ *
+ * Possible response statuses:
+ * - 200: User created successfully.
+ * - 400: User already exists or missing username or password.
+ * - 500: Internal Server Error, if an unexpected error occurs.
+ */
 export async function POST(request) {
     try {
         const reqBody = await request.json();

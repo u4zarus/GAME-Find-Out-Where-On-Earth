@@ -5,6 +5,26 @@ import { connect } from "@/dbConfig/dbConfig";
 
 connect();
 
+/**
+ * Handles a POST request to update the user's max score for a specific game mode.
+ *
+ * Verifies the user's authentication token and retrieves the user information.
+ * If the user exists and the provided totalScore is greater than the current max score
+ * for the specified mode, updates the user's max score. Supports four game modes:
+ * - "0": Europe
+ * - "1": Americas
+ * - "2": Asia Oceania
+ * - "3": Africa Middle East
+ *
+ * @param {Request} request - The incoming request object containing cookies and JSON body.
+ * @returns {Response} - A JSON response indicating the result of the operation.
+ *
+ * Possible response statuses:
+ * - 200: Max score updated successfully.
+ * - 401: Unauthorized, if the token is missing or invalid.
+ * - 404: User not found.
+ * - 500: Internal Server Error, if an unexpected error occurs.
+ */
 export async function POST(request) {
     try {
         const token = request.cookies.get("token")?.value;

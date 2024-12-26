@@ -4,6 +4,17 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Header from "@/(components)/header/Header";
 
+/**
+ * LeaderBoard component displays the top scores for different regions.
+ * It fetches and displays the leaderboard data for four regions:
+ * Europe, Americas, Asia Oceania, and Africa Middle East. It also displays
+ * the current user's scores, highlighting them on the leaderboard if present.
+ *
+ * Uses axios to fetch leaderboard and current user data, and updates
+ * state accordingly. Renders tables for each region's leaderboard.
+ *
+ * @returns {JSX.Element} The rendered leaderboard component.
+ */
 const LeaderBoard = () => {
     const [europe, setEurope] = useState([]);
     const [americas, setAmericas] = useState([]);
@@ -11,6 +22,17 @@ const LeaderBoard = () => {
     const [africaMe, setAfricaMe] = useState([]);
     const [currentUser, setCurrentUser] = useState(null);
 
+    /**
+     * Fetches the leaderboard data for various regions and updates the state.
+     *
+     * Sends a GET request to the leaderboard API endpoint with the current timestamp
+     * to prevent caching issues. The response includes the top scores for Europe,
+     * Americas, Asia Oceania, and Africa Middle East regions. The leaderboard data
+     * is set in the component's state upon successful fetch.
+     *
+     * Logs the fetched data to the console for debugging purposes.
+     * Handles and logs any errors that occur during the fetch operation.
+     */
     const fetchLeaderboard = async () => {
         try {
             const response = await axios.get(
@@ -32,6 +54,16 @@ const LeaderBoard = () => {
         }
     };
 
+    /**
+     * Fetches the current user's data and updates the component's state.
+     *
+     * Sends a GET request to the "me" API endpoint with the current timestamp
+     * to prevent caching issues. The response includes the current user's data.
+     * The current user's data is set in the component's state upon successful fetch.
+     *
+     * Logs the fetched data to the console for debugging purposes.
+     * Handles and logs any errors that occur during the fetch operation.
+     */
     const fetchCurrentUser = async () => {
         try {
             const response = await axios.get("/api/users/me", {
@@ -58,6 +90,16 @@ const LeaderBoard = () => {
         }
     }, [currentUser]);
 
+    /**
+     * Renders a leaderboard table displaying user rankings, usernames, and max scores
+     * for a specific region. Highlights the current user's row if present.
+     *
+     * @param {Array} data - An array of user objects to display in the table, each containing
+     *                       properties such as _id, username, and max scores for different regions.
+     * @param {string} title - The title of the table, indicating the region (e.g., "European Cities").
+     *
+     * @returns {JSX.Element} A JSX element representing the leaderboard table.
+     */
     const renderTable = (data, title) => (
         <div className="w-full mb-4">
             <h2 className="text-2xl font-semibold text-center my-3">{title}</h2>

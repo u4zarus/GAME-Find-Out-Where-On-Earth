@@ -5,6 +5,12 @@ import { connect } from "@/dbConfig/dbConfig";
 
 connect();
 
+/**
+ * Handles a GET request to retrieve the current user's information.
+ *
+ * @param {Request} request - The incoming request object.
+ * @returns {Response} - A JSON response containing the current user's information.
+ */
 export async function GET(request) {
     try {
         const userId = await getDataFromToken(request);
