@@ -90,16 +90,16 @@ const ProfilePage = () => {
     return (
         <>
             <Header className="fixed top-0 left-0 w-full z-50" />
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-gray-200 pt-[80px] px-4">
-                <div className="w-full max-w-lg bg-gray-800 shadow-lg rounded-lg p-6">
-                    <h1 className="text-3xl font-semibold mb-6 text-center text-white">
+            <div className="flex flex-col items-center justify-center min-h-screen text-white pt-[80px] px-4 bg-dark">
+                <div className="w-full max-w-lg shadow-lg rounded-2xl p-8 border-2 border-secondary">
+                    <h1 className="text-2xl font-semibold mb-6 text-center text-primary">
                         User Profile
                     </h1>
-                    <div className="mb-6">
-                        <p className="text-lg font-medium text-gray-300 text-center">
+                    <div className="mb-6 p-4 rounded-lg border border-gray-700">
+                        <p className="text-md font-medium text-gray-300 text-center mb-2">
                             Username:
                         </p>
-                        <h2 className="text-xl font-bold text-white text-center">
+                        <h2 className="text-xl font-bold text-primary text-center">
                             {userDetails?.username || "Not available"}
                         </h2>
                     </div>
@@ -108,44 +108,46 @@ const ProfilePage = () => {
                             Max Scores:
                         </p>
                         <div className="grid grid-cols-2 gap-4">
-                            <div className="bg-gray-700 p-4 rounded-lg text-center">
-                                <p className="text-gray-400">Europe</p>
-                                <h2 className="text-xl font-bold text-white">
+                            <div className="p-4 rounded-lg text-center border border-gray-700">
+                                <p className="text-gray-400 mb-2">Europe</p>
+                                <h2 className="text-xl font-bold text-primary">
                                     {userDetails?.maxScoreEurope || 0}
                                 </h2>
                             </div>
-                            <div className="bg-gray-700 p-4 rounded-lg text-center">
-                                <p className="text-gray-400">Americas</p>
-                                <h2 className="text-xl font-bold text-white">
+                            <div className="p-4 rounded-lg text-center border border-gray-700">
+                                <p className="text-gray-400 mb-2">Americas</p>
+                                <h2 className="text-xl font-bold text-primary">
                                     {userDetails?.maxScoreAmericas || 0}
                                 </h2>
                             </div>
-                            <div className="bg-gray-700 p-4 rounded-lg text-center">
-                                <p className="text-gray-400">Asia Oceania</p>
-                                <h2 className="text-xl font-bold text-white">
+                            <div className="p-4 rounded-lg text-center border border-gray-700">
+                                <p className="text-gray-400 mb-2">
+                                    Asia Oceania
+                                </p>
+                                <h2 className="text-xl font-bold text-primary">
                                     {userDetails?.maxScoreAsiaOceania || 0}
                                 </h2>
                             </div>
-                            <div className="bg-gray-700 p-4 rounded-lg text-center">
-                                <p className="text-gray-400">
+                            <div className="p-4 rounded-lg text-center border border-gray-700">
+                                <p className="text-gray-400 mb-2">
                                     Africa & Middle East
                                 </p>
-                                <h2 className="text-xl font-bold text-white">
+                                <h2 className="text-xl font-bold text-primary">
                                     {userDetails?.maxScoreAfricaMe || 0}
                                 </h2>
                             </div>
                         </div>
                     </div>
-                    <div className="flex justify-center gap-4 mt-6">
+                    <div className="flex justify-center gap-4 mt-8">
                         <button
                             onClick={logout}
-                            className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 focus:outline-none"
+                            className="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none transition-colors border-2 border-red-600 hover:border-red-700"
                         >
                             Log Out
                         </button>
                         <Link
                             href="/"
-                            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 focus:outline-none"
+                            className="px-5 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:outline-none transition-colors border-2 border-primary hover:border-primary-dark text-center"
                         >
                             Go to Home Page
                         </Link>

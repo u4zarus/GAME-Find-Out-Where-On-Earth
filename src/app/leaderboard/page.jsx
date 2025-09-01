@@ -101,19 +101,21 @@ const LeaderBoard = () => {
      * @returns {JSX.Element} A JSX element representing the leaderboard table.
      */
     const renderTable = (data, title) => (
-        <div className="w-full mb-4">
-            <h2 className="text-2xl font-semibold text-center my-3">{title}</h2>
+        <div className="w-full mb-6 bg-gray-800 border-2 border-secondary rounded-lg shadow-lg overflow-hidden">
+            <h2 className="text-xl font-semibold text-center py-4 text-primary">
+                {title}
+            </h2>
             <div className="max-h-[500px] overflow-y-auto no-scrollbar">
                 <table className="table-fixed w-full text-left border-collapse">
-                    <thead className="bg-gray-800 sticky top-0">
+                    <thead className="bg-gray-900 sticky top-0">
                         <tr>
-                            <th className="px-2 py-3 text-gray-300 font-semibold w-1/6">
+                            <th className="px-3 py-3 text-white font-semibold w-1/6 border-r border-gray-700">
                                 Rank
                             </th>
-                            <th className="px-2 py-3 text-gray-300 font-semibold w-3/6 truncate">
+                            <th className="px-3 py-3 text-white font-semibold w-3/6 truncate border-r border-gray-700">
                                 Username
                             </th>
-                            <th className="px-2 py-3 text-gray-300 font-semibold w-2/6">
+                            <th className="px-3 py-3 text-white font-semibold w-2/6">
                                 Max Score
                             </th>
                         </tr>
@@ -128,19 +130,19 @@ const LeaderBoard = () => {
                                     key={user._id}
                                     className={`${
                                         isCurrentUser
-                                            ? "bg-blue-500 text-white"
+                                            ? "bg-primary text-white"
                                             : index % 2 === 0
                                             ? "bg-gray-800"
                                             : "bg-gray-700"
                                     } hover:bg-gray-600 transition-colors duration-150`}
                                 >
-                                    <td className="border border-gray-600 px-2 py-3 text-center">
+                                    <td className="border border-gray-700 px-3 py-2 text-center">
                                         {index + 1}
                                     </td>
-                                    <td className="border border-gray-600 px-2 py-3 truncate">
+                                    <td className="border border-gray-700 px-3 py-2 truncate">
                                         {user.username}
                                     </td>
-                                    <td className="border border-gray-600 px-2 py-3 text-center">
+                                    <td className="border border-gray-700 px-3 py-2 text-center">
                                         {title === "European Cities"
                                             ? user.maxScoreEurope
                                             : title === "American Cities"
@@ -157,8 +159,8 @@ const LeaderBoard = () => {
                 </table>
             </div>
             {currentUser && (
-                <div className="mt-4 text-center text-gray-400">
-                    <p>
+                <div className="mt-3 p-3 bg-gray-900 text-center text-primary border-t border-gray-700">
+                    <p className="font-medium">
                         Your Score:{" "}
                         {title === "European Cities"
                             ? currentUser.maxScoreEurope
@@ -174,30 +176,19 @@ const LeaderBoard = () => {
     );
 
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-dark">
             <Header />
-            <div className="flex flex-col justify-center items-center p-4 bg-gray-900 min-h-screen text-gray-200 overflow-y-auto">
-                <h1 className="text-4xl font-bold text-center mb-5 text-white">
+            <main className="flex flex-col items-center justify-start p-6 flex-1 text-white w-full">
+                <h1 className="text-4xl font-bold text-center mb-6">
                     Leaderboard
                 </h1>
                 <div className="flex flex-col items-center w-full max-w-5xl gap-6">
-                    <div className="w-full max-w-2xl">
-                        {renderTable(europe, "European Cities")}
-                    </div>
-                    <div className="w-full max-w-2xl">
-                        {renderTable(americas, "American Cities")}
-                    </div>
-                    <div className="w-full max-w-2xl">
-                        {renderTable(asiaOceania, "Asian and Oceanian Cities")}
-                    </div>
-                    <div className="w-full max-w-2xl">
-                        {renderTable(
-                            africaMe,
-                            "African and Middle Eastern Cities"
-                        )}
-                    </div>
+                    {renderTable(europe, "European Cities")}
+                    {renderTable(americas, "American Cities")}
+                    {renderTable(asiaOceania, "Asian and Oceanian Cities")}
+                    {renderTable(africaMe, "African and Middle Eastern Cities")}
                 </div>
-            </div>
+            </main>
         </div>
     );
 };

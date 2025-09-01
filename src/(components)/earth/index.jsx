@@ -5,7 +5,7 @@ import { OrbitControls } from "@react-three/drei";
 import { Canvas, useThree, useFrame, extend } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { calculateDistance2 } from "@/utils/coordUtils";
+import { calculateDistance2, calculateDistanceH } from "@/utils/coordUtils";
 import Image from "next/image";
 import { IoIosCloseCircle } from "react-icons/io";
 import { isMobile } from "react-device-detect";
@@ -28,7 +28,10 @@ const Index = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [clickedSphericalCoords, setClickedSphericalCoords] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
-    const [modalData, setModalData] = useState({ location: "", distance: "" });
+    const [modalData, setModalData] = useState({
+        location: "",
+        distance: "",
+    });
     const [plusPoints, setPlusPoints] = useState(0);
     const [distances, setDistances] = useState([]);
     const [score, setScore] = useState(0);
@@ -522,7 +525,6 @@ const Earth = ({
      * @param {THREE.Vector3} point2 - The ending point of the curve.
      * @returns {THREE.Vector3[]} An array of Vector3 points representing the curve.
      */
-
     const createCurveBetweenPoints = (point1, point2) => {
         const numPoints = 100;
         const curve = new THREE.CatmullRomCurve3(
@@ -665,6 +667,9 @@ const Modal = ({ location, distance, points, onClose }) => {
                         <p className="text-lg text-gray-950 font-semibold">
                             Your guess is {distance} km away
                         </p>
+                        {/* <p className="text-lg text-gray-950 font-semibold">
+                            Your guess is {d} km away (Haversine)
+                        </p> */}
                         <p className="text-lg text-green-600 font-semibold">
                             +{points} points
                         </p>

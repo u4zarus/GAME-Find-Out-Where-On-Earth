@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Header from "@/(components)/header/Header";
+import Footer from "@/(components)/footer/Footer";
 
 /**
  * Renders the sign up page for the application.
@@ -64,64 +66,126 @@ const SignupPage = () => {
     }, [user]);
 
     return (
-        <>
-            <Header className="fixed top-0 left-0 w-full z-50" />
-            <div className="flex flex-col items-center justify-center min-h-screen bg-gray-900 text-gray-200 pt-[80px]">
-                <div className="w-full max-w-md bg-gray-800 shadow-lg rounded-lg p-6">
-                    <h1 className="text-2xl font-semibold mb-6 text-center">
-                        {loading ? "Processing..." : "Sign Up"}
+        <div className="flex flex-col min-h-screen bg-dark text-white">
+            <Header />
+            <main className="flex flex-col items-center justify-center flex-1 p-6 mt-16">
+                <div className="w-full max-w-md bg-gray-800 rounded-2xl shadow-lg p-8 border-2 border-secondary">
+                    <div className="flex justify-center mb-6">
+                        <Image
+                            src="/logo_.png"
+                            alt="Logo"
+                            width={100}
+                            height={60}
+                            className="cursor-pointer"
+                        />
+                    </div>
+
+                    <h1 className="text-2xl font-semibold text-center mb-6 text-primary">
+                        {loading ? "Processing..." : "Create Your Account"}
                     </h1>
-                    <hr className="border-gray-600 mb-4" />
+                    <hr className="border-gray-700 mb-6" />
 
-                    <label htmlFor="username" className="block mb-2">
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        id="username"
-                        value={user.username}
-                        onChange={(e) =>
-                            setUser({ ...user, username: e.target.value })
-                        }
-                        placeholder="Username"
-                        className="w-full p-2 border border-gray-600 bg-gray-700 text-gray-200 rounded-lg mb-4 focus:outline-none focus:border-blue-500"
-                    />
+                    <div className="space-y-4">
+                        <div>
+                            <label
+                                htmlFor="username"
+                                className="block mb-2 font-medium text-gray-300"
+                            >
+                                Username
+                            </label>
+                            <input
+                                type="text"
+                                id="username"
+                                value={user.username}
+                                onChange={(e) =>
+                                    setUser({
+                                        ...user,
+                                        username: e.target.value,
+                                    })
+                                }
+                                placeholder="Choose a username"
+                                className="w-full p-3 rounded-lg bg-gray-900 border-2 border-gray-700 text-white focus:outline-none focus:border-primary transition-colors"
+                            />
+                        </div>
 
-                    <label htmlFor="password" className="block mb-2">
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        id="password"
-                        value={user.password}
-                        onChange={(e) =>
-                            setUser({ ...user, password: e.target.value })
-                        }
-                        placeholder="Password"
-                        className="w-full p-2 border border-gray-600 bg-gray-700 text-gray-200 rounded-lg mb-4 focus:outline-none focus:border-blue-500"
-                    />
+                        <div>
+                            <label
+                                htmlFor="password"
+                                className="block mb-2 font-medium text-gray-300"
+                            >
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                id="password"
+                                value={user.password}
+                                onChange={(e) =>
+                                    setUser({
+                                        ...user,
+                                        password: e.target.value,
+                                    })
+                                }
+                                placeholder="Create a secure password"
+                                className="w-full p-3 rounded-lg bg-gray-900 border-2 border-gray-700 text-white focus:outline-none focus:border-primary transition-colors"
+                            />
+                        </div>
+                    </div>
 
                     <button
                         onClick={onSignup}
-                        disabled={buttonDisabled}
-                        className={`w-full p-2 rounded-lg mb-4 focus:outline-none ${
-                            buttonDisabled
-                                ? "bg-gray-600 cursor-not-allowed"
-                                : "bg-blue-600 hover:bg-blue-700"
-                        } text-white`}
+                        disabled={buttonDisabled || loading}
+                        className={`w-full p-3 mt-6 rounded-lg text-white font-medium focus:outline-none transition-all ${
+                            buttonDisabled || loading
+                                ? "bg-gray-700 cursor-not-allowed border-2 border-gray-600"
+                                : "bg-primary hover:bg-primary-dark border-2 border-primary shadow-lg transform hover:scale-105"
+                        }`}
                     >
-                        {loading ? "Signing Up..." : "Sign Up"}
+                        {loading ? (
+                            <span className="flex items-center justify-center">
+                                <svg
+                                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <circle
+                                        className="opacity-25"
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        stroke="currentColor"
+                                        strokeWidth="4"
+                                    ></circle>
+                                    <path
+                                        className="opacity-75"
+                                        fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                    ></path>
+                                </svg>
+                                Creating Account...
+                            </span>
+                        ) : (
+                            "Sign Up"
+                        )}
                     </button>
 
-                    <Link
-                        href="/login"
-                        className="text-blue-400 hover:underline text-center block mt-4"
-                    >
-                        Already have an account?
-                    </Link>
+                    <div className="text-center mt-6 pt-4 border-t border-gray-700">
+                        <p className="text-gray-400">
+                            Already have an account?{" "}
+                            <Link
+                                href="/login"
+                                className="text-primary hover:text-primary-light font-semibold underline transition-colors"
+                            >
+                                Log In Here
+                            </Link>
+                        </p>
+                    </div>
                 </div>
-            </div>
-        </>
+            </main>
+
+            {/* Footer with space theme */}
+            <Footer />
+        </div>
     );
 };
 

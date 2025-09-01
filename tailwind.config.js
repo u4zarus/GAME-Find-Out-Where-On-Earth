@@ -8,12 +8,11 @@ module.exports = {
     ],
     theme: {
         extend: {
-            // backgroundImage: {
-            //     "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-            //     "gradient-conic":
-            //         "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-            // },
-            colors: {},
+            colors: {
+                primary: "#03B7F0",
+                secondary: "#024F6D",
+                dark: "#030813",
+            },
             scrollbar: {
                 hidden: {
                     "&::-webkit-scrollbar": { display: "none" },

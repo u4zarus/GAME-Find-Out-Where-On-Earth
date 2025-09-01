@@ -15,6 +15,13 @@ export const calculateDistance2 = (sphericalCoord1, sphericalCoord2) => {
     return vincentysFormula(coord1, coord2);
 };
 
+// export const calculateDistanceH = (sphericalCoord1, sphericalCoord2) => {
+//     const coord1 = sphericalToGeographic(sphericalCoord1);
+//     const coord2 = sphericalToGeographic(sphericalCoord2);
+
+//     return haversineFormula(coord1, coord2);
+// };
+
 /**
  * Converts spherical coordinates to geographic coordinates.
  *
@@ -119,3 +126,21 @@ export const vincentysFormula = (coord1, coord2) => {
 
     return s / 1000; // distance in kilometers
 };
+
+// export const haversineFormula = (coord1, coord2) => {
+//     const R = 6371; // Earth's radius in kilometers
+//     const lat1 = toRadians(coord1.latitude);
+//     const lon1 = toRadians(coord1.longitude);
+//     const lat2 = toRadians(coord2.latitude);
+//     const lon2 = toRadians(coord2.longitude);
+
+//     const dLat = lat2 - lat1;
+//     const dLon = lon2 - lon1;
+
+//     const a =
+//         Math.sin(dLat / 2) ** 2 +
+//         Math.cos(lat1) * Math.cos(lat2) * Math.sin(dLon / 2) ** 2;
+//     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+//     return R * c; // Distance in kilometers
+// };

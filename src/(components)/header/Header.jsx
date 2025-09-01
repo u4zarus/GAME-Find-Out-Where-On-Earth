@@ -27,106 +27,47 @@ const Header = () => {
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
     return (
-        <header className="flex items-center justify-between px-4 py-2 bg-gray-800 text-white fixed w-full z-50">
-            {/* Logo */}
-            <div className="flex items-center">
-                <Link href="/">
-                    <Image
-                        src="/logo_.png"
-                        alt="Logo"
-                        width={40}
-                        height={40}
-                        className="cursor-pointer"
-                    />
-                </Link>
-            </div>
-
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-4 ml-auto">
-                <Link
-                    href="/leaderboard"
-                    className="hover:text-gray-300 cursor-pointer"
-                >
-                    Leaderboard
-                </Link>
-                <a
-                    className="hover:text-gray-300 cursor-pointer"
-                    onClick={() => setShowModal(true)}
-                >
-                    How to Play
-                </a>
-
-                {/* Conditional Links */}
-                {!isLoggedIn ? (
-                    <>
-                        <Link
-                            href="/login"
-                            className="hover:text-gray-300 cursor-pointer"
-                        >
-                            Log In
-                        </Link>
-                        <Link
-                            href="/signup"
-                            className="hover:text-gray-300 cursor-pointer"
-                        >
-                            Sign Up
-                        </Link>
-                    </>
-                ) : (
-                    <Link
-                        href="/profile"
-                        className="hover:text-gray-300 cursor-pointer"
-                    >
-                        Profile
+        <header className="fixed top-0 left-0 w-full z-50 bg-dark text-white border-b-2 border-secondary">
+            <div className="flex items-center justify-between max-w-7xl mx-auto px-6 py-4">
+                {/* Logo */}
+                <div className="flex items-center">
+                    <Link href="/">
+                        <Image
+                            src="/logo_.png"
+                            alt="Logo"
+                            width={60}
+                            height={40}
+                            className="cursor-pointer"
+                        />
                     </Link>
-                )}
-            </nav>
+                </div>
 
-            {/* Mobile Menu Icon */}
-            <div className="md:hidden flex items-center ml-auto">
-                <button onClick={toggleMobileMenu} aria-label="Toggle menu">
-                    {isMobileMenuOpen ? (
-                        <FaTimes size={24} />
-                    ) : (
-                        <FaBars size={24} />
-                    )}
-                </button>
-            </div>
-
-            {/* Mobile Dropdown Menu */}
-            {isMobileMenuOpen && (
-                <nav className="absolute top-full right-0 bg-gray-800 w-full md:hidden flex flex-col items-center space-y-4 py-4">
+                {/* Desktop Navigation */}
+                <nav className="hidden md:flex items-center space-x-10 text-sm font-medium">
                     <Link
                         href="/leaderboard"
-                        className="hover:text-gray-300 cursor-pointer"
-                        onClick={toggleMobileMenu}
+                        className="hover:text-primary transition"
                     >
                         Leaderboard
                     </Link>
-                    <a
-                        className="hover:text-gray-300 cursor-pointer"
-                        onClick={() => {
-                            setShowModal(true);
-                            toggleMobileMenu();
-                        }}
+                    <button
+                        onClick={() => setShowModal(true)}
+                        className="hover:text-primary transition"
                     >
                         How to Play
-                    </a>
+                    </button>
 
-                    {/* Conditional Links */}
                     {!isLoggedIn ? (
                         <>
                             <Link
                                 href="/login"
-                                className="hover:text-gray-300 cursor-pointer"
-                                onClick={toggleMobileMenu}
+                                className="hover:text-primary transition"
                             >
                                 Log In
                             </Link>
                             <Link
                                 href="/signup"
-                                className="hover:text-gray-300 cursor-pointer"
-                                onClick={toggleMobileMenu}
+                                className="hover:text-primary transition"
                             >
                                 Sign Up
                             </Link>
@@ -134,8 +75,71 @@ const Header = () => {
                     ) : (
                         <Link
                             href="/profile"
-                            className="hover:text-gray-300 cursor-pointer"
+                            className="hover:text-primary transition"
+                        >
+                            Profile
+                        </Link>
+                    )}
+                </nav>
+
+                {/* Mobile Menu Icon */}
+                <div className="md:hidden flex items-center">
+                    <button
+                        onClick={toggleMobileMenu}
+                        aria-label="Toggle menu"
+                        className="text-white"
+                    >
+                        {isMobileMenuOpen ? (
+                            <FaTimes size={28} />
+                        ) : (
+                            <FaBars size={28} />
+                        )}
+                    </button>
+                </div>
+            </div>
+
+            {/* Mobile Dropdown Menu */}
+            {isMobileMenuOpen && (
+                <nav className="bg-dark border-t border-gray-800 flex flex-col items-center py-4 space-y-4 md:hidden text-white font-medium">
+                    <Link
+                        href="/leaderboard"
+                        onClick={toggleMobileMenu}
+                        className="hover:text-primary"
+                    >
+                        Leaderboard
+                    </Link>
+                    <button
+                        onClick={() => {
+                            setShowModal(true);
+                            toggleMobileMenu();
+                        }}
+                        className="hover:text-primary"
+                    >
+                        How to Play
+                    </button>
+
+                    {!isLoggedIn ? (
+                        <>
+                            <Link
+                                href="/login"
+                                onClick={toggleMobileMenu}
+                                className="hover:text-primary"
+                            >
+                                Log In
+                            </Link>
+                            <Link
+                                href="/signup"
+                                onClick={toggleMobileMenu}
+                                className="hover:text-primary"
+                            >
+                                Sign Up
+                            </Link>
+                        </>
+                    ) : (
+                        <Link
+                            href="/profile"
                             onClick={toggleMobileMenu}
+                            className="hover:text-primary"
                         >
                             Profile
                         </Link>
@@ -143,9 +147,7 @@ const Header = () => {
                 </nav>
             )}
 
-            {showModal ? (
-                <InfoModal onClose={() => setShowModal(false)} />
-            ) : null}
+            {showModal && <InfoModal onClose={() => setShowModal(false)} />}
         </header>
     );
 };
@@ -163,45 +165,67 @@ const InfoModal = ({ onClose }) => {
 
     return (
         <div
-            className={`modal ${isOpen ? "is-active" : ""}`}
-            style={{ position: "fixed", zIndex: 9999 }}
+            className={`fixed inset-0 z-50 ${
+                isOpen ? "flex" : "hidden"
+            } items-center justify-center`}
         >
-            <div className="modal-background fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                <div className="modal-content bg-white rounded-lg shadow-xl w-3/4 md:w-1/2 lg:w-1/3">
-                    <div className="box p-6 relative">
-                        <button
-                            className="absolute top-2 right-2 text-3xl"
-                            onClick={handleClose}
-                        >
-                            <IoIosCloseCircle fill="black" />
-                        </button>
-                        <p className="text-lg text-gray-950 font-semibold mb-2">
-                            How to Play:
-                        </p>
-                        <ul className="list-disc list-inside text-gray-600">
-                            <li className="pb-2">
+            <div
+                className="fixed inset-0 bg-black bg-opacity-70"
+                onClick={handleClose}
+            ></div>
+            <div className="relative bg-gray-900 rounded-2xl shadow-xl w-11/12 md:w-3/4 lg:w-1/2 xl:w-2/5 max-h-[90vh] overflow-y-auto border-2 border-secondary">
+                <div className="p-6 relative">
+                    <button
+                        className="absolute top-4 right-4 text-3xl hover:text-primary transition-colors"
+                        onClick={handleClose}
+                        aria-label="Close modal"
+                    >
+                        <IoIosCloseCircle
+                            className="text-white hover:text-primary"
+                            size={32}
+                        />
+                    </button>
+                    <h2 className="text-2xl font-semibold mb-4 text-primary">
+                        How to Play:
+                    </h2>
+                    <ul className="space-y-3 text-gray-200">
+                        <li className="flex items-start">
+                            <span className="text-primary mr-2 mt-1">•</span>
+                            <span>
                                 Try to guess the location from the satellite
                                 photo on the Earth!
-                            </li>
-                            <li className="pb-2">
+                            </span>
+                        </li>
+                        <li className="flex items-start">
+                            <span className="text-primary mr-2 mt-1">•</span>
+                            <span>
                                 Double click (single tap on mobile) on the Earth
                                 to place a guess marker, then press Guess button
                                 to take a guess.
-                            </li>
-                            <li className="pb-2">
+                            </span>
+                        </li>
+                        <li className="flex items-start">
+                            <span className="text-primary mr-2 mt-1">•</span>
+                            <span>
                                 The closer your guess is to the actual location,
                                 the more points you earn (0 - 1000).
-                            </li>
-                            <li className="pb-2">
+                            </span>
+                        </li>
+                        <li className="flex items-start">
+                            <span className="text-primary mr-2 mt-1">•</span>
+                            <span>
                                 You need to guess where is the place
                                 (city/landmark) located, not the image itself.
-                            </li>
-                            <li className="pb-2">
+                            </span>
+                        </li>
+                        <li className="flex items-start">
+                            <span className="text-primary mr-2 mt-1">•</span>
+                            <span>
                                 Enable GPU acceleration in your browser settings
                                 for better performance.
-                            </li>
-                        </ul>
-                    </div>
+                            </span>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
