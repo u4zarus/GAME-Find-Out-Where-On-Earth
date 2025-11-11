@@ -81,7 +81,7 @@ const SignupPage = () => {
                     </div>
 
                     <h1 className="text-2xl font-semibold text-center mb-6 text-primary">
-                        {loading ? "Processing..." : "Create Your Account"}
+                        {loading ? "Zpracovávám..." : "Vytvoř si účet"}
                     </h1>
                     <hr className="border-gray-700 mb-6" />
 
@@ -91,7 +91,7 @@ const SignupPage = () => {
                                 htmlFor="username"
                                 className="block mb-2 font-medium text-gray-300"
                             >
-                                Username
+                                Uživatelské jméno
                             </label>
                             <input
                                 type="text"
@@ -103,7 +103,7 @@ const SignupPage = () => {
                                         username: e.target.value,
                                     })
                                 }
-                                placeholder="Choose a username"
+                                placeholder="Zvol si uživatelské jméno"
                                 className="w-full p-3 rounded-lg bg-gray-900 border-2 border-gray-700 text-white focus:outline-none focus:border-primary transition-colors"
                             />
                         </div>
@@ -113,7 +113,7 @@ const SignupPage = () => {
                                 htmlFor="password"
                                 className="block mb-2 font-medium text-gray-300"
                             >
-                                Password
+                                Heslo
                             </label>
                             <input
                                 type="password"
@@ -125,7 +125,7 @@ const SignupPage = () => {
                                         password: e.target.value,
                                     })
                                 }
-                                placeholder="Create a secure password"
+                                placeholder="Vytvoř si bezpečné heslo"
                                 className="w-full p-3 rounded-lg bg-gray-900 border-2 border-gray-700 text-white focus:outline-none focus:border-primary transition-colors"
                             />
                         </div>
@@ -162,21 +162,21 @@ const SignupPage = () => {
                                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                     ></path>
                                 </svg>
-                                Creating Account...
+                                Vytvářím účet...
                             </span>
                         ) : (
-                            "Sign Up"
+                            "Zaregistrovat se"
                         )}
                     </button>
 
                     <div className="text-center mt-6 pt-4 border-t border-gray-700">
                         <p className="text-gray-400">
-                            Already have an account?{" "}
+                            Už máš účet?{" "}
                             <Link
                                 href="/login"
                                 className="text-primary hover:text-primary-light font-semibold underline transition-colors"
                             >
-                                Log In Here
+                                Přihlas se zde
                             </Link>
                         </p>
                     </div>

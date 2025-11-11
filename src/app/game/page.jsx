@@ -19,7 +19,7 @@ const Game = () => {
                 }
             `}</style>
             <Header />
-            <Suspense fallback={<div>Loading game...</div>}>
+            <Suspense fallback={<div>Načítání hry...</div>}>
                 <Index />
             </Suspense>
         </main>

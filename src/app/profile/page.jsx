@@ -84,7 +84,7 @@ const ProfilePage = () => {
     }, []);
 
     if (loading) {
-        return <p className="text-center">Loading...</p>;
+        return <p className="text-center">Zpracovávám...</p>;
     }
 
     return (
@@ -93,11 +93,11 @@ const ProfilePage = () => {
             <div className="flex flex-col items-center justify-center min-h-screen text-white pt-[80px] px-4 bg-dark">
                 <div className="w-full max-w-lg shadow-lg rounded-2xl p-8 border-2 border-secondary">
                     <h1 className="text-2xl font-semibold mb-6 text-center text-primary">
-                        User Profile
+                        Uživatelský profil
                     </h1>
                     <div className="mb-6 p-4 rounded-lg border border-gray-700">
                         <p className="text-md font-medium text-gray-300 text-center mb-2">
-                            Username:
+                            Uživatelské jméno:
                         </p>
                         <h2 className="text-xl font-bold text-primary text-center">
                             {userDetails?.username || "Not available"}
@@ -105,24 +105,24 @@ const ProfilePage = () => {
                     </div>
                     <div className="mb-6 text-center">
                         <p className="text-lg font-medium text-gray-300 mb-4">
-                            Max Scores:
+                            Nejvyšší skóre:
                         </p>
                         <div className="grid grid-cols-2 gap-4">
                             <div className="p-4 rounded-lg text-center border border-gray-700">
-                                <p className="text-gray-400 mb-2">Europe</p>
+                                <p className="text-gray-400 mb-2">Evropa</p>
                                 <h2 className="text-xl font-bold text-primary">
                                     {userDetails?.maxScoreEurope || 0}
                                 </h2>
                             </div>
                             <div className="p-4 rounded-lg text-center border border-gray-700">
-                                <p className="text-gray-400 mb-2">Americas</p>
+                                <p className="text-gray-400 mb-2">Amerika</p>
                                 <h2 className="text-xl font-bold text-primary">
                                     {userDetails?.maxScoreAmericas || 0}
                                 </h2>
                             </div>
                             <div className="p-4 rounded-lg text-center border border-gray-700">
                                 <p className="text-gray-400 mb-2">
-                                    Asia Oceania
+                                    Asie a Oceánie
                                 </p>
                                 <h2 className="text-xl font-bold text-primary">
                                     {userDetails?.maxScoreAsiaOceania || 0}
@@ -130,7 +130,7 @@ const ProfilePage = () => {
                             </div>
                             <div className="p-4 rounded-lg text-center border border-gray-700">
                                 <p className="text-gray-400 mb-2">
-                                    Africa & Middle East
+                                    Afrika a Blízký východ
                                 </p>
                                 <h2 className="text-xl font-bold text-primary">
                                     {userDetails?.maxScoreAfricaMe || 0}
@@ -143,13 +143,13 @@ const ProfilePage = () => {
                             onClick={logout}
                             className="px-5 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 focus:outline-none transition-colors border-2 border-red-600 hover:border-red-700"
                         >
-                            Log Out
+                            Odhlásit se
                         </button>
                         <Link
                             href="/"
                             className="px-5 py-2 bg-primary text-white rounded-lg hover:bg-primary-dark focus:outline-none transition-colors border-2 border-primary hover:border-primary-dark text-center"
                         >
-                            Go to Home Page
+                            Přejít na domovskou stránku
                         </Link>
                     </div>
                 </div>

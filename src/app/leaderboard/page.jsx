@@ -110,13 +110,13 @@ const LeaderBoard = () => {
                     <thead className="bg-gray-900 sticky top-0">
                         <tr>
                             <th className="px-3 py-3 text-white font-semibold w-1/6 border-r border-gray-700">
-                                Rank
+                                Pořadí
                             </th>
                             <th className="px-3 py-3 text-white font-semibold w-3/6 truncate border-r border-gray-700">
-                                Username
+                                Uživatelské jméno
                             </th>
                             <th className="px-3 py-3 text-white font-semibold w-2/6">
-                                Max Score
+                                Nejvyšší skóre
                             </th>
                         </tr>
                     </thead>
@@ -161,7 +161,7 @@ const LeaderBoard = () => {
             {currentUser && (
                 <div className="mt-3 p-3 bg-gray-900 text-center text-primary border-t border-gray-700">
                     <p className="font-medium">
-                        Your Score:{" "}
+                        Tvé skóre:{" "}
                         {title === "European Cities"
                             ? currentUser.maxScoreEurope
                             : title === "American Cities"
@@ -180,13 +180,13 @@ const LeaderBoard = () => {
             <Header />
             <main className="flex flex-col items-center justify-start p-6 flex-1 text-white w-full">
                 <h1 className="text-4xl font-bold text-center mb-6">
-                    Leaderboard
+                    Žebříček
                 </h1>
                 <div className="flex flex-col items-center w-full max-w-5xl gap-6">
-                    {renderTable(europe, "European Cities")}
-                    {renderTable(americas, "American Cities")}
-                    {renderTable(asiaOceania, "Asian and Oceanian Cities")}
-                    {renderTable(africaMe, "African and Middle Eastern Cities")}
+                    {renderTable(europe, "Evropská města")}
+                    {renderTable(americas, "Americká města")}
+                    {renderTable(asiaOceania, "Asijská a oceánská města")}
+                    {renderTable(africaMe, "Africká a blízkovýchodní města")}
                 </div>
             </main>
         </div>

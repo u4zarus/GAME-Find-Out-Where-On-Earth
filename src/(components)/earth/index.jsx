@@ -193,14 +193,14 @@ const Index = () => {
                     >
                         {currentIndex + 1 ===
                         Object.keys(gpsData.gpsImageData).length
-                            ? "See Results"
-                            : "Next Image"}
+                            ? "Zobrazit výsledky"
+                            : "Další obrázek"}
                     </button>
                 ) : null}
             </div>
 
             <div className="fixed top-16 left-2 px-1 py-2 text-center min-w-10 rounded-md text-xl z-50 bg-gradient-to-r from-green-400 via-blue-500 to-purple-600">
-                <p className="hidden sm:block">Current Score: {score}</p>
+                <p className="hidden sm:block">Aktuální skóre: {score}</p>
                 <p className="sm:hidden">{score}</p>
             </div>
 
@@ -240,7 +240,7 @@ const Index = () => {
             </div>
         </div>
     ) : (
-        <p>Loading game data...</p>
+        <p>Načítám herní data...</p>
     );
 };
 
@@ -421,7 +421,7 @@ const QuestionImage = ({
                 className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 disabled:bg-gray-500 disabled:opacity-50"
                 disabled={!clickedSphericalCoords || guessDisabled}
             >
-                Guess
+                Tipnout
             </button>
 
             {isModalOpen && (
@@ -662,16 +662,16 @@ const Modal = ({ location, distance, points, onClose }) => {
                             <IoIosCloseCircle fill="black" />
                         </button>
                         <p className="text-lg text-gray-950 font-semibold mb-2">
-                            The place was - {location}
+                            Místo bylo - {location}
                         </p>
                         <p className="text-lg text-gray-950 font-semibold">
-                            Your guess is {distance} km away
+                            Tvůj odhad je {distance} km daleko
                         </p>
                         {/* <p className="text-lg text-gray-950 font-semibold">
                             Your guess is {d} km away (Haversine)
                         </p> */}
                         <p className="text-lg text-green-600 font-semibold">
-                            +{points} points
+                            +{points} bodů
                         </p>
                     </div>
                 </div>
@@ -762,14 +762,14 @@ const EndGameModal = ({
             <div className="modal-background fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="modal-content bg-white rounded-lg shadow-xl w-11/12 md:w-3/4 lg:w-1/2 max-h-screen overflow-y-auto p-4 relative">
                     <h1 className="text-xl md:text-2xl text-gray-950 font-semibold mb-2 text-center">
-                        Game Over
+                        Konec hry
                     </h1>
                     <p className="text-base md:text-lg text-gray-950 font-semibold mb-2 text-center">
-                        Total Score: {totalScore}
+                        Celkové skóre: {totalScore}
                     </p>
                     <div className="mt-2 mb-4">
                         <h2 className="text-lg text-gray-950 font-semibold mb-2 text-center">
-                            Results:
+                            Výsledky:
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2">
                             {Object.keys(gpsImageData).map((key, index) => {
@@ -792,7 +792,7 @@ const EndGameModal = ({
                                             {gpsImageData[key].location}
                                         </p>
                                         <p className="text-center text-sm">
-                                            Distance:{" "}
+                                            Vzdálenost:{" "}
                                             <span className="font-semibold">
                                                 {distances[index].toFixed(0)} km
                                             </span>
@@ -807,13 +807,13 @@ const EndGameModal = ({
                             onClick={handleTryAgain}
                             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                         >
-                            Try Again
+                            Zkusit znovu
                         </button>
                         <button
                             onClick={() => (window.location.href = "/")}
                             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                         >
-                            Go to Home
+                            Domovská stránka
                         </button>
                     </div>
                 </div>

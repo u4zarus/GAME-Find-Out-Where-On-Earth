@@ -48,13 +48,13 @@ const Header = () => {
                         href="/leaderboard"
                         className="hover:text-primary transition"
                     >
-                        Leaderboard
+                        Žebříček
                     </Link>
                     <button
                         onClick={() => setShowModal(true)}
                         className="hover:text-primary transition"
                     >
-                        How to Play
+                        Jak hrát
                     </button>
 
                     {!isLoggedIn ? (
@@ -63,13 +63,13 @@ const Header = () => {
                                 href="/login"
                                 className="hover:text-primary transition"
                             >
-                                Log In
+                                Přihlásit se
                             </Link>
                             <Link
                                 href="/signup"
                                 className="hover:text-primary transition"
                             >
-                                Sign Up
+                                Registrovat se
                             </Link>
                         </>
                     ) : (
@@ -77,7 +77,7 @@ const Header = () => {
                             href="/profile"
                             className="hover:text-primary transition"
                         >
-                            Profile
+                            Profil
                         </Link>
                     )}
                 </nav>
@@ -125,14 +125,14 @@ const Header = () => {
                                 onClick={toggleMobileMenu}
                                 className="hover:text-primary"
                             >
-                                Log In
+                                Přihlásit se
                             </Link>
                             <Link
                                 href="/signup"
                                 onClick={toggleMobileMenu}
                                 className="hover:text-primary"
                             >
-                                Sign Up
+                                Registrovat se
                             </Link>
                         </>
                     ) : (
@@ -141,7 +141,7 @@ const Header = () => {
                             onClick={toggleMobileMenu}
                             className="hover:text-primary"
                         >
-                            Profile
+                            Profil
                         </Link>
                     )}
                 </nav>
@@ -186,43 +186,37 @@ const InfoModal = ({ onClose }) => {
                         />
                     </button>
                     <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        How to Play:
+                        Jak hrát:
                     </h2>
                     <ul className="space-y-3 text-gray-200">
                         <li className="flex items-start">
                             <span className="text-primary mr-2 mt-1">•</span>
                             <span>
-                                Try to guess the location from the satellite
-                                photo on the Earth!
+                                Zkus uhodnout místo na Zemi podle satelitního snímku!
                             </span>
                         </li>
                         <li className="flex items-start">
                             <span className="text-primary mr-2 mt-1">•</span>
                             <span>
-                                Double click (single tap on mobile) on the Earth
-                                to place a guess marker, then press Guess button
-                                to take a guess.
+                                Dvojklikem (nebo klepnutím na mobilu) umísti značku hádání a poté stiskni tlačítko „Hádat“.
                             </span>
                         </li>
                         <li className="flex items-start">
                             <span className="text-primary mr-2 mt-1">•</span>
                             <span>
-                                The closer your guess is to the actual location,
-                                the more points you earn (0 - 1000).
+                                Čím blíže budeš skutečné poloze, tím více bodů získáš (0-1000).
                             </span>
                         </li>
                         <li className="flex items-start">
                             <span className="text-primary mr-2 mt-1">•</span>
                             <span>
-                                You need to guess where is the place
-                                (city/landmark) located, not the image itself.
+                                Cílem je uhodnout, kde se místo (město/památka) nachází, ne co je na obrázku.
                             </span>
                         </li>
                         <li className="flex items-start">
                             <span className="text-primary mr-2 mt-1">•</span>
                             <span>
-                                Enable GPU acceleration in your browser settings
-                                for better performance.
+                                Pro lepší výkon zapni v nastavení prohlížeče akceleraci GPU.
                             </span>
                         </li>
                     </ul>
