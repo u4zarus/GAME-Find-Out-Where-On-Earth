@@ -4,7 +4,7 @@ const Footer = () => {
     return (
         <footer className="bg-dark text-white border-t-2 border-secondary py-4 px-6">
             <p className="text-center text-sm font-medium">
-                © {currentYear} Vzdělávací kancelář ESA - ESERO Česká republika
+                © {currentYear} ESERO Czech Republic; Vyrobeno ve spolupráci s Visegrad Fund
             </p>
         </footer>
     );
