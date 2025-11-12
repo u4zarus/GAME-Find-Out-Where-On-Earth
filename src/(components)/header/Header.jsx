@@ -4,8 +4,11 @@ import Link from "next/link";
 import axios from "axios";
 import { IoIosCloseCircle } from "react-icons/io";
 import { FaBars, FaTimes } from "react-icons/fa";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "../LanguageSwitcher/LanguageSwitcher";
 
 const Header = () => {
+    const { t } = useLanguage();
     const [showModal, setShowModal] = useState(false);
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -48,13 +51,13 @@ const Header = () => {
                         href="/leaderboard"
                         className="hover:text-primary transition"
                     >
-                        Žebříček
+                        {t("header.links.leaderboard")}
                     </Link>
                     <button
                         onClick={() => setShowModal(true)}
                         className="hover:text-primary transition"
                     >
-                        Jak hrát
+                        {t("header.links.howToPlay")}
                     </button>
 
                     {!isLoggedIn ? (
@@ -63,13 +66,13 @@ const Header = () => {
                                 href="/login"
                                 className="hover:text-primary transition"
                             >
-                                Přihlásit se
+                                {t("header.links.login")}
                             </Link>
                             <Link
                                 href="/signup"
                                 className="hover:text-primary transition"
                             >
-                                Registrovat se
+                                {t("header.links.signup")}
                             </Link>
                         </>
                     ) : (
@@ -77,9 +80,10 @@ const Header = () => {
                             href="/profile"
                             className="hover:text-primary transition"
                         >
-                            Profil
+                            {t("header.links.profile")}
                         </Link>
                     )}
+                    <LanguageSwitcher />
                 </nav>
 
                 {/* Mobile Menu Icon */}
@@ -106,7 +110,7 @@ const Header = () => {
                         onClick={toggleMobileMenu}
                         className="hover:text-primary"
                     >
-                        Leaderboard
+                        {t("header.links.leaderboard")}
                     </Link>
                     <button
                         onClick={() => {
@@ -115,7 +119,7 @@ const Header = () => {
                         }}
                         className="hover:text-primary"
                     >
-                        How to Play
+                        {t("header.links.howToPlay")}
                     </button>
 
                     {!isLoggedIn ? (
@@ -125,14 +129,14 @@ const Header = () => {
                                 onClick={toggleMobileMenu}
                                 className="hover:text-primary"
                             >
-                                Přihlásit se
+                                {t("header.links.login")}
                             </Link>
                             <Link
                                 href="/signup"
                                 onClick={toggleMobileMenu}
                                 className="hover:text-primary"
                             >
-                                Registrovat se
+                                {t("header.links.signup")}
                             </Link>
                         </>
                     ) : (
@@ -141,9 +145,10 @@ const Header = () => {
                             onClick={toggleMobileMenu}
                             className="hover:text-primary"
                         >
-                            Profil
+                            {t("header.links.profile")}
                         </Link>
                     )}
+                    <LanguageSwitcher />
                 </nav>
             )}
 
@@ -154,6 +159,7 @@ const Header = () => {
 
 const InfoModal = ({ onClose }) => {
     const [isOpen, setIsOpen] = useState(true);
+    const { t } = useLanguage();
 
     /**
      * Closes the modal by setting its open state to false and calls the onClose callback.
@@ -186,37 +192,37 @@ const InfoModal = ({ onClose }) => {
                         />
                     </button>
                     <h2 className="text-2xl font-semibold mb-4 text-primary">
-                        Jak hrát:
+                        {t("modal.title")}
                     </h2>
                     <ul className="space-y-3 text-gray-200">
                         <li className="flex items-start">
                             <span className="text-primary mr-2 mt-1">•</span>
                             <span>
-                                Zkus uhodnout místo na Zemi podle satelitního snímku!
+                                {t("modal.instructions.0")}
                             </span>
                         </li>
                         <li className="flex items-start">
                             <span className="text-primary mr-2 mt-1">•</span>
                             <span>
-                                Dvojklikem (nebo klepnutím na mobilu) umísti značku hádání a poté stiskni tlačítko „Hádat“.
+                                {t("modal.instructions.1")}
                             </span>
                         </li>
                         <li className="flex items-start">
                             <span className="text-primary mr-2 mt-1">•</span>
                             <span>
-                                Čím blíže budeš skutečné poloze, tím více bodů získáš (0-1000).
+                                {t("modal.instructions.2")}
                             </span>
                         </li>
                         <li className="flex items-start">
                             <span className="text-primary mr-2 mt-1">•</span>
                             <span>
-                                Cílem je uhodnout, kde se místo (město/památka) nachází, ne co je na obrázku.
+                                {t("modal.instructions.3")}
                             </span>
                         </li>
                         <li className="flex items-start">
                             <span className="text-primary mr-2 mt-1">•</span>
                             <span>
-                                Pro lepší výkon zapni v nastavení prohlížeče akceleraci GPU.
+                                {t("modal.instructions.4")}
                             </span>
                         </li>
                     </ul>

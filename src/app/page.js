@@ -6,6 +6,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 /**
  * Home component renders the main landing page for the application.
@@ -25,6 +26,7 @@ import { useEffect } from "react";
  */
 const Home = () => {
   const router = useRouter();
+  const { t } = useLanguage();
 
   useEffect(() => {
     router.refresh();
@@ -36,10 +38,11 @@ const Home = () => {
       <main className="flex-grow flex justify-center items-center px-4 sm:px-6 mt-16">
         <div className="flex flex-col items-center space-y-6 sm:space-y-8 bg-opacity-90 p-6 sm:p-8 rounded-2xl w-full sm:w-auto border-2 border-secondary shadow-xl">
           <h1 className="text-2xl sm:text-4xl font-bold mb-6 sm:mb-8 text-primary text-center max-w-xs sm:max-w-none">
-            Svět pohledem družic
+            {t('home.title')}
+
           </h1>
           <p className="text-lg sm:text-xl text-white text-center">
-            Vyber herní režim a začni hrát
+            {t('home.description')}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 w-full">
             <Link
@@ -60,7 +63,7 @@ const Home = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
                 </div>
                 <p className="text-lg sm:text-xl text-white font-bold text-center mt-4 group-hover:text-primary transition-colors">
-                  Evropská města
+                  {t('home.gameModes.europe')}
                 </p>
               </div>
             </Link>
@@ -82,7 +85,7 @@ const Home = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
                 </div>
                 <p className="text-lg sm:text-xl text-white font-bold text-center mt-4 group-hover:text-primary transition-colors">
-                  Americká města
+                  {t('home.gameModes.america')}
                 </p>
               </div>
             </Link>
@@ -104,7 +107,7 @@ const Home = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
                 </div>
                 <p className="text-lg sm:text-xl text-white font-bold text-center mt-4 group-hover:text-primary transition-colors">
-                  Asijská a oceánská města
+                  {t('home.gameModes.asia')}
                 </p>
               </div>
             </Link>
@@ -126,7 +129,7 @@ const Home = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-dark/70 to-transparent"></div>
                 </div>
                 <p className="text-lg sm:text-xl text-white font-bold text-center mt-4 group-hover:text-primary transition-colors">
-                  Africká a blízkovýchodní města
+                  {t('home.gameModes.africa')}
                 </p>
               </div>
             </Link>

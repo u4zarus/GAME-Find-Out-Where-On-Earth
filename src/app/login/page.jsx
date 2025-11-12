@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Header from "@/(components)/header/Header";
 import Footer from "@/(components)/footer/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 /**
  * Renders the login page for the application.
@@ -29,6 +30,7 @@ const LoginPage = () => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const { t } = useLanguage();
 
   /**
    * Handles a login request to the server.
@@ -58,9 +60,7 @@ const LoginPage = () => {
         "Log In failed",
         error.response?.data?.message || error.message
       );
-      setAlertMessage(
-        error.response?.data?.message || "Špaté jmeno nebo heslo"
-      );
+      setAlertMessage(error.response?.data?.message || t("login.wrong"));
       toast.error("Log In failed");
     } finally {
       setLoading(false);
@@ -91,7 +91,7 @@ const LoginPage = () => {
           </div>
 
           <h1 className="text-2xl font-semibold text-center mb-6 text-primary">
-            {loading ? "Zpracovávám..." : "Přihlas se do svého účtu"}
+            {loading ? t("login.loading") : t("login.title")}
           </h1>
           <hr className="border-gray-700 mb-6" />
 
@@ -107,7 +107,7 @@ const LoginPage = () => {
                 htmlFor="username"
                 className="block mb-2 font-medium text-gray-300"
               >
-                Uživatelské jméno
+                {t("login.username")}
               </label>
               <input
                 type="text"
@@ -119,7 +119,7 @@ const LoginPage = () => {
                     username: e.target.value,
                   })
                 }
-                placeholder="Zadej své uživatelské jméno"
+                placeholder={t("login.usernamePlaceholder")}
                 className="w-full p-3 rounded-lg bg-gray-900 border-2 border-gray-700 text-white focus:outline-none focus:border-primary transition-colors"
               />
             </div>
@@ -129,7 +129,7 @@ const LoginPage = () => {
                 htmlFor="password"
                 className="block mb-2 font-medium text-gray-300"
               >
-                Heslo
+                {t("login.password")}
               </label>
               <input
                 type="password"
@@ -141,7 +141,7 @@ const LoginPage = () => {
                     password: e.target.value,
                   })
                 }
-                placeholder="Zadej své heslo"
+                placeholder={t("login.passwordPlaceholder")}
                 className="w-full p-3 rounded-lg bg-gray-900 border-2 border-gray-700 text-white focus:outline-none focus:border-primary transition-colors"
               />
             </div>
@@ -178,21 +178,21 @@ const LoginPage = () => {
                     d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                   ></path>
                 </svg>
-                Přihlašování...
+                {t("login.loggingIn")}
               </span>
             ) : (
-              "Přihlásit se"
+              t("login.button")
             )}
           </button>
 
           <div className="text-center mt-6 pt-4 border-t border-gray-700">
             <p className="text-gray-400">
-              Nemáš účet?{" "}
+              {t("login.noAccount")}{" "}
               <Link
                 href="/signup"
                 className="text-primary hover:text-primary-light font-semibold underline transition-colors"
               >
-                Zaregistruj se nyní
+                {t("login.signup")}
               </Link>
             </p>
           </div>

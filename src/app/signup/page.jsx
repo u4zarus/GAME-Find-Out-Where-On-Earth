@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Header from "@/(components)/header/Header";
 import Footer from "@/(components)/footer/Footer";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 /**
  * Renders the sign up page for the application.
@@ -30,6 +31,7 @@ const SignupPage = () => {
 
     const [buttonDisabled, setButtonDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { t } = useLanguage();
 
     /**
      * Handles a sign up request to the server.
@@ -91,7 +93,7 @@ const SignupPage = () => {
                                 htmlFor="username"
                                 className="block mb-2 font-medium text-gray-300"
                             >
-                                Uživatelské jméno
+                                {t("login.username")}
                             </label>
                             <input
                                 type="text"
@@ -103,7 +105,7 @@ const SignupPage = () => {
                                         username: e.target.value,
                                     })
                                 }
-                                placeholder="Zvol si uživatelské jméno"
+                                placeholder={t("login.usernamePlaceholder")}
                                 className="w-full p-3 rounded-lg bg-gray-900 border-2 border-gray-700 text-white focus:outline-none focus:border-primary transition-colors"
                             />
                         </div>
@@ -113,7 +115,7 @@ const SignupPage = () => {
                                 htmlFor="password"
                                 className="block mb-2 font-medium text-gray-300"
                             >
-                                Heslo
+                                {t("login.password")}
                             </label>
                             <input
                                 type="password"
@@ -125,7 +127,7 @@ const SignupPage = () => {
                                         password: e.target.value,
                                     })
                                 }
-                                placeholder="Vytvoř si bezpečné heslo"
+                                placeholder={t("login.passwordPlaceholder")}
                                 className="w-full p-3 rounded-lg bg-gray-900 border-2 border-gray-700 text-white focus:outline-none focus:border-primary transition-colors"
                             />
                         </div>
@@ -162,21 +164,21 @@ const SignupPage = () => {
                                         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                                     ></path>
                                 </svg>
-                                Vytvářím účet...
+                                {t("login.creating")}
                             </span>
                         ) : (
-                            "Zaregistrovat se"
+                            t("login.button")
                         )}
                     </button>
 
                     <div className="text-center mt-6 pt-4 border-t border-gray-700">
                         <p className="text-gray-400">
-                            Už máš účet?{" "}
+                            {t("login.alreadyHaveAccount")}{" "}
                             <Link
                                 href="/login"
                                 className="text-primary hover:text-primary-light font-semibold underline transition-colors"
                             >
-                                Přihlas se zde
+                                {t("login.button")}
                             </Link>
                         </p>
                     </div>

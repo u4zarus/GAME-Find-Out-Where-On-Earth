@@ -3,6 +3,7 @@
 import Header from "@/(components)/header/Header";
 import Index from "@/(components)/earth";
 import { Suspense } from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 /**
  * The main Game component. This component is responsible for rendering the main
@@ -11,6 +12,8 @@ import { Suspense } from "react";
  * @returns {ReactElement} The main game component.
  */
 const Game = () => {
+    const { t } = useLanguage();
+
     return (
         <main>
             <style jsx global>{`
@@ -19,7 +22,7 @@ const Game = () => {
                 }
             `}</style>
             <Header />
-            <Suspense fallback={<div>Načítání hry...</div>}>
+            <Suspense fallback={<div>{t("game.loading")}</div>}>
                 <Index />
             </Suspense>
         </main>

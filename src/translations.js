@@ -1,0 +1,193 @@
+export const translations = {
+  cs: {
+    header: {
+      links: {
+        leaderboard: "Žebříček",
+        howToPlay: "Jak hrát",
+        login: "Přihlásit se",
+        signup: "Registrovat se",
+        profile: "Profil",
+      },
+    },
+    modal: {
+      title: "Jak hrát:",
+      instructions: [
+        "Zkus uhodnout místo na Zemi podle satelitního snímku!",
+        "Dvojklikem (nebo klepnutím na mobilu) umísti značku hádání a poté stiskni tlačítko „Hádat“.",
+        "Čím blíže budeš skutečné poloze, tím více bodů získáš (0-1000).",
+        "Cílem je uhodnout, kde se místo (město/památka) nachází, ne co je na obrázku.",
+        "Pro lepší výkon zapni v nastavení prohlížeče akceleraci GPU.",
+      ],
+    },
+    home: {
+      title: "Svět pohledem družic",
+      description: "Vyber herní režim a začni hrát",
+      gameModes: {
+        europe: "Evropská města",
+        america: "Americká města",
+        asia: "Asijská a oceánská města",
+        africa: "Africká a blízkovýchodní města",
+      },
+    },
+    leaderboard: {
+      title: "Žebříček",
+      columns: {
+        rank: "Pořadí",
+        username: "Uživatelské jméno",
+        maxScore: "Nejvyšší skóre",
+      },
+      yourScore: "Tvé skóre",
+    },
+    login: {
+      loading: "Zpracovávám...",
+      title: "Přihlas se do svého účtu",
+      username: "Uživatelské jméno",
+      usernamePlaceholder: "Zadej své uživatelské jméno",
+      password: "Heslo",
+      passwordPlaceholder: "Zadej své heslo",
+      button: "Přihlásit se",
+      loggingIn: "Přihlašování...",
+      noAccount: "Nemáš účet?",
+      alreadyHaveAccount: "Už máš účet?",
+      signup: "Zaregistruj se nyní",
+      wrong: "Spatné uživatelské jméno nebo heslo",
+      creating: "Vytvářím...",
+    },
+    game: {
+      loading: "Načítání hry...",
+    },
+    profile: {
+      title: "Uživatelský profil",
+      usernameLabel: "Uživatelské jméno:",
+      maxScore: "Nejvyšší skóre:",
+      regions: {
+        europe: "Evropa",
+        americas: "Amerika",
+        asiaOceania: "Asie a Oceánie",
+        africaMe: "Afrika a Blízký východ",
+      },
+      logoutButton: "Odhlásit se",
+      homeButton: "Přejít na domovskou stránku",
+      notAvailable: "Není dostupné",
+    },
+    game: {
+      loadingData: "Načítám herní data...",
+      nextImage: "Další obrázek",
+      showResults: "Zobrazit výsledky",
+      currentScore: "Aktuální skóre:",
+      guessButton: "Tipnout",
+      modal: {
+        location: "Místo bylo - {location}",
+        distance: "Tvůj odhad je {distance} km daleko",
+        points: "+{points} bodů",
+      },
+      endGame: {
+        title: "Konec hry",
+        totalScore: "Celkové skóre: {score}",
+        results: "Výsledky:",
+        distance: "Vzdálenost:",
+        tryAgain: "Zkusit znovu",
+        home: "Domovská stránka",
+      },
+    },
+    footer: {
+      text: "© {year} ESERO Czech Republic; Vyrobeno ve spolupráci s Visegrad Fund",
+    },
+  },
+
+  en: {
+    header: {
+      links: {
+        leaderboard: "Leaderboard",
+        howToPlay: "How to Play",
+        login: "Log In",
+        signup: "Sign Up",
+        profile: "Profile",
+      },
+    },
+    modal: {
+      title: "How to Play:",
+      instructions: [
+        "Try to guess the place on Earth based on the satellite image!",
+        "Double-click (or tap on mobile) to place your guess marker and then press the 'Guess' button.",
+        "The closer you are to the real location, the more points you get (0–1000).",
+        "The goal is to guess where the place (city/landmark) is located, not what is shown in the image.",
+        "For better performance, enable GPU acceleration in your browser settings.",
+      ],
+    },
+    home: {
+      title: "World Through Satellites",
+      description: "Select a game mode and start playing",
+      gameModes: {
+        europe: "European Cities",
+        america: "American Cities",
+        asia: "Asian & Oceanic Cities",
+        africa: "African & Middle Eastern Cities",
+      },
+    },
+    leaderboard: {
+      title: "Leaderboard",
+      columns: {
+        rank: "Rank",
+        username: "Username",
+        maxScore: "Max Score",
+      },
+      yourScore: "Your Score",
+    },
+    login: {
+      loading: "Processing...",
+      title: "Log in to your account",
+      username: "Username",
+      usernamePlaceholder: "Enter your username",
+      password: "Password",
+      passwordPlaceholder: "Enter your password",
+      button: "Log In",
+      loggingIn: "Logging in...",
+      noAccount: "Don't have an account?",
+      alreadyHaveAccount: "Already have an account?",
+      signup: "Sign up now",
+      wrong: "Wrong username or password",
+      creating: "Creating...",
+    },
+    game: {
+      loading: "Loading...",
+    },
+    profile: {
+      title: "User Profile",
+      usernameLabel: "Username:",
+      maxScore: "Highest Score:",
+      regions: {
+        europe: "Europe",
+        americas: "Americas",
+        asiaOceania: "Asia & Oceania",
+        africaMe: "Africa & Middle East",
+      },
+      logoutButton: "Log Out",
+      homeButton: "Go to Home Page",
+      notAvailable: "Not available",
+    },
+    game: {
+      loadingData: "Loading game data...",
+      nextImage: "Next Image",
+      showResults: "Show Results",
+      currentScore: "Current Score:",
+      guessButton: "Guess",
+      modal: {
+        location: "The location was - {location}",
+        distance: "Your guess is {distance} km away",
+        points: "+{points} points",
+      },
+      endGame: {
+        title: "Game Over",
+        totalScore: "Total Score: {score}",
+        results: "Results:",
+        distance: "Distance:",
+        tryAgain: "Try Again",
+        home: "Home Page",
+      },
+    },
+    footer: {
+      text: "© {year} ESERO Czech Republic; Made in collaboration with the Visegrad Fund",
+    },
+  },
+};

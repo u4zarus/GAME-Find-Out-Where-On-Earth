@@ -1,11 +1,12 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-    title: "Find where on Earth",
-    description: "Guess the location of the satellite image on the Earth",
+  title: "Find where on Earth",
+  description: "Guess the location of the satellite image on the Earth",
 };
 
 /**
@@ -20,9 +21,11 @@ export const metadata = {
  * @returns {React.ReactElement} The root layout element.
  */
 export default function RootLayout({ children }) {
-    return (
-        <html lang="en">
-            <body className={inter.className}>{children}</body>
-        </html>
-    );
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        <LanguageProvider>{children}</LanguageProvider>
+      </body>
+    </html>
+  );
 }

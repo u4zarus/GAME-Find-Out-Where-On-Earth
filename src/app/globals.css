@@ -40,7 +40,7 @@ canvas {
 }
 
 .image-container:hover::before {
-    content: "Click to enlarge";
+    content: "Zoom";
     position: absolute;
     top: 50%;
     left: 50%;
